@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Sparkles } from 'lucide-react';
-import EquipmentModal from './EquipmentModal';
-import { worldsEquipmentData } from '../data/equipmentData';
 
 const MARS_PINS = [
   {
@@ -64,10 +62,7 @@ export default function MarsMissionsPage({
   onExploreInsight, 
   onOpenInsightMission 
 }) {
-  const [selectedMission, setSelectedMission] = useState(null);
   const [showComparison, setShowComparison] = useState(false);
-
-  const marsData = worldsEquipmentData.mars;
 
   const handlePinClick = (pin) => {
     if (pin.id === 'insight') {
@@ -77,11 +72,7 @@ export default function MarsMissionsPage({
         onExploreInsight();
       } else if (onOpenInsightMission) {
         onOpenInsightMission();
-      } else {
-        setSelectedMission(marsData);
       }
-    } else {
-      setSelectedMission(marsData);
     }
   };
 
@@ -158,16 +149,22 @@ export default function MarsMissionsPage({
 
           {/* Interactive Mission Location Pins Overlay */}
           <div className="absolute inset-0 pointer-events-auto">
-            {MARS_PINS.map((pin) => (
-              <div
-                key={pin.id}
-                onClick={() => handlePinClick(pin)}
-                className={`absolute ${pin.positionClass} flex items-center cursor-pointer group transition-transform duration-300 hover:scale-[1.04] active:scale-[0.98] select-none`}
-                role="button"
-                tabIndex={0}
-                aria-label={`${pin.name} - ${pin.subtitle}`}
-                onKeyDown={(e) => e.key === 'Enter' && handlePinClick(pin)}
-              >
+            {MARS_PINS.map((pin) => {
+              const isInsight = pin.id === 'insight';
+              return (
+                <div
+                  key={pin.id}
+                  onClick={isInsight ? () => handlePinClick(pin) : undefined}
+                  className={`absolute ${pin.positionClass} flex items-center select-none ${
+                    isInsight
+                      ? 'cursor-pointer group transition-transform duration-300 hover:scale-[1.04] active:scale-[0.98]'
+                      : 'cursor-default'
+                  }`}
+                  role={isInsight ? 'button' : undefined}
+                  tabIndex={isInsight ? 0 : undefined}
+                  aria-label={`${pin.name} - ${pin.subtitle}`}
+                  onKeyDown={isInsight ? (e) => e.key === 'Enter' && handlePinClick(pin) : undefined}
+                >
                 {/* 
                   Teardrop Map Pin Marker SVG:
                   - Solid pure black fill (#000000)
@@ -219,7 +216,8 @@ export default function MarsMissionsPage({
                 </div>
 
               </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>
@@ -277,12 +275,6 @@ export default function MarsMissionsPage({
           </div>
         </div>
       )}
-
-      {/* Equipment Dossier Modal when clicking Curiosity / Maven / Phoenix */}
-      <EquipmentModal
-        world={selectedMission}
-        onClose={() => setSelectedMission(null)}
-      />
 
     </div>
   );
