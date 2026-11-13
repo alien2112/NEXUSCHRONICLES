@@ -3,19 +3,36 @@ import Navbar from './components/Navbar';
 import SearchModal from './components/SearchModal';
 import DrawerMenu from './components/DrawerMenu';
 import ChooseWorld from './components/ChooseWorld';
+import MarsPage from './components/MarsPage';
+import MarsMissionsPage from './components/MarsMissionsPage';
+import MarsInsightPage from './components/MarsInsightPage';
+import InsightMissionPage from './components/InsightMissionPage';
+import InsightStory1Page from './components/InsightStory1Page';
 import { ChevronRight, Eye, EyeOff, Sparkles } from 'lucide-react';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'missions'
+  const [currentPage, setCurrentPage] = useState('home'); 
+  // 'home' | 'missions' | 'mars' | 'mars-missions' | 'mars-insight' | 'insight-mission' | 'insight-story-1'
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
 
-  // Sync state with URL hash (#missions or #home)
+  // Sync state with URL hash
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.toLowerCase();
-      if (hash === '#missions' || hash === '#choose-world' || hash === '#worlds') {
+      if (hash === '#insight-story-1' || hash === '#story-1' || hash === '#story1' || hash === '#page7') {
+        setCurrentPage('insight-story-1');
+      } else if (hash === '#insight-mission' || hash === '#page6') {
+        setCurrentPage('insight-mission');
+      } else if (hash === '#mars-insight' || hash === '#page5' || hash === '#insight') {
+        setCurrentPage('mars-insight');
+      } else if (hash === '#mars-missions' || hash === '#mars-page4' || hash === '#page4') {
+        setCurrentPage('mars-missions');
+      } else if (hash === '#mars' || hash === '#the-mars' || hash === '#page3') {
+        setCurrentPage('mars');
+      } else if (hash === '#missions' || hash === '#choose-world' || hash === '#worlds' || hash === '#page2') {
         setCurrentPage('missions');
       } else if (hash === '#home' || hash === '' || hash === '#explore') {
         setCurrentPage('home');
@@ -29,7 +46,21 @@ export default function App() {
 
   const navigate = (page) => {
     setCurrentPage(page);
-    window.location.hash = page === 'missions' ? '#missions' : '#home';
+    if (page === 'insight-story-1') {
+      window.location.hash = '#story-1';
+    } else if (page === 'insight-mission') {
+      window.location.hash = '#insight-mission';
+    } else if (page === 'mars-insight') {
+      window.location.hash = '#mars-insight';
+    } else if (page === 'mars-missions') {
+      window.location.hash = '#mars-missions';
+    } else if (page === 'mars') {
+      window.location.hash = '#mars';
+    } else if (page === 'missions') {
+      window.location.hash = '#missions';
+    } else {
+      window.location.hash = '#home';
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -39,8 +70,7 @@ export default function App() {
       {/* 
         The Navigation Bar
         - Centers nav links (Explore, Missions, Discover, About)
-        - Clicking "Missions" opens the "Choose a World" page
-        - Clicking "Explore" or NASA Meatball Logo returns to the Home page
+        - Clean transparent background (no borders, no blur, no vignette)
         - Right icons: Search, Drawer Menu, Divider, Meatball Logo
       */}
       <Navbar
@@ -52,21 +82,56 @@ export default function App() {
 
       {/* 
         CONDITIONAL PAGE RENDERING:
-        1. 'missions' -> Choose a World page (public/choose-world-background.png, moon.png, mars.png)
-        2. 'home' -> Main hero page (public/space-bg.jpg, logo placeholder, Begin Your Journey)
+        0. 'insight-story-1' -> Page 7 ("The Machine That Took Mars's Pulse" - Story 1)
+        1. 'insight-mission' -> Page 6 ("A Tiny Listener on a Big Planet" - Trailer Page)
+        2. 'mars-insight'    -> Page 5 (Mars zoomed in with InSight card on the left of Mars)
+        3. 'mars-missions'   -> Page 4 (Mars Horizon Map with 4 location pins)
+        4. 'mars'            -> Page 3 (The Mars Planet Overview with 3 badges)
+        5. 'missions'        -> Page 2 (Choose a World: Moon, Mars)
+        6. 'home'            -> Page 1 (Main Hero with homepagebg.png, logo placeholder, Begin Your Journey)
       */}
-      {currentPage === 'missions' ? (
-        <ChooseWorld onNavigateHome={() => navigate('home')} />
+      {currentPage === 'insight-story-1' ? (
+        <InsightStory1Page
+          onBack={() => navigate('insight-mission')}
+        />
+      ) : currentPage === 'insight-mission' ? (
+        <InsightMissionPage
+          onBack={() => navigate('mars-insight')}
+          onWatchStory={() => navigate('insight-story-1')}
+        />
+      ) : currentPage === 'mars-insight' ? (
+        <MarsInsightPage
+          onBack={() => navigate('mars-missions')}
+          onExploreMissions={() => navigate('insight-mission')}
+        />
+      ) : currentPage === 'mars-missions' ? (
+        <MarsMissionsPage
+          onBack={() => navigate('mars')}
+          onSelectInsight={() => navigate('mars-insight')}
+          onExploreInsight={() => navigate('mars-insight')}
+          onOpenInsightMission={() => navigate('mars-insight')}
+        />
+      ) : currentPage === 'mars' ? (
+        <MarsPage
+          onBack={() => navigate('missions')}
+          onExploreMissions={() => navigate('mars-missions')}
+          onNavigateHome={() => navigate('home')}
+        />
+      ) : currentPage === 'missions' ? (
+        <ChooseWorld 
+          onSelectMars={() => navigate('mars')}
+          onNavigateHome={() => navigate('home')} 
+        />
       ) : (
         <>
           {/* 
             Full-Screen Wallpaper Background for Home
-            Using the uploaded astronaut & Mars base artwork.
+            Using user's provided file: public/homepagebg.png
           */}
           <div 
             className="fixed inset-0 z-0 bg-cover bg-top sm:bg-center bg-no-repeat pointer-events-none select-none"
             style={{ 
-              backgroundImage: `url('/space-bg.jpg')`,
+              backgroundImage: `url('/homepagebg.png')`,
             }}
           />
 
@@ -77,7 +142,7 @@ export default function App() {
             Hero Content Section (Positioned Pixel-Perfect on the Left)
             - Empty Logo Placeholder (reserved for user logo)
             - Text: "Every mission leaves a trace... / Are you ready to uncover it ?"
-            - Button: "Begin Your Journey >" (navigates to Choose a World)
+            - Button: "Begin Your Journey >"
           */}
           <main className="relative z-10 flex-1 flex flex-col justify-start pt-24 sm:pt-28 md:pt-32 lg:pt-36 px-6 sm:px-12 md:px-16 lg:px-20 xl:px-24">
             
@@ -86,6 +151,7 @@ export default function App() {
               {/* 
                 Empty Logo Placeholder
                 Exact bounding box (~300px x 150px) where the NEXUS CHRONICLES logo goes.
+                Left as an empty placeholder as requested by the user.
               */}
               <div 
                 className="w-[280px] sm:w-[320px] md:w-[340px] h-[135px] sm:h-[150px] md:h-[155px] rounded-xl border border-dashed border-white/20 bg-white/[0.02] flex items-center justify-center transition-colors group relative overflow-hidden"
@@ -118,13 +184,13 @@ export default function App() {
               {/* 
                 Button under the text:
                 "Begin Your Journey >"
-                Navigates smoothly to the Choose a World / Missions page!
+                Pointed corners with corner radius 10, hovering to deep vibrant red(#E24240)
               */}
               <div className="pt-2">
                 <button
                   onClick={() => navigate('missions')}
                   className="relative group inline-flex items-center justify-between gap-4 px-8 sm:px-9 py-3 min-w-[230px] sm:min-w-[250px] h-[52px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
-                  title="Begin Your Journey to Choose a World"
+                  title="Begin Your Journey"
                 >
                   {/* Pointed hexagon border with corner radius 10 and intense #E24240 hover glow */}
                   <svg 
@@ -158,7 +224,7 @@ export default function App() {
                   <div className="text-left">
                     <h4 className="text-sm font-semibold text-white flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-cyan-400" />
-                      Home Reference Composition Comparison
+                      Reference Composition Comparison
                     </h4>
                     <p className="text-xs text-gray-400">
                       Comparing your uploaded composition against the live implementation.
@@ -190,7 +256,10 @@ export default function App() {
             )}
           </main>
 
-          {/* Floating Reference Comparison Control */}
+          {/* 
+            Bottom Floating Control (Discreet)
+            Allows toggling comparison overlay
+          */}
           <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2">
             <button
               onClick={() => setShowComparison(prev => !prev)}
@@ -208,7 +277,6 @@ export default function App() {
       <SearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
-        onNavigate={navigate}
       />
 
       {/* Interactive NASA Drawer Menu */}
@@ -216,7 +284,6 @@ export default function App() {
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         onOpenSearch={() => setIsSearchOpen(true)}
-        onNavigate={navigate}
       />
 
     </div>

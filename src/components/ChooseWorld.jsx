@@ -3,12 +3,16 @@ import { ArrowRight, Eye, EyeOff, Sparkles } from 'lucide-react';
 import EquipmentModal from './EquipmentModal';
 import { worldsEquipmentData } from '../data/equipmentData';
 
-export default function ChooseWorld() {
+export default function ChooseWorld({ onSelectMars }) {
   const [selectedWorld, setSelectedWorld] = useState(null);
   const [showComparison, setShowComparison] = useState(false);
 
   const handleCardClick = (worldId) => {
-    setSelectedWorld(worldsEquipmentData[worldId]);
+    if (worldId === 'mars' && onSelectMars) {
+      onSelectMars();
+    } else {
+      setSelectedWorld(worldsEquipmentData[worldId]);
+    }
   };
 
   return (
@@ -52,9 +56,8 @@ export default function ChooseWorld() {
         {/* 
           Two Planet Cards Row:
           - Cards dimensions strictly set to 296px * 328px
-          - Card background uses choose-world-planets-background.png
-          - Without hover: no frame glow
-          - On hover: only the frame glow effect and no other effect (no movement, no scaling)
+          - Without hover: clean card without purple outline
+          - On hover: that purple outline illuminates alone as the hover effect
         */}
         <div className="mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-7 sm:gap-9 md:gap-11 w-full max-w-4xl mx-auto">
           
@@ -64,19 +67,37 @@ export default function ChooseWorld() {
             style={{
               width: '296px',
               height: '328px',
-              backgroundImage: `url('/choose-world-planets-background.png')`,
-              backgroundSize: '100% 100%',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
             }}
-            className="relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center shadow-none hover:shadow-[0_0_35px_rgba(56,189,248,0.45)] transition-shadow duration-300 cursor-pointer select-none shrink-0"
+            className="group relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-pointer select-none shrink-0"
             role="button"
             tabIndex={0}
             aria-label="Explore The Moon equipment"
             onKeyDown={(e) => e.key === 'Enter' && handleCardClick('moon')}
           >
+            {/* Background 1: Clean Card WITHOUT purple outline (default state) */}
+            <div 
+              className="absolute inset-0 rounded-[28px] pointer-events-none"
+              style={{
+                backgroundImage: `url('/choose-world-planets-background-clean.png')`,
+                backgroundSize: '100% 100%',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
+
+            {/* Background 2: Card WITH purple outline (appears ALONE on hover) */}
+            <div 
+              className="absolute inset-0 rounded-[28px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                backgroundImage: `url('/choose-world-planets-background.png')`,
+                backgroundSize: '100% 100%',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
+
             {/* Top Planet Image */}
-            <div className="w-[172px] h-[172px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5">
+            <div className="relative z-10 w-[172px] h-[172px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5 pointer-events-none">
               <img
                 src="/moon.png"
                 alt="The Moon"
@@ -85,7 +106,7 @@ export default function ChooseWorld() {
             </div>
 
             {/* Bottom Info Row */}
-            <div className="w-full flex items-center justify-between px-2 pb-1 pt-2">
+            <div className="relative z-10 w-full flex items-center justify-between px-2 pb-1 pt-2 pointer-events-none">
               <div className="text-left">
                 <h2 className="text-white font-medium text-lg sm:text-[20px] leading-tight tracking-wide font-public">
                   The Moon
@@ -108,19 +129,37 @@ export default function ChooseWorld() {
             style={{
               width: '296px',
               height: '328px',
-              backgroundImage: `url('/choose-world-planets-background.png')`,
-              backgroundSize: '100% 100%',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
             }}
-            className="relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center shadow-none hover:shadow-[0_0_35px_rgba(249,115,22,0.45)] transition-shadow duration-300 cursor-pointer select-none shrink-0"
+            className="group relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-pointer select-none shrink-0"
             role="button"
             tabIndex={0}
             aria-label="Explore The Mars equipment"
             onKeyDown={(e) => e.key === 'Enter' && handleCardClick('mars')}
           >
+            {/* Background 1: Clean Card WITHOUT purple outline (default state) */}
+            <div 
+              className="absolute inset-0 rounded-[28px] pointer-events-none"
+              style={{
+                backgroundImage: `url('/choose-world-planets-background-clean.png')`,
+                backgroundSize: '100% 100%',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
+
+            {/* Background 2: Card WITH purple outline (appears ALONE on hover) */}
+            <div 
+              className="absolute inset-0 rounded-[28px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                backgroundImage: `url('/choose-world-planets-background.png')`,
+                backgroundSize: '100% 100%',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
+
             {/* Top Planet Image */}
-            <div className="w-[172px] h-[172px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5">
+            <div className="relative z-10 w-[172px] h-[172px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5 pointer-events-none">
               <img
                 src="/mars.png"
                 alt="The Mars"
@@ -129,7 +168,7 @@ export default function ChooseWorld() {
             </div>
 
             {/* Bottom Info Row */}
-            <div className="w-full flex items-center justify-between px-2 pb-1 pt-2">
+            <div className="relative z-10 w-full flex items-center justify-between px-2 pb-1 pt-2 pointer-events-none">
               <div className="text-left">
                 <h2 className="text-white font-medium text-lg sm:text-[20px] leading-tight tracking-wide font-public">
                   The Mars

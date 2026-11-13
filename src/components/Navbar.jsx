@@ -56,25 +56,24 @@ export default function Navbar({
     >
       {/* 
         Navbar Bar Container
-        Sits on top of the home or choose-world background wallpaper.
-        Subtle dark vignette ensures contrast for text and icons.
+        Completely transparent with no background box, border, or blur.
       */}
-      <div className="relative w-full h-[70px] bg-gradient-to-b from-black/80 via-black/40 to-transparent border-b border-white/10 backdrop-blur-[2px]">
+      <div className="relative w-full h-[70px] bg-transparent">
         
         {/* Foreground Content Container */}
         <div className="relative max-w-[1440px] mx-auto h-full px-4 sm:px-8 lg:px-12 flex items-center justify-between">
           
           {/* Left area spacer */}
           <div className="w-12 sm:w-20 md:w-32 flex items-center shrink-0">
-            {/* Quick Home indicator if on missions page */}
-            {currentPage === 'missions' && (
+            {/* Quick Back indicator if on missions or mars page */}
+            {(currentPage === 'missions' || currentPage === 'mars') && (
               <button
-                onClick={() => onNavigate && onNavigate('home')}
+                onClick={() => onNavigate && onNavigate(currentPage === 'mars' ? 'missions' : 'home')}
                 className="hidden md:inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white transition-colors cursor-pointer"
-                title="Return to Home Screen"
+                title={currentPage === 'mars' ? 'Back to Choose a World' : 'Return to Home Screen'}
               >
                 <span className="text-white/40">‹</span>
-                <span>Home</span>
+                <span>{currentPage === 'mars' ? 'Worlds' : 'Home'}</span>
               </button>
             )}
           </div>
@@ -87,7 +86,7 @@ export default function Navbar({
             {nasaNavData.map((item) => {
               const isOpen = activeDropdown === item.key;
               const isCurrent = 
-                (item.key === 'missions' && currentPage === 'missions') ||
+                (item.key === 'missions' && (currentPage === 'missions' || currentPage === 'mars')) ||
                 (item.key === 'explore' && currentPage === 'home');
 
               return (
