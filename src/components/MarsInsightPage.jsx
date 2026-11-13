@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowLeft, ChevronRight, Eye, EyeOff, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { ArrowLeft, ChevronRight, Eye, EyeOff, Sparkles } from "lucide-react";
 
-export default function MarsInsightPage({ onBack, onExploreMissions }) {
+export default function MarsInsightPage({
+  onBack,
+  onExploreMissions,
+  onExplore3D,
+}) {
   const [isZoomedIn, setIsZoomedIn] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
 
@@ -15,14 +19,15 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
 
   return (
     <div className="relative h-screen w-full flex flex-col select-none overflow-hidden font-public text-white bg-[#02050e]">
-      
       {/* 
         Full-Screen Cosmic Space Nebula Background
       */}
-      <div 
+      <div
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none"
-        style={{ 
-          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.png')}')`,
+        style={{
+          backgroundImage: `url('${encodeURI(
+            "/خلفية فضائية سينمائية بسديم وكوكب مضيء.png"
+          )}')`,
         }}
       />
 
@@ -36,8 +41,7 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
             onClick={onBack}
             className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/70 hover:border-white hover:bg-white/15 flex items-center justify-center transition-colors duration-200 cursor-pointer active:scale-95"
             aria-label="Back to Mars Missions"
-            title="Back to Mars Missions"
-          >
+            title="Back to Mars Missions">
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
 
@@ -55,10 +59,9 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
         <div
           className={`absolute bottom-0 left-0 w-full h-[78vh] sm:h-[80vh] flex items-end justify-center transition-transform duration-1000 ease-out origin-bottom-left ${
             isZoomedIn
-              ? '-translate-x-[24%] translate-y-[18%] scale-[1.22]'
-              : 'translate-x-0 translate-y-0 scale-100'
-          }`}
-        >
+              ? "-translate-x-[24%] translate-y-[18%] scale-[1.22]"
+              : "translate-x-0 translate-y-0 scale-100"
+          }`}>
           {/* Mars Horizon Image (public/mars-page4.png) */}
           <img
             src="/mars-page4.png"
@@ -72,29 +75,24 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
         */}
         <div
           className={`absolute top-[51%] left-[12%] sm:top-[52%] sm:left-[16%] z-20 flex items-center gap-3 sm:gap-3.5 pointer-events-auto transition-all duration-700 ${
-            isZoomedIn ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
-          }`}
-        >
+            isZoomedIn
+              ? "opacity-100 translate-y-0 scale-100"
+              : "opacity-0 translate-y-4 scale-95"
+          }`}>
           {/* Teardrop Map Pin SVG */}
           <div className="w-11 h-14 sm:w-13 sm:h-17 shrink-0 drop-shadow-[0_6px_16px_rgba(0,0,0,0.9)]">
             <svg
               viewBox="0 0 48 64"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full"
-            >
+              className="w-full h-full">
               <path
                 d="M24 2C11.85 2 2 11.85 2 24C2 39.25 24 61 24 61C24 61 46 39.25 46 24C46 11.85 36.15 2 24 2Z"
                 fill="#070B14"
                 stroke="#F5D393"
                 strokeWidth="2.8"
               />
-              <circle
-                cx="24"
-                cy="23"
-                r="7.5"
-                fill="#F5D393"
-              />
+              <circle cx="24" cy="23" r="7.5" fill="#F5D393" />
             </svg>
           </div>
 
@@ -115,10 +113,8 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
         Matches page5-reference.jpg positioning and styling on the right side of the screen
       */}
       <main className="relative z-20 flex-1 max-w-[1440px] mx-auto w-full px-6 sm:px-10 md:px-14 lg:px-20 pb-8 flex items-center justify-center lg:justify-end pointer-events-none">
-        
         <div className="w-[330px] sm:w-[365px] md:w-[385px] shrink-0 pointer-events-auto animate-in fade-in slide-in-from-right-6 duration-500">
           <div className="rounded-[22px] bg-[#040814]/92 backdrop-blur-xl border border-white/25 shadow-[0_24px_60px_rgba(0,0,0,0.9)] p-4 sm:p-5">
-            
             {/* Top Lander Photo */}
             <div className="w-full h-[175px] sm:h-[195px] rounded-[14px] overflow-hidden mb-3.5 bg-black/60">
               <img
@@ -140,12 +136,14 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
 
             {/* Mission Description */}
             <p className="text-xs sm:text-[13px] text-white/85 font-exo2 leading-[1.45] mt-2.5 text-left">
-              NASA&apos;s Insight was a robotic lander that studied Mars&apos; interior, detecting marsquakes and measuring underground heat flow to understand the planet&apos;s structure.
+              NASA&apos;s Insight was a robotic lander that studied Mars&apos;
+              interior, detecting marsquakes and measuring underground heat flow
+              to understand the planet&apos;s structure.
             </p>
 
             {/* Mission Status */}
             <div className="text-sm sm:text-[15px] font-orbitron mt-3.5 text-left">
-              <span className="text-[#E5C185] font-medium">Status:</span>{' '}
+              <span className="text-[#E5C185] font-medium">Status:</span>{" "}
               <span className="text-white font-medium">Mission ended</span>
             </div>
 
@@ -154,14 +152,12 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
               <button
                 onClick={onExploreMissions}
                 className="relative group inline-flex items-center justify-between gap-3 px-6 sm:px-7 py-2.5 w-[215px] sm:w-[235px] h-[44px] sm:h-[46px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
-                title="Explore Missions"
-              >
+                title="Explore Missions">
                 {/* Pointed Hexagon Border SVG */}
-                <svg 
+                <svg
                   className="absolute inset-0 w-full h-full pointer-events-none transition-all duration-300 group-hover:drop-shadow-[0_0_12px_rgba(229,193,133,0.5)]"
-                  viewBox="0 0 235 46" 
-                  preserveAspectRatio="none"
-                >
+                  viewBox="0 0 235 46"
+                  preserveAspectRatio="none">
                   <path
                     d="M 22 1.5 L 213 1.5 Q 220 1.5 225 8.5 L 231 18.5 Q 233.5 23 231 27.5 L 225 37.5 Q 220 44.5 213 44.5 L 22 44.5 Q 15 44.5 10 37.5 L 4 27.5 Q 1.5 23 4 18.5 L 10 8.5 Q 15 1.5 22 1.5 Z"
                     fill="rgba(4, 8, 20, 0.75)"
@@ -177,11 +173,17 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
                 </span>
                 <ChevronRight className="relative z-10 w-4 h-4 text-white group-hover:translate-x-1 transition-transform duration-300 shrink-0" />
               </button>
-            </div>
 
+              <button
+                onClick={onExplore3D}
+                className="mt-3 w-full h-11 rounded-lg border border-[#E5C185]/60
+  bg-[#E5C185]/10 text-[#E5C185] font-orbitron
+  hover:bg-[#E5C185]/20 transition-all">
+                Explore 3D Model
+              </button>
+            </div>
           </div>
         </div>
-
       </main>
 
       {/* Floating Reference Comparison Control */}
@@ -189,10 +191,15 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
         <button
           onClick={() => setShowComparison((prev) => !prev)}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/15 hover:border-[#F7961D]/60 text-xs font-medium text-gray-300 hover:text-white transition-all shadow-xl cursor-pointer"
-          title="Compare with Page 5 reference"
-        >
-          {showComparison ? <EyeOff className="w-3.5 h-3.5 text-[#F7961D]" /> : <Eye className="w-3.5 h-3.5 text-gray-400" />}
-          <span className="hidden sm:inline">{showComparison ? 'Hide Reference' : 'Compare Reference'}</span>
+          title="Compare with Page 5 reference">
+          {showComparison ? (
+            <EyeOff className="w-3.5 h-3.5 text-[#F7961D]" />
+          ) : (
+            <Eye className="w-3.5 h-3.5 text-gray-400" />
+          )}
+          <span className="hidden sm:inline">
+            {showComparison ? "Hide Reference" : "Compare Reference"}
+          </span>
         </button>
       </div>
 
@@ -207,13 +214,13 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
                   Page 5 Reference Comparison
                 </h4>
                 <p className="text-xs text-gray-400">
-                  Comparing your uploaded Page 5 reference image against the live component.
+                  Comparing your uploaded Page 5 reference image against the
+                  live component.
                 </p>
               </div>
               <button
                 onClick={() => setShowComparison(false)}
-                className="text-xs px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer"
-              >
+                className="text-xs px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer">
                 Close
               </button>
             </div>
@@ -230,7 +237,6 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
           </div>
         </div>
       )}
-
     </div>
   );
 }

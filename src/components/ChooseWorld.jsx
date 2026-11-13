@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { ArrowRight, Eye, EyeOff, Sparkles } from 'lucide-react';
-import EquipmentModal from './EquipmentModal';
-import { worldsEquipmentData } from '../data/equipmentData';
+import React, { useState } from "react";
+import { ArrowRight, Eye, EyeOff, Sparkles } from "lucide-react";
+import EquipmentModal from "./EquipmentModal";
+import { worldsEquipmentData } from "../data/equipmentData";
 
 export default function ChooseWorld({ onSelectMars }) {
   const [selectedWorld, setSelectedWorld] = useState(null);
   const [showComparison, setShowComparison] = useState(false);
 
   const handleCardClick = (worldId) => {
-    if (worldId === 'mars' && onSelectMars) {
+    if (worldId === "mars" && onSelectMars) {
       onSelectMars();
     } else {
       setSelectedWorld(worldsEquipmentData[worldId]);
@@ -17,14 +17,13 @@ export default function ChooseWorld({ onSelectMars }) {
 
   return (
     <div className="relative min-h-screen w-full flex flex-col select-none overflow-x-hidden font-public">
-      
       {/* 
         Full-Screen Cosmic Space Background:
         Using public/choose-world-background.png
       */}
-      <div 
+      <div
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none"
-        style={{ 
+        style={{
           backgroundImage: `url('/choose-world-background.png')`,
         }}
       />
@@ -37,20 +36,16 @@ export default function ChooseWorld({ onSelectMars }) {
         Positioned higher up on the screen right below the navbar (pt-20 sm:pt-24 md:pt-26 lg:pt-28)
       */}
       <main className="relative z-10 flex-1 flex flex-col items-center justify-start px-4 sm:px-6 pt-20 sm:pt-24 md:pt-26 lg:pt-28 pb-16">
-        
         {/* Header Block: Title & Subtitle */}
         <div className="max-w-2xl mx-auto text-center space-y-2.5 sm:space-y-3">
-          
           <h1 className="text-3xl sm:text-4xl md:text-[44px] lg:text-[48px] font-bold font-orbitron tracking-wider text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.9)] leading-tight">
             Choose a World
           </h1>
 
           <p className="text-sm sm:text-base md:text-[18px] text-slate-200/90 font-exo2 font-normal tracking-wide leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
             Discover the equipment left behind by NASA's
-            <br className="hidden sm:inline" />
-            {' '}missions on the Moon and Mars
+            <br className="hidden sm:inline" /> missions on the Moon and Mars
           </p>
-
         </div>
 
         {/* 
@@ -60,39 +55,37 @@ export default function ChooseWorld({ onSelectMars }) {
           - On hover: that purple outline illuminates alone as the hover effect
         */}
         <div className="mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-7 sm:gap-9 md:gap-11 w-full max-w-4xl mx-auto">
-          
           {/* Card 1: The Moon */}
           <div
-            onClick={() => handleCardClick('moon')}
+            onClick={() => handleCardClick("moon")}
             style={{
-              width: '296px',
-              height: '328px',
+              width: "296px",
+              height: "328px",
             }}
             className="group relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-pointer select-none shrink-0"
             role="button"
             tabIndex={0}
             aria-label="Explore The Moon equipment"
-            onKeyDown={(e) => e.key === 'Enter' && handleCardClick('moon')}
-          >
+            onKeyDown={(e) => e.key === "Enter" && handleCardClick("moon")}>
             {/* Background 1: Clean Card WITHOUT purple outline (default state) */}
-            <div 
+            <div
               className="absolute inset-0 rounded-[28px] pointer-events-none"
               style={{
                 backgroundImage: `url('/choose-world-planets-background-clean.png')`,
-                backgroundSize: '100% 100%',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
+                backgroundSize: "100% 100%",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
             />
 
             {/* Background 2: Card WITH purple outline (appears ALONE on hover) */}
-            <div 
+            <div
               className="absolute inset-0 rounded-[28px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               style={{
                 backgroundImage: `url('/choose-world-planets-background.png')`,
-                backgroundSize: '100% 100%',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
+                backgroundSize: "100% 100%",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
             />
 
@@ -125,36 +118,35 @@ export default function ChooseWorld({ onSelectMars }) {
 
           {/* Card 2: The Mars */}
           <div
-            onClick={() => handleCardClick('mars')}
+            onClick={() => handleCardClick("mars")}
             style={{
-              width: '296px',
-              height: '328px',
+              width: "296px",
+              height: "328px",
             }}
             className="group relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-pointer select-none shrink-0"
             role="button"
             tabIndex={0}
             aria-label="Explore The Mars equipment"
-            onKeyDown={(e) => e.key === 'Enter' && handleCardClick('mars')}
-          >
+            onKeyDown={(e) => e.key === "Enter" && handleCardClick("mars")}>
             {/* Background 1: Clean Card WITHOUT purple outline (default state) */}
-            <div 
+            <div
               className="absolute inset-0 rounded-[28px] pointer-events-none"
               style={{
                 backgroundImage: `url('/choose-world-planets-background-clean.png')`,
-                backgroundSize: '100% 100%',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
+                backgroundSize: "100% 100%",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
             />
 
             {/* Background 2: Card WITH purple outline (appears ALONE on hover) */}
-            <div 
+            <div
               className="absolute inset-0 rounded-[28px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               style={{
                 backgroundImage: `url('/choose-world-planets-background.png')`,
-                backgroundSize: '100% 100%',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
+                backgroundSize: "100% 100%",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
             />
 
@@ -184,7 +176,6 @@ export default function ChooseWorld({ onSelectMars }) {
               </div>
             </div>
           </div>
-
         </div>
 
         {/* Optional reference comparison dialog */}
@@ -197,13 +188,13 @@ export default function ChooseWorld({ onSelectMars }) {
                   Choose a World Reference Comparison
                 </h4>
                 <p className="text-xs text-gray-400">
-                  Comparing your uploaded "Choose a World" reference image against the live component.
+                  Comparing your uploaded "Choose a World" reference image
+                  against the live component.
                 </p>
               </div>
               <button
                 onClick={() => setShowComparison(false)}
-                className="text-xs px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer"
-              >
+                className="text-xs px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer">
                 Close
               </button>
             </div>
@@ -224,18 +215,22 @@ export default function ChooseWorld({ onSelectMars }) {
             </div>
           </div>
         )}
-
       </main>
 
       {/* Floating Reference Comparison Control */}
       <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2">
         <button
-          onClick={() => setShowComparison(prev => !prev)}
+          onClick={() => setShowComparison((prev) => !prev)}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/15 hover:border-cyan-400/50 text-xs font-medium text-gray-300 hover:text-white transition-all shadow-xl cursor-pointer"
-          title="Compare with reference"
-        >
-          {showComparison ? <EyeOff className="w-3.5 h-3.5 text-cyan-400" /> : <Eye className="w-3.5 h-3.5 text-gray-400" />}
-          <span className="hidden sm:inline">{showComparison ? 'Hide Reference' : 'Compare Reference'}</span>
+          title="Compare with reference">
+          {showComparison ? (
+            <EyeOff className="w-3.5 h-3.5 text-cyan-400" />
+          ) : (
+            <Eye className="w-3.5 h-3.5 text-gray-400" />
+          )}
+          <span className="hidden sm:inline">
+            {showComparison ? "Hide Reference" : "Compare Reference"}
+          </span>
         </button>
       </div>
 
@@ -244,7 +239,6 @@ export default function ChooseWorld({ onSelectMars }) {
         world={selectedWorld}
         onClose={() => setSelectedWorld(null)}
       />
-
     </div>
   );
 }
