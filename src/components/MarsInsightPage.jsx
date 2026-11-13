@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, ChevronRight, Eye, EyeOff, Sparkles } from 'lucide-react';
+import { ChevronRight, Eye, EyeOff, Sparkles } from 'lucide-react';
 
 export default function MarsInsightPage({ onBack, onExploreMissions }) {
   const [isZoomedIn, setIsZoomedIn] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
 
-  // Trigger smooth camera zoom onto the left side of Mars when opening Page 5
+  // Smoothly animate from Page 4 full horizon into the bottom-left zoomed Mars view
   useEffect(() => {
     const timer = requestAnimationFrame(() => {
       setIsZoomedIn(true);
@@ -20,63 +20,83 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
         Full-Screen Cosmic Space Nebula Background
       */}
       <div 
-        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none"
+        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none select-none"
         style={{ 
           backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.png')}')`,
         }}
       />
 
-      {/* Dark upper sky vignette */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-[#02050d]/75 via-[#02050d]/30 to-transparent" />
+      {/* Subtle upper sky vignette so navbar & header pop cleanly while keeping right-side nebula vibrant */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-[#02050d]/70 via-[#02050d]/25 to-transparent" />
 
-      {/* Top Header Row: Back Button & "The Mars" Title */}
-      <div className="relative z-30 pt-20 sm:pt-24 md:pt-28 px-6 sm:px-10 md:px-14 lg:px-20 max-w-[1440px] mx-auto w-full">
-        <div className="flex items-center gap-4 sm:gap-5">
+      {/* 
+        Top Header Row: Circular Back Button & "The Mars" Title
+        Matches Page 4 & Page 5 reference position on the upper-left
+      */}
+      <div className="relative z-30 pt-20 sm:pt-24 md:pt-26 px-6 sm:px-10 md:px-14 lg:px-20 max-w-[1440px] w-full">
+        <div className="inline-flex items-center gap-3.5 sm:gap-4 group">
           <button
             onClick={onBack}
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/70 hover:border-white hover:bg-white/15 flex items-center justify-center transition-colors duration-200 cursor-pointer active:scale-95"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/80 hover:border-white hover:bg-white/10 flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95 shadow-sm"
             aria-label="Back to Mars Missions"
             title="Back to Mars Missions"
           >
-            <ArrowLeft className="w-5 h-5 text-white" />
+            <svg 
+              className="w-4 h-4 text-white transform group-hover:-translate-x-0.5 transition-transform duration-200" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
           </button>
 
-          <h1 className="text-2xl sm:text-3xl md:text-[38px] font-bold font-orbitron tracking-wider text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-[36px] font-bold font-orbitron tracking-wider text-white select-none leading-none drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
             The Mars
           </h1>
         </div>
       </div>
 
       {/* 
-        LEFT / BOTTOM-LEFT: Mars Horizon Globe Zoomed In on the Left (focusing on the Insight pin)
-        Smoothly transitions from the Page 4 full-horizon view into the zoomed-in bottom-left quadrant.
+        LEFT / BOTTOM-LEFT: Zoomed Mars Horizon (0vw to 60vw, 42vh to 100vh)
+        - Starts from Page 4 full-width horizon state and smoothly zooms into the bottom-left corner
+        - Leaves the right 40% of the screen open starry nebula space for the Insight card
       */}
       <div className="fixed inset-0 z-10 pointer-events-none overflow-hidden">
         <div
-          className={`absolute bottom-0 left-0 w-full h-[78vh] sm:h-[80vh] flex items-end justify-center transition-transform duration-1000 ease-out origin-bottom-left ${
-            isZoomedIn
-              ? '-translate-x-[24%] translate-y-[18%] scale-[1.22]'
-              : 'translate-x-0 translate-y-0 scale-100'
-          }`}
+          style={{
+            left: isZoomedIn ? '-56vw' : '0vw',
+            bottom: isZoomedIn ? '-14vh' : '0vh',
+            width: isZoomedIn ? '118vw' : '100vw',
+            height: isZoomedIn ? '72vh' : '84vh',
+          }}
+          className="absolute transition-all duration-900 ease-out flex items-end justify-center"
         >
           {/* Mars Horizon Image (public/mars-page4.png) */}
           <img
             src="/mars-page4.png"
             alt="Mars Horizon Zoomed on Left"
-            className="w-full h-full object-cover object-top select-none pointer-events-none drop-shadow-[0_-12px_35px_rgba(247,150,29,0.75)]"
+            className="w-full h-full object-fill select-none pointer-events-none drop-shadow-[0_-10px_28px_rgba(247,150,29,0.65)]"
           />
         </div>
 
         {/* 
-          Interactive "Insight / Full Mission" Pin & Label on the Zoomed Left Mars Surface
+          "Insight / Full Mission" Pin & Framed Badge on the Left Zoomed Mars Surface
+          Positioned at X ≈ 16.2%, Y ≈ 50-52% matching the reference image
         */}
         <div
-          className={`absolute top-[51%] left-[12%] sm:top-[52%] sm:left-[16%] z-20 flex items-center gap-3 sm:gap-3.5 pointer-events-auto transition-all duration-700 ${
-            isZoomedIn ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
-          }`}
+          style={{
+            left: isZoomedIn ? '16.2%' : '24%',
+            top: isZoomedIn ? '51%' : '34%',
+          }}
+          className="absolute z-20 flex items-center gap-2.5 sm:gap-3.5 pointer-events-auto transition-all duration-900 ease-out"
         >
           {/* Teardrop Map Pin SVG */}
-          <div className="w-11 h-14 sm:w-13 sm:h-17 shrink-0 drop-shadow-[0_6px_16px_rgba(0,0,0,0.9)]">
+          <div className="w-11 h-14 sm:w-13 sm:h-17 md:w-14 md:h-18 shrink-0 drop-shadow-[0_6px_16px_rgba(0,0,0,0.95)]">
             <svg
               viewBox="0 0 48 64"
               fill="none"
@@ -84,26 +104,26 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
               className="w-full h-full"
             >
               <path
-                d="M24 2C11.85 2 2 11.85 2 24C2 39.25 24 61 24 61C24 61 46 39.25 46 24C46 11.85 36.15 2 24 2Z"
-                fill="#070B14"
-                stroke="#F5D393"
+                d="M24 2.5C12.1 2.5 2.5 12.1 2.5 24C2.5 39.5 24 61.5 24 61.5C24 61.5 45.5 39.5 45.5 24C45.5 12.1 35.9 2.5 24 2.5Z"
+                fill="#050811"
+                stroke="#F5E6CA"
                 strokeWidth="2.8"
               />
               <circle
                 cx="24"
                 cy="23"
                 r="7.5"
-                fill="#F5D393"
+                fill="#F5E6CA"
               />
             </svg>
           </div>
 
-          {/* Framed Translucent Label Pill */}
-          <div className="rounded-xl bg-black/35 backdrop-blur-[2px] border border-[#F5D393]/65 px-5 sm:px-6 py-2 sm:py-2.5 text-center shadow-[0_6px_24px_rgba(0,0,0,0.55)]">
-            <div className="font-orbitron font-semibold text-white text-base sm:text-[19px] tracking-wider leading-tight">
+          {/* Framed Translucent Label Pill matching Reference */}
+          <div className="rounded-[14px] bg-black/35 backdrop-blur-[2px] border border-[#F5E6CA]/75 px-5 sm:px-7 py-2 sm:py-3 text-center shadow-[0_6px_24px_rgba(0,0,0,0.55)]">
+            <div className="font-orbitron font-semibold text-white text-base sm:text-[20px] tracking-wider leading-tight">
               Insight
             </div>
-            <div className="font-exo2 text-white/90 text-xs sm:text-[13px] tracking-wide mt-0.5">
+            <div className="font-exo2 text-white/90 text-xs sm:text-[13px] tracking-wide mt-1">
               Full Mission
             </div>
           </div>
@@ -112,15 +132,15 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
 
       {/* 
         RIGHT SIDE: InSight Mission Detail Card
-        Matches page5-reference.jpg positioning and styling on the right side of the screen
+        Positioned on the right side of the screen (X ≈ 60% to 92%) over the cosmic nebula background
       */}
-      <main className="relative z-20 flex-1 max-w-[1440px] mx-auto w-full px-6 sm:px-10 md:px-14 lg:px-20 pb-8 flex items-center justify-center lg:justify-end pointer-events-none">
+      <main className="relative z-20 flex-1 max-w-[1440px] mx-auto w-full px-6 sm:px-10 md:px-14 lg:px-20 pb-6 flex items-center justify-end pointer-events-none">
         
-        <div className="w-[330px] sm:w-[365px] md:w-[385px] shrink-0 pointer-events-auto animate-in fade-in slide-in-from-right-6 duration-500">
+        <div className="w-[310px] sm:w-[345px] md:w-[375px] lg:w-[395px] shrink-0 pointer-events-auto animate-in fade-in slide-in-from-right-6 duration-500">
           <div className="rounded-[22px] bg-[#040814]/92 backdrop-blur-xl border border-white/25 shadow-[0_24px_60px_rgba(0,0,0,0.9)] p-4 sm:p-5">
             
             {/* Top Lander Photo */}
-            <div className="w-full h-[175px] sm:h-[195px] rounded-[14px] overflow-hidden mb-3.5 bg-black/60">
+            <div className="w-full h-[165px] sm:h-[185px] md:h-[195px] rounded-[14px] overflow-hidden mb-3.5 bg-black/60">
               <img
                 src="/insight-lander-photo.jpg"
                 alt="NASA InSight Lander on Mars"

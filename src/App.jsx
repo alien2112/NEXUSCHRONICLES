@@ -184,34 +184,51 @@ export default function App() {
               {/* 
                 Button under the text:
                 "Begin Your Journey >"
-                Pointed corners with corner radius 10, hovering to deep vibrant red(#E24240)
+                Exact silhouette and solid gradient fill on hover matching user's reference PNG
               */}
               <div className="pt-2">
                 <button
                   onClick={() => navigate('missions')}
-                  className="relative group inline-flex items-center justify-between gap-4 px-8 sm:px-9 py-3 min-w-[230px] sm:min-w-[250px] h-[52px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
+                  className="relative group inline-flex items-center justify-center gap-3.5 px-8 sm:px-9 py-3 min-w-[235px] sm:min-w-[255px] h-[52px] transition-transform duration-300 cursor-pointer select-none active:scale-[0.98]"
                   title="Begin Your Journey"
                 >
-                  {/* Pointed hexagon border with corner radius 10 and intense #E24240 hover glow */}
+                  {/* Exact Pointed Pill SVG Silhouette (traced 1:1 from reference PNG) */}
                   <svg 
-                    className="absolute inset-0 w-full h-full pointer-events-none transition-all duration-300 drop-shadow-[0_0_10px_rgba(226,66,64,0.45)] group-hover:drop-shadow-[0_0_18px_#E24240] group-hover:drop-shadow-[0_0_35px_rgba(226,66,64,0.85)]"
-                    viewBox="0 0 250 50" 
+                    className="absolute inset-0 w-full h-full pointer-events-none"
+                    viewBox="0 0 348 71" 
                     preserveAspectRatio="none"
                   >
+                    <defs>
+                      <linearGradient id="homeBtnHoverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#EC6A36" />
+                        <stop offset="50%" stopColor="#E95D3A" />
+                        <stop offset="100%" stopColor="#E24240" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Base Default State (Dark translucent with #E24240 outline) */}
                     <path
-                      d="M 29 1 L 221 1 Q 231 1 238 10 L 244 20 Q 249 25 244 30 L 238 40 Q 231 49 221 49 L 29 49 Q 19 49 12 40 L 6 30 Q 1 25 6 20 L 12 10 Q 19 1 29 1 Z"
-                      fill="rgba(6, 8, 18, 0.55)"
-                      stroke="rgba(226, 66, 64, 0.8)"
-                      strokeWidth="1.6"
-                      className="group-hover:stroke-[#E24240] group-hover:stroke-[2.2px] group-hover:fill-[rgba(226,66,64,0.35)] transition-all duration-300"
+                      d="M 32 1.5 L 316 1.5 Q 324 1.5 329 8.5 L 344 28.5 Q 347.5 35.5 344 42.5 L 329 62.5 Q 324 69.5 316 69.5 L 32 69.5 Q 24 69.5 19 62.5 L 4 42.5 Q 0.5 35.5 4 28.5 L 19 8.5 Q 24 1.5 32 1.5 Z"
+                      fill="rgba(8, 9, 18, 0.55)"
+                      stroke="#E24240"
+                      strokeWidth="2"
+                    />
+
+                    {/* Solid Orange-to-Red Gradient Hover Fill (Exact match to reference PNG) */}
+                    <path
+                      d="M 32 1.5 L 316 1.5 Q 324 1.5 329 8.5 L 344 28.5 Q 347.5 35.5 344 42.5 L 329 62.5 Q 324 69.5 316 69.5 L 32 69.5 Q 24 69.5 19 62.5 L 4 42.5 Q 0.5 35.5 4 28.5 L 19 8.5 Q 24 1.5 32 1.5 Z"
+                      fill="url(#homeBtnHoverGrad)"
+                      stroke="url(#homeBtnHoverGrad)"
+                      strokeWidth="2"
+                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-250"
                     />
                   </svg>
 
                   {/* Button Label in Exo 2 and Chevron Icon */}
-                  <span className="relative z-10 text-white font-exo2 text-[15px] sm:text-base font-semibold tracking-wide drop-shadow-md group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.9)] transition-all duration-300">
+                  <span className="relative z-10 text-white font-exo2 text-[15px] sm:text-[16px] font-semibold tracking-wide">
                     Begin Your Journey
                   </span>
-                  <ChevronRight className="relative z-10 w-4 h-4 text-white group-hover:translate-x-1.5 transition-transform duration-300" />
+                  <ChevronRight className="relative z-10 w-4 h-4 text-white stroke-[2.4] group-hover:translate-x-1 transition-transform duration-250" />
                 </button>
               </div>
 

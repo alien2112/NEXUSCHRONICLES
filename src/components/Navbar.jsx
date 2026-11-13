@@ -39,12 +39,11 @@ export default function Navbar({
     } else if (key === 'explore') {
       if (onNavigate) onNavigate('home');
       setActiveDropdown(null);
-    } else {
-      setActiveDropdown((prev) => (prev === key ? null : key));
     }
   };
 
   const handleChevronClick = (e, key) => {
+    if (key === 'discover' || key === 'about') return;
     e.stopPropagation();
     setActiveDropdown((prev) => (prev === key ? null : key));
   };
@@ -84,7 +83,8 @@ export default function Navbar({
           */}
           <nav className="hidden lg:flex items-center justify-center absolute left-1/2 -translate-x-1/2 space-x-7 xl:space-x-9">
             {nasaNavData.map((item) => {
-              const isOpen = activeDropdown === item.key;
+              const isActionDisabled = item.key === 'discover' || item.key === 'about';
+              const isOpen = !isActionDisabled && activeDropdown === item.key;
               const isCurrent = 
                 (item.key === 'missions' && (currentPage === 'missions' || currentPage === 'mars')) ||
                 (item.key === 'explore' && currentPage === 'home');
@@ -93,22 +93,25 @@ export default function Navbar({
                 <div key={item.key} className="relative">
                   <div className="flex items-center">
                     <button
-                      onClick={() => handleNavClick(item.key)}
-                      className={`flex items-center gap-1.5 py-2 text-[15px] font-public font-medium tracking-wide transition-all duration-150 cursor-pointer ${
+                      type="button"
+                      onClick={isActionDisabled ? undefined : () => handleNavClick(item.key)}
+                      className={`flex items-center gap-1.5 py-2 text-[15px] font-public font-medium tracking-wide transition-all duration-150 ${
+                        isActionDisabled ? 'cursor-default' : 'cursor-pointer'
+                      } ${
                         isCurrent
                           ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
                           : isOpen
                           ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]'
                           : 'text-white/95 hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]'
                       }`}
-                      aria-expanded={isOpen}
-                      aria-haspopup="true"
+                      aria-expanded={isActionDisabled ? undefined : isOpen}
+                      aria-haspopup={isActionDisabled ? undefined : 'true'}
                     >
                       <span>{item.label}</span>
                       <span
-                        onClick={(e) => handleChevronClick(e, item.key)}
-                        className="p-0.5 rounded hover:bg-white/10 transition-colors"
-                        title={`Open ${item.label} menu`}
+                        onClick={isActionDisabled ? undefined : (e) => handleChevronClick(e, item.key)}
+                        className={`p-0.5 rounded transition-colors ${isActionDisabled ? '' : 'hover:bg-white/10'}`}
+                        title={isActionDisabled ? undefined : `Open ${item.label} menu`}
                       >
                         <ChevronDown
                           className={`w-3.5 h-3.5 transition-transform duration-200 ${
@@ -239,22 +242,20 @@ export default function Navbar({
           {/* Right Action Group: Search Icon, Hamburger Menu, Divider, NASA Meatball Logo */}
           <div className="ml-auto flex items-center space-x-4 sm:space-x-5 shrink-0">
             
-            {/* Search Icon Button */}
+            {/* Search Icon Button (Action disabled) */}
             <button
-              onClick={onOpenSearch}
-              className="p-2 text-white/90 hover:text-white hover:bg-white/15 rounded-full transition-all duration-150 cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-400/50"
-              title="Search NASA (Ctrl+K)"
-              aria-label="Open Search"
+              type="button"
+              className="p-2 text-white/90 rounded-full transition-all duration-150 cursor-default focus:outline-none"
+              aria-label="Search"
             >
               <Search className="w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={2} />
             </button>
 
-            {/* Hamburger Menu Button */}
+            {/* Hamburger Menu Button (Action disabled) */}
             <button
-              onClick={onOpenDrawer}
-              className="p-2 text-white/90 hover:text-white hover:bg-white/15 rounded-lg transition-all duration-150 cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-400/50"
-              title="NASA Menu"
-              aria-label="Open Menu Drawer"
+              type="button"
+              className="p-2 text-white/90 rounded-lg transition-all duration-150 cursor-default focus:outline-none"
+              aria-label="Menu"
             >
               <Menu className="w-5 h-5" strokeWidth={2} />
             </button>
