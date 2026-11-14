@@ -89,7 +89,7 @@ Hash matching is case-insensitive. Unknown hashes consistently render Home, incl
 
 Keep public asset URLs, content, styling, state ownership, and navigation behavior intact when reorganizing modules. The existing equipment component and data are retained even though the current page flow does not import them. Global CSS remains together to preserve its cascade and Tailwind output.
 
-See [the refactoring report](docs/refactoring-report.md) for the file inventory and validation results. This refactor adds no Engineering Legacy implementation and does not deploy the site.
+See [the refactoring report](docs/refactoring-report.md) for the file inventory and validation results. This refactor adds no Engineering Legacy implementation and does not deploy the site
 
 ## Audit fixes
 
