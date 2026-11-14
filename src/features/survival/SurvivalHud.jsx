@@ -30,7 +30,11 @@ import {
   RESOURCE_TYPES,
   getLevelDef,
 } from './gameData';
-import { getRecommendedGuidance, isLevelConditionMet } from './gameLogic';
+import {
+  getRecommendedGuidance,
+  getUpcomingEarlyWarning,
+  isLevelConditionMet,
+} from './gameLogic';
 
 function StatGauge({ icon: Icon, label, value, color }) {
   return (
@@ -77,8 +81,11 @@ export default function SurvivalHud({
 
   const levelDef = getLevelDef(state.level);
   const activeChallenge = state.eventState.active ? CHALLENGES[state.eventState.active.type] : null;
+  const upcomingForecast = !activeChallenge ? getUpcomingEarlyWarning(state) : null;
   const nexusText = activeChallenge
     ? NEXUS_DIALOGUES[state.eventState.active.type]
+    : upcomingForecast
+    ? `InSight early-warning edge: ${upcomingForecast.title} precursors detected ~${Math.ceil(upcomingForecast.secondsUntil)}s ahead. Prepare Energy and resources now!`
     : levelDef.nexusHint;
   const level20Ready = state.level === 20 && isLevelConditionMet(state);
   const guidance = getRecommendedGuidance(state, proximity);
@@ -254,6 +261,29 @@ export default function SurvivalHud({
             )}
           </div>
 
+          {upcomingForecast && (
+            <div
+              role="status"
+              className="game-panel-sm border border-[#4DE2E8]/70 border-l-4 border-l-[#4DE2E8] p-2.5 sm:p-3 shadow-[0_0_20px_rgba(77,226,232,0.22)]"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-orbitron font-bold text-[#4DE2E8]">
+                  <Radio className="w-3.5 h-3.5 animate-pulse" />
+                  <span>INSIGHT EARLY FORECAST</span>
+                </span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#4DE2E8]/15 text-[#4DE2E8] font-bold">
+                  ~{Math.ceil(upcomingForecast.secondsUntil)}s
+                </span>
+              </div>
+              <div className="mt-1 text-xs font-orbitron font-bold text-white uppercase">
+                {upcomingForecast.title}
+              </div>
+              <p className="mt-0.5 text-[10px] sm:text-[11px] font-public text-slate-300 leading-snug">
+                Sensor edge active: prepare Energy, Metal, or Insulation before warning alert begins.
+              </p>
+            </div>
+          )}
+
           {activeChallenge && (
             <div
               role="alert"
@@ -272,6 +302,12 @@ export default function SurvivalHud({
                   {state.eventState.active.phase.toUpperCase()} · {Math.ceil(state.eventState.active.timer)}s
                 </span>
               </div>
+              {state.eventState.active.earlyWarningEdge && state.eventState.active.phase === 'warning' && (
+                <div className="mt-1 inline-flex items-center gap-1 px-1.5 py-0.5 bg-[#4DE2E8]/15 border border-[#4DE2E8]/45 text-[9px] font-mono text-[#4DE2E8] uppercase">
+                  <Radio className="w-2.5 h-2.5" />
+                  <span>InSight Early-Warning Edge (+Prep Time)</span>
+                </div>
+              )}
               <p className="mt-1 text-[10px] sm:text-[11px] font-public text-slate-200 leading-snug">
                 {state.eventState.active.phase === 'warning'
                   ? activeChallenge.warningText

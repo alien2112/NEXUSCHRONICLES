@@ -119,12 +119,84 @@ function buildInitialNodes() {
   return typesCycle.map((type, idx) => createResourceNode(idx + 1, type, idx, idx));
 }
 
-export function createInitialState(savedSettings = null) {
+export const CHALLENGE_TYPES = Object.keys(CHALLENGES);
+
+function rollScheduleTime(baseTime, minDelay, randomWindow, rng = Math.random) {
+  return Number((baseTime + minDelay + rng() * randomWindow).toFixed(2));
+}
+
+export function createInitialChallengeSchedule(rng = Math.random) {
+  const schedule = {};
+  for (const type of CHALLENGE_TYPES) {
+    const cfg = CHALLENGES[type].schedule;
+    schedule[type] = rollScheduleTime(0, cfg.initialMinDelay, cfg.initialRandomWindow, rng);
+  }
+  return schedule;
+}
+
+export function hasEarlyWarningEdge(state, challengeType) {
+  const recId = CHALLENGES[challengeType]?.insightRecordId;
+  return Boolean(recId && state.insightConsulted?.includes(recId));
+}
+
+export function getChallengeWarningDuration(state, challengeType) {
+  const def = CHALLENGES[challengeType];
+  if (!def) return 5;
+  return def.durationWarning + (hasEarlyWarningEdge(state, challengeType) ? (def.earlyWarningBonus ?? 0) : 0);
+}
+
+export function getUpcomingEarlyWarning(state) {
+  if (state.screen !== 'playing' || state.eventState?.active) return null;
+  const elapsed = state.elapsedPlayTime ?? 0;
+  const scheduled = state.eventState?.nextScheduledAt ?? {};
+  let soonest = null;
+
+  for (const type of CHALLENGE_TYPES) {
+    if (!hasEarlyWarningEdge(state, type)) continue;
+    const def = CHALLENGES[type];
+    const nextAt = scheduled[type];
+    if (typeof nextAt !== 'number') continue;
+    const lead = def.earlyForecastLead ?? 25;
+    const remaining = nextAt - elapsed;
+    if (remaining <= lead && remaining >= -1) {
+      if (!soonest || remaining < soonest.secondsUntil) {
+        soonest = {
+          type,
+          title: def.title,
+          subtitle: def.subtitle,
+          recordId: def.insightRecordId,
+          secondsUntil: Math.max(0, remaining),
+        };
+      }
+    }
+  }
+  return soonest;
+}
+
+export function deferUpcomingChallenges(state, minLeadSeconds = 15) {
+  const elapsed = state.elapsedPlayTime ?? 0;
+  const current = state.eventState?.nextScheduledAt ?? createInitialChallengeSchedule();
+  const nextScheduledAt = {};
+  for (const type of CHALLENGE_TYPES) {
+    nextScheduledAt[type] = Math.max(current[type] ?? 0, elapsed + minLeadSeconds);
+  }
+  return {
+    ...state,
+    eventState: {
+      ...state.eventState,
+      active: null,
+      nextScheduledAt,
+    },
+  };
+}
+
+export function createInitialState(savedSettings = null, rng = Math.random) {
   return {
     screen: 'menu', // 'menu' | 'playing' | 'paused' | 'victory' | 'gameover'
     level: 1,
     score: 0,
     levelScore: 0,
+    elapsedPlayTime: 0,
     resourcesCollectedCount: 0,
     nextNodeId: 21,
     nextNoticeId: 1,
@@ -159,6 +231,12 @@ export function createInitialState(savedSettings = null) {
       survivedTypes: [],
       survivedCount: 0,
       mitigatedCount: 0,
+      lastCompletedAt: {
+        marsquake: null,
+        dust_storm: null,
+        extreme_cold: null,
+      },
+      nextScheduledAt: createInitialChallengeSchedule(rng),
     },
     notices: [],
     lastBanner: null,
@@ -527,16 +605,35 @@ export function repairStation(state) {
 export function consultInsight(state, recordId) {
   const already = state.insightConsulted.includes(recordId);
   const nextInsight = already ? state.insightConsulted : [...state.insightConsulted, recordId];
+
+  // If a matching catastrophe is currently in its warning phase without the edge, extend its warning timer right away
+  let nextEventState = state.eventState;
+  const active = nextEventState?.active;
+  if (!already && active && active.phase === 'warning' && !active.earlyWarningEdge) {
+    const def = CHALLENGES[active.type];
+    if (def?.insightRecordId === recordId) {
+      nextEventState = {
+        ...nextEventState,
+        active: {
+          ...active,
+          earlyWarningEdge: true,
+          timer: active.timer + (def.earlyWarningBonus ?? 0),
+        },
+      };
+    }
+  }
+
   const nextState = {
     ...state,
     insightConsulted: nextInsight,
+    eventState: nextEventState,
     score: already ? state.score : state.score + 60,
     levelScore: already ? state.levelScore : state.levelScore + 60,
     lastBanner: {
       type: 'info',
       text: already
         ? 'InSight historical telemetry archive reviewed.'
-        : 'InSight data analyzed (+60 Science Bonus)! Use these engineering lessons on your outpost.',
+        : 'InSight data analyzed (+60 Science Bonus)! Early-warning forecast & extended prep time unlocked.',
     },
   };
   return evaluateLevelProgress(nextState);
@@ -547,6 +644,9 @@ export function startChallenge(state, challengeType, secondaryQuake = false) {
   if (!def) return state;
   if (state.eventState.active) return state;
 
+  const earlyWarningEdge = hasEarlyWarningEdge(state, challengeType);
+  const warningDuration = getChallengeWarningDuration(state, challengeType);
+
   return {
     ...state,
     eventState: {
@@ -554,14 +654,17 @@ export function startChallenge(state, challengeType, secondaryQuake = false) {
       active: {
         type: challengeType,
         phase: 'warning',
-        timer: def.durationWarning,
+        timer: warningDuration,
         secondaryQuake,
         mitigated: false,
+        earlyWarningEdge,
       },
     },
     lastBanner: {
       type: 'warning',
-      text: `⚠ ${def.title}: ${def.warningText}`,
+      text: earlyWarningEdge
+        ? `⚠ ${def.title} (EARLY INSIGHT WARNING · ${warningDuration}s): ${def.warningText}`
+        : `⚠ ${def.title}: ${def.warningText}`,
     },
   };
 }
@@ -795,8 +898,10 @@ export function getRecommendedGuidance(state, proximity = null) {
   return { focus: 'explore', label: def.objective };
 }
 
-export function applySimulationTick(state, dt) {
+export function applySimulationTick(state, dt, rng = Math.random) {
   if (state.screen !== 'playing' || dt <= 0) return state;
+
+  const nextElapsedTime = (state.elapsedPlayTime ?? 0) + dt;
 
   // Advance progressive building assembly (0 -> 1 in ~1.2s)
   let modulesChanged = false;
@@ -869,11 +974,27 @@ export function applySimulationTick(state, dt) {
         const survivedTypes = eventState.survivedTypes.includes(active.type)
           ? eventState.survivedTypes
           : [...eventState.survivedTypes, active.type];
+        const prevScheduled = eventState.nextScheduledAt ?? {};
+        const nextScheduledAt = {};
+        for (const t of CHALLENGE_TYPES) {
+          if (t === active.type) {
+            const cfg = def.schedule;
+            nextScheduledAt[t] = rollScheduleTime(nextElapsedTime, cfg.minGap, cfg.randomGapWindow, rng);
+          } else {
+            // Keep a short 10s breather after any catastrophe clears before another type can start
+            nextScheduledAt[t] = Math.max(prevScheduled[t] ?? nextElapsedTime + 10, nextElapsedTime + 10);
+          }
+        }
         eventState = {
           ...eventState,
           active: null,
           survivedTypes,
           survivedCount: eventState.survivedCount + 1,
+          lastCompletedAt: {
+            ...(eventState.lastCompletedAt ?? {}),
+            [active.type]: nextElapsedTime,
+          },
+          nextScheduledAt,
         };
         lastBanner = { type: 'success', text: `${def.title} cleared! ${def.recoveryText}` };
       }
@@ -888,10 +1009,45 @@ export function applySimulationTick(state, dt) {
     stats.dustOnSolar = Math.max(0, stats.dustOnSolar - 0.6 * dt);
     stats.thermalIntegrity = clamp(stats.thermalIntegrity + 0.8 * dt, 0, 100);
     stats.stability = clamp(stats.stability + 0.6 * dt, 0, 100);
+
+    // Autonomous environmental catastrophe scheduler (independent of InSight analysis)
+    const scheduled = eventState.nextScheduledAt ?? {};
+    let dueType = null;
+    let earliestAt = Infinity;
+    for (const type of CHALLENGE_TYPES) {
+      const nextAt = scheduled[type];
+      if (typeof nextAt === 'number' && nextAt <= nextElapsedTime && nextAt < earliestAt) {
+        earliestAt = nextAt;
+        dueType = type;
+      }
+    }
+    if (dueType) {
+      const def = CHALLENGES[dueType];
+      const earlyWarningEdge = hasEarlyWarningEdge(state, dueType);
+      const warningDuration = getChallengeWarningDuration(state, dueType);
+      eventState = {
+        ...eventState,
+        active: {
+          type: dueType,
+          phase: 'warning',
+          timer: warningDuration,
+          secondaryQuake: false,
+          mitigated: false,
+          earlyWarningEdge,
+        },
+      };
+      lastBanner = {
+        type: 'warning',
+        text: earlyWarningEdge
+          ? `⚠ ${def.title} (EARLY INSIGHT WARNING · ${warningDuration}s): ${def.warningText}`
+          : `⚠ ${def.title}: ${def.warningText}`,
+      };
+    }
   }
 
   let nextState = {
     ...state,
+    elapsedPlayTime: nextElapsedTime,
     modules: modulesChanged ? nextModules : state.modules,
     missionStats: stats,
     eventState,
@@ -964,6 +1120,8 @@ export function evaluateLevelProgress(state) {
   // Trigger scheduled environmental challenges cleanly for challenge levels
   if (nextDef.type === 'survive_challenge') {
     const cType = nextDef.challengeType;
+    const earlyWarningEdge = hasEarlyWarningEdge(state, cType);
+    const warningDuration = getChallengeWarningDuration(state, cType);
     nextEventState = {
       ...nextEventState,
       // Reset survived flag for that challenge type so Level 19 & Level 11 require withstanding the new storm cleanly
@@ -971,26 +1129,17 @@ export function evaluateLevelProgress(state) {
       active: {
         type: cType,
         phase: 'warning',
-        timer: CHALLENGES[cType].durationWarning,
+        timer: warningDuration,
         secondaryQuake: Boolean(nextDef.secondaryQuake),
         mitigated: false,
+        earlyWarningEdge,
       },
     };
     lastBanner = {
       type: 'warning',
-      text: `LEVEL ${nextLevel}: ⚠ ${CHALLENGES[cType].title} approaching! Prepare your response.`,
-    };
-  } else if (currentDef.challengeTrigger && !nextEventState.active) {
-    const cType = currentDef.challengeTrigger;
-    nextEventState = {
-      ...nextEventState,
-      active: {
-        type: cType,
-        phase: 'warning',
-        timer: CHALLENGES[cType].durationWarning,
-        secondaryQuake: false,
-        mitigated: false,
-      },
+      text: earlyWarningEdge
+        ? `LEVEL ${nextLevel}: ⚠ ${CHALLENGES[cType].title} approaching (EARLY INSIGHT WARNING · ${warningDuration}s)!`
+        : `LEVEL ${nextLevel}: ⚠ ${CHALLENGES[cType].title} approaching! Prepare your response.`,
     };
   }
 
@@ -1065,12 +1214,20 @@ export function saveSurvivalGame(state) {
     const payload = {
       level: state.level,
       score: state.score,
+      elapsedPlayTime: state.elapsedPlayTime ?? 0,
       resourcesCollectedCount: state.resourcesCollectedCount,
       rover: state.rover,
       inventory: state.inventory,
       modules: state.modules,
       missionStats: state.missionStats,
       insightConsulted: state.insightConsulted,
+      eventState: {
+        survivedTypes: state.eventState?.survivedTypes ?? [],
+        survivedCount: state.eventState?.survivedCount ?? 0,
+        mitigatedCount: state.eventState?.mitigatedCount ?? 0,
+        lastCompletedAt: state.eventState?.lastCompletedAt ?? {},
+        nextScheduledAt: state.eventState?.nextScheduledAt ?? createInitialChallengeSchedule(),
+      },
       settings: state.settings,
       savedAt: Date.now(),
     };
@@ -1089,17 +1246,28 @@ export function loadSurvivalGame() {
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed.level !== 'number') return null;
     const base = createInitialState(parsed.settings);
+    const savedElapsed = typeof parsed.elapsedPlayTime === 'number' ? parsed.elapsedPlayTime : 0;
+    const savedEvent = parsed.eventState ?? {};
     return {
       ...base,
       screen: 'playing',
       level: clamp(parsed.level, 1, 20),
       score: parsed.score ?? 0,
+      elapsedPlayTime: savedElapsed,
       resourcesCollectedCount: parsed.resourcesCollectedCount ?? 0,
       rover: { ...base.rover, ...parsed.rover },
       inventory: { ...base.inventory, ...parsed.inventory },
       modules: parsed.modules ?? {},
       missionStats: { ...base.missionStats, ...parsed.missionStats },
       insightConsulted: Array.isArray(parsed.insightConsulted) ? parsed.insightConsulted : [],
+      eventState: {
+        ...base.eventState,
+        survivedTypes: Array.isArray(savedEvent.survivedTypes) ? savedEvent.survivedTypes : [],
+        survivedCount: savedEvent.survivedCount ?? 0,
+        mitigatedCount: savedEvent.mitigatedCount ?? 0,
+        lastCompletedAt: { ...base.eventState.lastCompletedAt, ...(savedEvent.lastCompletedAt ?? {}) },
+        nextScheduledAt: savedEvent.nextScheduledAt ?? base.eventState.nextScheduledAt,
+      },
       lastBanner: { type: 'info', text: `Resumed Mission at Level ${parsed.level}.` },
     };
   } catch {

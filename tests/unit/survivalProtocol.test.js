@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  CHALLENGES,
   INSIGHT_RECORDS,
   LEVELS,
   MODULES_LIST,
@@ -16,8 +17,11 @@ import {
   computeStationCapabilities,
   consultInsight,
   createInitialState,
+  getChallengeWarningDuration,
   getRecommendedGuidance,
   getRoverProximity,
+  getUpcomingEarlyWarning,
+  hasEarlyWarningEdge,
   repairStation,
   startChallenge,
   stepRoverPhysics,
@@ -118,13 +122,18 @@ test('environmental challenges affect station condition and engineering response
   assert.ok(afterRepair.missionStats.stationHealth >= afterAction.missionStats.stationHealth);
 });
 
-test('consulting InSight data advances science objectives and Level 20 certifies full protocol', () => {
+test('consulting InSight data advances science objectives without triggering hazards and Level 20 certifies full protocol', () => {
   let state = createInitialState();
   state.screen = 'playing';
   state.level = 5;
+  assert.equal(hasEarlyWarningEdge(state, 'marsquake'), false);
+
   state = consultInsight(state, 'seis');
   assert.equal(state.level, 6);
-  assert.ok(state.eventState.active?.type === 'marsquake');
+  // Analyzing InSight must NOT trigger the marsquake directly; it unlocks early-warning edge instead
+  assert.equal(state.eventState.active, null);
+  assert.equal(hasEarlyWarningEdge(state, 'marsquake'), true);
+  assert.ok(getChallengeWarningDuration(state, 'marsquake') > CHALLENGES.marsquake.durationWarning);
 
   // Jump to Level 20 certification test with 3 upgraded modules
   state.level = 20;
@@ -137,6 +146,73 @@ test('consulting InSight data advances science objectives and Level 20 certifies
   const certified = completeFinalMission(state);
   assert.equal(certified.screen, 'victory');
   assert.ok(['S', 'A', 'B'].includes(certified.finalReport.grade));
+});
+
+test('catastrophes trigger autonomously with per-hazard delays and gaps, and InSight gives early warning edge', () => {
+  // Deterministic rng = 0 hits minimum initial delays and minimum gaps
+  let state = createInitialState(null, () => 0);
+  state.screen = 'playing';
+
+  // Different hazards have different initial delays and gaps
+  assert.equal(state.eventState.nextScheduledAt.marsquake, 60);
+  assert.ok(state.eventState.nextScheduledAt.dust_storm > state.eventState.nextScheduledAt.marsquake);
+  assert.ok(state.eventState.nextScheduledAt.extreme_cold > state.eventState.nextScheduledAt.dust_storm);
+  assert.notEqual(CHALLENGES.marsquake.schedule.minGap, CHALLENGES.dust_storm.schedule.minGap);
+  assert.notEqual(CHALLENGES.dust_storm.schedule.minGap, CHALLENGES.extreme_cold.schedule.minGap);
+
+  // Without InSight analysis, no advance early forecast is shown at 45s
+  for (let i = 0; i < 45; i += 1) {
+    state = applySimulationTick(state, 1, () => 0);
+  }
+  assert.equal(state.eventState.active, null);
+  assert.equal(getUpcomingEarlyWarning(state), null);
+
+  // Advance to 59s — still no earthquake before 1 minute
+  for (let i = 0; i < 14; i += 1) {
+    state = applySimulationTick(state, 1, () => 0);
+  }
+  assert.equal(state.eventState.active, null);
+
+  // At 60s (1 min), marsquake triggers autonomously even without analyzing InSight
+  state = applySimulationTick(state, 1, () => 0);
+  assert.equal(state.eventState.active?.type, 'marsquake');
+  assert.equal(state.eventState.active?.phase, 'warning');
+  assert.equal(state.eventState.active?.earlyWarningEdge, false);
+  assert.equal(state.eventState.active?.timer, CHALLENGES.marsquake.durationWarning);
+
+  // Mitigate and finish this marsquake
+  state = applyEmergencyAction(state, 'dampen_seismic');
+  for (let i = 0; i < 20; i += 1) {
+    if (!state.eventState.active) break;
+    state = applySimulationTick(state, 1, () => 0);
+  }
+  assert.equal(state.eventState.active, null);
+
+  // Next marsquake must respect at least 3 min (180s) gap after completion
+  const completedAt = state.eventState.lastCompletedAt.marsquake;
+  assert.ok(typeof completedAt === 'number');
+  assert.ok(state.eventState.nextScheduledAt.marsquake >= completedAt + 180);
+
+  // Now analyze SEIS and verify early-warning forecast & longer prep window on the next marsquake
+  state = consultInsight(state, 'seis');
+  state.eventState.nextScheduledAt.marsquake = state.elapsedPlayTime + 15;
+  state.eventState.nextScheduledAt.dust_storm = state.elapsedPlayTime + 500;
+  state.eventState.nextScheduledAt.extreme_cold = state.elapsedPlayTime + 500;
+
+  const forecast = getUpcomingEarlyWarning(state);
+  assert.ok(forecast);
+  assert.equal(forecast.type, 'marsquake');
+  assert.ok(forecast.secondsUntil <= 15);
+
+  for (let i = 0; i < 15; i += 1) {
+    state = applySimulationTick(state, 1, () => 0);
+  }
+  assert.equal(state.eventState.active?.type, 'marsquake');
+  assert.equal(state.eventState.active?.earlyWarningEdge, true);
+  assert.equal(
+    state.eventState.active?.timer,
+    CHALLENGES.marsquake.durationWarning + CHALLENGES.marsquake.earlyWarningBonus
+  );
 });
 
 test('ignoring severe hazard causes real defeat while taking recommended action saves outpost', () => {

@@ -194,6 +194,7 @@ export const INSIGHT_RECORDS = [
     relevance:
       'Understanding ground motion helps engineers consider base isolation, anchored foundations, and vibration shielding for future research stations—even though most marsquakes are moderate rather than catastrophic.',
     bonusHint: 'Priority Modules: Foundation Platform, Structural Support, Seismic Protection System.',
+    earlyWarningEdge: 'Early Warning Edge: Unlocks 25s SEIS P-wave advance forecast & +7s Marsquake warning time.',
   },
   {
     id: 'apss',
@@ -204,6 +205,7 @@ export const INSIGHT_RECORDS = [
     relevance:
       'Simplified engineering takeaway: steep cold cycles demand insulated enclosures and power-budgeted heating so sensitive electronics remain within safe operating limits.',
     bonusHint: 'Priority Modules: Main Habitat, Thermal Protection System, Equipment Storage.',
+    earlyWarningEdge: 'Early Warning Edge: Unlocks 25s APSS thermal drop forecast & +7s Cold Front warning time.',
   },
   {
     id: 'solar_dust',
@@ -214,6 +216,7 @@ export const INSIGHT_RECORDS = [
     relevance:
       'Solar-powered outposts need dust-mitigation workflows, backup battery reserves, and smart energy load shedding during low-irradiance dust storms.',
     bonusHint: 'Priority Modules: Solar Energy Array, Battery Storage.',
+    earlyWarningEdge: 'Early Warning Edge: Unlocks 30s Dust Opacity advance forecast & +8s Dust Storm warning time.',
   },
 ];
 
@@ -227,6 +230,15 @@ export const CHALLENGES = {
     recoveryText: 'Seismic wave subsided. Inspect integrity and review SEIS isolation data.',
     durationWarning: 5,
     durationActive: 10,
+    insightRecordId: 'seis',
+    earlyWarningBonus: 7,
+    earlyForecastLead: 25,
+    schedule: {
+      initialMinDelay: 60, // 1 min before first random earthquake can strike
+      initialRandomWindow: 20,
+      minGap: 180, // 3 min minimum gap between earthquakes
+      randomGapWindow: 40,
+    },
     actions: [
       {
         id: 'dampen_seismic',
@@ -253,6 +265,15 @@ export const CHALLENGES = {
     recoveryText: 'Winds clearing. Brush remaining dust off panels to restore full solar yield.',
     durationWarning: 5,
     durationActive: 11,
+    insightRecordId: 'solar_dust',
+    earlyWarningBonus: 8,
+    earlyForecastLead: 30,
+    schedule: {
+      initialMinDelay: 95, // ~1.6 min before first random dust storm
+      initialRandomWindow: 25,
+      minGap: 240, // 4 min minimum gap between dust storms
+      randomGapWindow: 45,
+    },
     actions: [
       {
         id: 'clean_solar',
@@ -279,6 +300,15 @@ export const CHALLENGES = {
     recoveryText: 'Solar noon warming site. Verify thermal shields held avionics within tolerance.',
     durationWarning: 5,
     durationActive: 10,
+    insightRecordId: 'apss',
+    earlyWarningBonus: 7,
+    earlyForecastLead: 25,
+    schedule: {
+      initialMinDelay: 135, // ~2.25 min before first random extreme cold front
+      initialRandomWindow: 30,
+      minGap: 270, // 4.5 min minimum gap between extreme cold fronts
+      randomGapWindow: 50,
+    },
     actions: [
       {
         id: 'pulse_heaters',
@@ -364,11 +394,10 @@ export const LEVELS = [
     level: 5,
     act: 'ACT II · STRUCTURAL DEFENSE',
     title: 'Level 5: Seismic Alert',
-    objective: 'Visit InSight (northwest) to access SEIS Seismic Data, or consult SEIS archive.',
+    objective: 'Visit InSight (northwest) to analyze SEIS Seismic Data and unlock early marsquake warnings.',
     type: 'consult_insight',
     recordId: 'seis',
-    challengeTrigger: 'marsquake',
-    nexusHint: 'Approach NASA InSight at (-10.5, -8.5) and press E to review SEIS marsquake findings before tremors strike.',
+    nexusHint: 'Approach NASA InSight at (-10.5, -8.5) and press E to analyze SEIS data—giving you advance forecasts and extra warning time before marsquakes hit.',
     rewardScore: 240,
   },
   {
@@ -429,11 +458,10 @@ export const LEVELS = [
     level: 11,
     act: 'ACT III · ENERGY SYSTEMS',
     title: 'Level 11: Dust Storm Incoming',
-    objective: 'Consult InSight Solar & Dust archive AND weather the regional Dust Storm.',
+    objective: 'Weather the regional Dust Storm while maintaining outpost power reserves.',
     type: 'survive_challenge',
     challengeType: 'dust_storm',
-    requireInsightId: 'solar_dust',
-    nexusHint: 'Read InSight Solar/Dust data if locked, then run Clean Solar Panels or Route Battery Reserve during the storm.',
+    nexusHint: 'Run Clean Solar Panels or Route Battery Reserve during the storm! Analyzing InSight Solar/Dust data gives you advance storm forecasts.',
     rewardScore: 360,
   },
   {

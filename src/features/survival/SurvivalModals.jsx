@@ -383,13 +383,13 @@ export function HowToPlayModal({ onClose }) {
     },
     {
       keys: ['INSIGHT'],
-      title: '4. NASA InSight & NEXUS AI',
-      body: 'Visit NASA’s InSight lander northwest of the build pad (or click Science Data) to review verified 2018–2022 mission findings translated into strategy.',
+      title: '4. NASA InSight Early-Warning Edge',
+      body: 'Visit NASA’s InSight lander northwest of the build pad (or click InSight) to analyze 2018–2022 findings. Each record unlocks advance forecasts and extra warning time before matching catastrophes strike.',
     },
     {
       keys: ['ALERT'],
-      title: '5. Survive 20 Mission Levels',
-      body: 'When Marsquakes, Dust Storms, or Extreme Cold strike, trigger Emergency Engineering Responses in the Hazard panel to protect station integrity.',
+      title: '5. Survive Dynamic Martian Hazards',
+      body: 'Marsquakes, Dust Storms, and Extreme Cold occur independently over time (even if you haven’t analyzed InSight yet). Trigger Emergency Engineering Responses in the Hazard panel to protect station integrity.',
     },
   ];
 
@@ -610,6 +610,11 @@ export function InsightArchiveModal({ consultedIds, onConsultRecord, onClose }) 
               <p className="mt-1.5 text-xs font-public text-slate-300 leading-relaxed">
                 <strong className="text-[#FFB547]">Engineering relevance:</strong> {rec.relevance}
               </p>
+              {rec.earlyWarningEdge && (
+                <p className="mt-2 px-2.5 py-1.5 bg-[#0A1628] border border-[#45D483]/40 text-[11px] font-mono text-[#45D483]">
+                  {rec.earlyWarningEdge}
+                </p>
+              )}
               <div className="mt-3 pt-2.5 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
                 <span className="text-[11px] font-mono text-[#4DE2E8]">{rec.bonusHint}</span>
                 <button

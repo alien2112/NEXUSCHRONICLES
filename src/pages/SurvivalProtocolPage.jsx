@@ -20,6 +20,7 @@ import {
   completeFinalMission,
   consultInsight,
   createInitialState,
+  deferUpcomingChallenges,
   getRecommendedGuidance,
   getRoverProximity,
   loadSurvivalGame,
@@ -362,13 +363,14 @@ export default function SurvivalProtocolPage({ onReturnToNexus }) {
           level={uiState.level}
           onResume={() => mutateGame((s) => ({ ...s, screen: 'playing' }))}
           onRestartLevel={() => {
-            mutateGame((s) => ({
-              ...s,
-              screen: 'playing',
-              missionStats: { ...s.missionStats, stationHealth: 100, stability: 90, thermalIntegrity: 90 },
-              eventState: { ...s.eventState, active: null },
-              lastBanner: { type: 'info', text: `Level ${s.level} reset cleanly.` },
-            }));
+            mutateGame((s) =>
+              deferUpcomingChallenges({
+                ...s,
+                screen: 'playing',
+                missionStats: { ...s.missionStats, stationHealth: 100, stability: 90, thermalIntegrity: 90 },
+                lastBanner: { type: 'info', text: `Level ${s.level} reset cleanly.` },
+              })
+            );
           }}
           onOpenSettings={() => setActiveModal('settings')}
           onSaveAndMenu={() => {
@@ -386,12 +388,13 @@ export default function SurvivalProtocolPage({ onReturnToNexus }) {
           report={uiState.finalReport}
           level={uiState.level}
           onRetryLevel={() => {
-            mutateGame((s) => ({
-              ...s,
-              screen: 'playing',
-              missionStats: { ...s.missionStats, stationHealth: 100, stability: 88, thermalIntegrity: 88 },
-              eventState: { ...s.eventState, active: null },
-            }));
+            mutateGame((s) =>
+              deferUpcomingChallenges({
+                ...s,
+                screen: 'playing',
+                missionStats: { ...s.missionStats, stationHealth: 100, stability: 88, thermalIntegrity: 88 },
+              })
+            );
           }}
           onNewCampaign={handleStartNewMission}
           onReturnToNexus={onReturnToNexus}
