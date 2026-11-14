@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { CaseBoardStrip } from './CaseBoardPanel';
 import { TestHudFrame, NexusSidePanel } from './WorkspaceLayout';
 import { CutoutImage } from './InvestigationGraphics';
 import siteContent from '../../data/siteContent.json';
@@ -18,7 +17,6 @@ const test3Copy = invCopy.test03;
 export function Test03Workspace({
   confidenceChoice,
   onChangeConfidence,
-  earnedStampIds,
   onUnlockStamp3,
   onComplete,
 }) {
@@ -299,23 +297,17 @@ export function Test03Workspace({
         </NexusSidePanel>
       </div>
 
-      {/* Case Board Stamp Preview Strip aligned directly under TEST 03 on final frame */}
+      {/* Proceed action on final frame */}
       {stage === 'speed' && speedNarrativeIdx >= 2 && (
-        <div className="mt-2 w-full grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-4 items-end inv-fade-up">
-          <div className="lg:col-span-7 xl:col-span-7 w-full lg:w-[103%]">
-            <CaseBoardStrip earnedStampIds={earnedStampIds} className="mt-0" />
-          </div>
-
-          <div className="lg:col-span-5 xl:col-span-5 flex justify-end lg:pl-5 pb-1">
-            <button
-              type="button"
-              onClick={onComplete}
-              className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs transition-colors cursor-pointer shadow-[0_0_16px_rgba(247,150,29,0.35)]"
-            >
-              <span>{test3Copy.continueLabel}</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
+        <div className="mt-3 w-full flex justify-end inv-fade-up">
+          <button
+            type="button"
+            onClick={onComplete}
+            className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs transition-colors cursor-pointer shadow-[0_0_16px_rgba(247,150,29,0.35)]"
+          >
+            <span>{test3Copy.continueLabel}</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
         </div>
       )}
     </div>

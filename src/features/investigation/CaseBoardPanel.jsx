@@ -26,72 +26,6 @@ import siteContent from '../../data/siteContent.json';
 const invCopy = siteContent.investigation;
 const cbCopy = invCopy.caseBoard;
 
-/**
- * Compact 4-slot chamfered Case Board stamp strip shown beneath Tests 01–04 as stamps are earned.
- */
-export function CaseBoardStrip({
-  earnedStampIds,
-  onOpenCaseBoard,
-  actionLabel = cbCopy.stripDefaultAction,
-  className = 'mt-3',
-}) {
-  return (
-    <div className={`${className} relative w-full h-full pt-2 pb-2.5 px-4 sm:px-5 inv-fade-up flex flex-col justify-between`}>
-      {/* Chamfered HUD Border matching the reference Case Board */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        viewBox="0 0 800 132"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M 14 2 L 138 2 L 160 22 L 784 22 Q 798 22 798 36 L 798 118 Q 798 130 784 130 L 16 130 Q 2 130 2 116 L 2 14 Q 2 2 14 2 Z"
-          fill="rgba(4, 9, 27, 0.88)"
-          stroke="#F7961D"
-          strokeOpacity="0.78"
-          strokeWidth="1.4"
-        />
-      </svg>
-
-      <div className="relative z-10 flex items-start justify-between mb-2">
-        <span className="font-exo2 font-semibold text-xs sm:text-[14px] text-[#F7961D] tracking-wide pt-0.5">
-          {cbCopy.stripTitle}
-        </span>
-        {onOpenCaseBoard && (earnedStampIds.length >= 4 || actionLabel !== cbCopy.stripDefaultAction) && (
-          <button
-            type="button"
-            onClick={onOpenCaseBoard}
-            className="mt-3 text-[11px] font-exo2 font-semibold text-[#F7961D] hover:text-[#ffb454] hover:underline cursor-pointer transition-colors leading-none"
-          >
-            {actionLabel}
-          </button>
-        )}
-      </div>
-
-      <div className="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-3.5">
-        {CASE_STAMPS.map((stamp) => {
-          const unlocked = earnedStampIds.includes(stamp.id);
-          return (
-            <div
-              key={stamp.id}
-              className={`h-[56px] sm:h-[62px] rounded-xl border flex items-center justify-center px-1.5 overflow-hidden transition-all duration-300 ${
-                unlocked
-                  ? 'border-white/30 bg-[#04091a]/90'
-                  : 'border-white/25 bg-[#04091a]/75'
-              }`}
-            >
-              {unlocked ? (
-                <div className="-rotate-[18deg] border-[1.5px] border-[#F7961D] rounded-[3px] px-2 py-0.5 text-[9px] sm:text-[9.5px] font-exo2 font-bold text-[#F7961D] tracking-wider text-center leading-[1.15] whitespace-nowrap shadow-[0_0_12px_rgba(247,150,29,0.22)] bg-[#060b1d]/90">
-                  {stamp.label}
-                </div>
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 const mapConfidenceToTrustOption = (val) => {
   if (val < 0.15) return TRUST_OPTIONS[0];
   if (val < 0.4) return TRUST_OPTIONS[1];
@@ -114,8 +48,6 @@ export default function CaseBoardView({
   initialPlacedParts = {},
   onPlacedPartsChange,
   onExploreFurther,
-  onGoDeeper,
-  onGoTechnical,
   onSurvivalProtocol,
   onRestart,
   onExit,
@@ -693,8 +625,8 @@ export default function CaseBoardView({
             </div>
           </div>
 
-          {/* Post-Investigation Exploration Options: Chooser, Go deeper, Go technical & Survival Protocol */}
-          {(onExploreFurther || onGoDeeper || onGoTechnical || onSurvivalProtocol) && (
+          {/* Post-Investigation Exploration Options: Chooser & Survival Protocol */}
+          {(onExploreFurther || onSurvivalProtocol) && (
             <div className="rounded-[18px] border border-white/25 bg-[#050b1f]/90 backdrop-blur-md p-4 text-left shadow-[0_14px_34px_rgba(0,0,0,0.45)] flex flex-col gap-2.5">
               <div className="flex items-center justify-between gap-2">
                 <span className="font-exo2 font-semibold text-sm sm:text-base text-white">
@@ -718,30 +650,6 @@ export default function CaseBoardView({
                   <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                 </button>
               )}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
-                {onGoDeeper && (
-                  <button
-                    type="button"
-                    onClick={onGoDeeper}
-                    className="flex items-center justify-between gap-2 px-4 py-2 rounded-full border border-[#F7961D]/80 bg-[#070e24]/90 hover:bg-[#F7961D]/15 text-[#F7961D] hover:text-[#ffb454] text-xs sm:text-[13px] font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
-                    title={cbCopy.exploreFurther.goDeeperTitle}
-                  >
-                    <span>{cbCopy.exploreFurther.goDeeperLabel}</span>
-                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
-                  </button>
-                )}
-                {onGoTechnical && (
-                  <button
-                    type="button"
-                    onClick={onGoTechnical}
-                    className="flex items-center justify-between gap-2 px-4 py-2 rounded-full border border-[#F7961D]/80 bg-[#070e24]/90 hover:bg-[#F7961D]/15 text-[#F7961D] hover:text-[#ffb454] text-xs sm:text-[13px] font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
-                    title={cbCopy.exploreFurther.goTechnicalTitle}
-                  >
-                    <span>{cbCopy.exploreFurther.goTechnicalLabel}</span>
-                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
-                  </button>
-                )}
-              </div>
 
               {onSurvivalProtocol && (
                 <div className="mt-1 pt-3 border-t border-white/10 flex flex-col gap-2">

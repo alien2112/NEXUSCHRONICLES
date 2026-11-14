@@ -72,8 +72,6 @@ export default function App() {
           savedProgress={currentPage === 'case-board' ? case1094Progress : null}
           onSaveProgress={setCase1094Progress}
           onExploreFurther={() => navigate('after-investigation')}
-          onGoDeeper={() => navigate('go-deeper-1')}
-          onGoTechnical={() => navigate('go-technical-1')}
           onSurvivalProtocol={() => navigate('survival-protocol')}
           onBack={() => navigate('home')}
         />

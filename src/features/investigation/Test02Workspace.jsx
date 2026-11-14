@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Crosshair } from 'lucide-react';
 import TrustMeter from './TrustMeter';
-import { CaseBoardStrip } from './CaseBoardPanel';
 import { TestHudFrame, NexusSidePanel } from './WorkspaceLayout';
 import siteContent from '../../data/siteContent.json';
 
@@ -156,7 +155,6 @@ const TEST2_CLUE_CARDS = test2Copy.clueCards;
 export function Test02Workspace({
   confidenceChoice,
   onChangeConfidence,
-  earnedStampIds = [],
   onUnlockStamp2,
   onComplete,
 }) {
@@ -443,26 +441,22 @@ export function Test02Workspace({
         </NexusSidePanel>
       </div>
 
-      {/* FINAL BEAT (beat === 7): Bottom Case Board (Stamps 1 & 2) + Trust Meter aligned side-by-side (Matches Image 13) */}
+      {/* FINAL BEAT (beat === 7): Trust Meter + Continue button */}
       {beat === 7 && (
-        <div className="mt-2.5 w-full grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch inv-fade-up">
-          <div className="lg:col-span-8">
-            <CaseBoardStrip
-              earnedStampIds={earnedStampIds}
-              onOpenCaseBoard={onComplete}
-              actionLabel={test2Copy.continueLabel}
-              className="mt-0 h-full"
-            />
-          </div>
-
-          <div className="lg:col-span-4">
-            <TrustMeter
-              value={confidenceChoice}
-              onChange={onChangeConfidence}
-              variant="slate"
-              className="mt-0 h-full"
-            />
-          </div>
+        <div className="mt-2.5 w-full flex flex-col sm:flex-row items-stretch sm:items-end justify-end gap-4 inv-fade-up">
+          <TrustMeter
+            value={confidenceChoice}
+            onChange={onChangeConfidence}
+            variant="slate"
+            className="mt-0 w-full sm:w-[360px]"
+          />
+          <button
+            type="button"
+            onClick={onComplete}
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs transition-colors cursor-pointer shadow-[0_0_16px_rgba(247,150,29,0.35)] shrink-0 self-end"
+          >
+            <span>{test2Copy.continueLabel}</span>
+          </button>
         </div>
       )}
     </div>

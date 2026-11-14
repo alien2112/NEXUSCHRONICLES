@@ -54,8 +54,6 @@ export default function InvestigationPage({
   savedProgress = null,
   onSaveProgress,
   onExploreFurther,
-  onGoDeeper,
-  onGoTechnical,
   onSurvivalProtocol,
 }) {
   const [scene, setScene] = useState(initialScene);
@@ -564,7 +562,6 @@ export default function InvestigationPage({
                   togglePlayAudio={togglePlayAudio}
                   confidenceChoice={confidenceChoice}
                   onChangeConfidence={setConfidenceChoice}
-                  earnedStampIds={earnedStampIds}
                   onUnlockStamp1={() => unlockStamp(1)}
                   onContinue={() => {
                     unlockStamp(1);
@@ -577,7 +574,6 @@ export default function InvestigationPage({
                 <Test02Workspace
                   confidenceChoice={confidenceChoice}
                   onChangeConfidence={setConfidenceChoice}
-                  earnedStampIds={earnedStampIds}
                   onUnlockStamp2={() => unlockStamp(2)}
                   onComplete={() => {
                     unlockStamp(2);
@@ -590,7 +586,6 @@ export default function InvestigationPage({
                 <Test03Workspace
                   confidenceChoice={confidenceChoice}
                   onChangeConfidence={setConfidenceChoice}
-                  earnedStampIds={earnedStampIds}
                   onUnlockStamp3={() => unlockStamp(3)}
                   onComplete={() => {
                     unlockStamp(3);
@@ -603,7 +598,6 @@ export default function InvestigationPage({
                 <Test04Workspace
                   confidenceChoice={confidenceChoice}
                   onChangeConfidence={setConfidenceChoice}
-                  earnedStampIds={earnedStampIds}
                   onUnlockStamp4={() => unlockStamp(4)}
                   onOpenCaseBoard={() => {
                     navigateToScene('case-board');
@@ -631,34 +625,6 @@ export default function InvestigationPage({
                             placedParts,
                           });
                           onExploreFurther();
-                        }
-                      : undefined
-                  }
-                  onGoDeeper={
-                    onGoDeeper
-                      ? () => {
-                          onSaveProgress?.({
-                            codename,
-                            initialConfidence,
-                            confidenceChoice,
-                            earnedStampIds,
-                            placedParts,
-                          });
-                          onGoDeeper();
-                        }
-                      : undefined
-                  }
-                  onGoTechnical={
-                    onGoTechnical
-                      ? () => {
-                          onSaveProgress?.({
-                            codename,
-                            initialConfidence,
-                            confidenceChoice,
-                            earnedStampIds,
-                            placedParts,
-                          });
-                          onGoTechnical();
                         }
                       : undefined
                   }

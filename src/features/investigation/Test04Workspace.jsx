@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { CaseBoardStrip } from './CaseBoardPanel';
 import { NexusSidePanel } from './WorkspaceLayout';
 import siteContent from '../../data/siteContent.json';
 
@@ -328,7 +327,6 @@ function LightFingerprintMatcher({ selectedId, onSelect }) {
 export function Test04Workspace({
   confidenceChoice,
   onChangeConfidence,
-  earnedStampIds,
   onUnlockStamp4,
   onOpenCaseBoard,
 }) {
@@ -664,14 +662,6 @@ export function Test04Workspace({
           )}
         </NexusSidePanel>
       </div>
-
-      {/* Bottom Case Board Stamp Strip appears on Frame 6 (beat === 4) with all 4 stamps */}
-      {beat === 4 && (
-        <CaseBoardStrip
-          earnedStampIds={earnedStampIds}
-          onOpenCaseBoard={onOpenCaseBoard}
-        />
-      )}
     </div>
   );
 }

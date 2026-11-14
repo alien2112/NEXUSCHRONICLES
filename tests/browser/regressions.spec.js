@@ -231,8 +231,8 @@ test('story 1 removes Go deeper and Investigation entries, and post-investigatio
 
   await enterInvestigation(page);
   await page.getByRole('button', { name: 'Go to Case Board' }).click();
-  await expect(page.getByRole('button', { name: 'Go deeper' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Go technical' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Go deeper' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Go technical' })).toHaveCount(0);
 
   // Post-Investigation path chooser page (#after-investigation)
   await page.getByRole('button', { name: 'Choose Your Next Path' }).click();
@@ -243,8 +243,9 @@ test('story 1 removes Go deeper and Investigation entries, and post-investigatio
   await page.getByRole('button', { name: 'Back to Case Board' }).click();
   await expect(page).toHaveURL(/#case-board$/);
 
-  // Go deeper (Science Behind It) 6-page journey from Case Board
-  await page.getByRole('button', { name: 'Go deeper' }).click();
+  // Go deeper (Science Behind It) 6-page journey via Explore Your Path
+  await page.getByRole('button', { name: 'Choose Your Next Path' }).click();
+  await page.getByRole('button', { name: 'Go deeper: Science Behind It' }).click();
   await expect(page).toHaveURL(/#go-deeper$/);
   await expect(page.getByRole('heading', { name: 'The Planet That Whispers' })).toBeVisible();
 
@@ -290,8 +291,9 @@ test('story 1 removes Go deeper and Investigation entries, and post-investigatio
   await expect(page.getByText('The mission ended. The lessons remain.', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Back to Case Board' }).click();
   await expect(page).toHaveURL(/#case-board$/);
-  await expect(page.getByRole('button', { name: 'Go deeper' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Go technical' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Choose Your Next Path' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Go deeper' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Go technical' })).toHaveCount(0);
 
   await page.goto('/#engineering-the-mission-2');
   await expect(page.getByRole('heading', { name: "1. The solar panels: the machine's lifeline" })).toBeVisible();

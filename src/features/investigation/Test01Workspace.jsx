@@ -2,7 +2,6 @@ import { activateOnKeyboard } from '../../utils/keyboard';
 import { useState } from 'react';
 import { Play, Pause } from 'lucide-react';
 import TrustMeter from './TrustMeter';
-import { CaseBoardStrip } from './CaseBoardPanel';
 import { TestHudFrame, NexusSidePanel } from './WorkspaceLayout';
 import siteContent from '../../data/siteContent.json';
 
@@ -28,7 +27,6 @@ export function Test01Workspace({
   audioError,
   confidenceChoice,
   onChangeConfidence,
-  earnedStampIds = [],
   onUnlockStamp1,
   onContinue,
 }) {
@@ -326,25 +324,21 @@ export function Test01Workspace({
         </NexusSidePanel>
       </div>
 
-      {/* Final Test 01 beat: Bottom Case Board (Stamp 1) + Trust Meter matching reference */}
+      {/* Final Test 01 beat: Trust Meter + Continue button */}
       {beat === 7 && (
-        <div className="mt-3 w-full grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch inv-fade-up">
-          <div className="lg:col-span-8">
-            <CaseBoardStrip
-              earnedStampIds={earnedStampIds}
-              onOpenCaseBoard={onContinue}
-              actionLabel={test1Copy.continueLabel}
-              className="mt-0"
-            />
-          </div>
-
-          <div className="lg:col-span-4 flex flex-col">
-            <TrustMeter
-              value={confidenceChoice}
-              onChange={onChangeConfidence}
-              className="mt-0 h-full"
-            />
-          </div>
+        <div className="mt-3 w-full flex flex-col sm:flex-row items-stretch sm:items-end justify-end gap-4 inv-fade-up">
+          <TrustMeter
+            value={confidenceChoice}
+            onChange={onChangeConfidence}
+            className="mt-0 w-full sm:w-[360px]"
+          />
+          <button
+            type="button"
+            onClick={onContinue}
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs transition-colors cursor-pointer shadow-[0_0_16px_rgba(247,150,29,0.35)] shrink-0 self-end"
+          >
+            <span>{test1Copy.continueLabel}</span>
+          </button>
         </div>
       )}
     </div>
