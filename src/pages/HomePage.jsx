@@ -1,4 +1,7 @@
 import { ChevronRight } from 'lucide-react';
+import siteContent from '../data/siteContent.json';
+
+const homeCopy = siteContent.homePage;
 
 export default function HomePage({ onBeginJourney }) {
   return (
@@ -10,7 +13,7 @@ export default function HomePage({ onBeginJourney }) {
       <div 
         className="fixed inset-0 z-0 bg-cover bg-top sm:bg-center bg-no-repeat pointer-events-none select-none"
         style={{ 
-          backgroundImage: `url('/homepagebg.webp')`,
+          backgroundImage: `url('${homeCopy.backgroundImage}')`,
         }}
       />
 
@@ -34,14 +37,14 @@ export default function HomePage({ onBeginJourney }) {
           */}
           <div 
             className="w-[280px] sm:w-[320px] md:w-[340px] h-[135px] sm:h-[150px] md:h-[155px] rounded-xl border border-dashed border-white/20 bg-white/[0.02] flex items-center justify-center transition-colors group relative overflow-hidden"
-            title="Empty Logo Placeholder - Logo will be placed here"
+            title={homeCopy.logoPlaceholder.title}
           >
             <div className="flex flex-col items-center gap-1 text-white/30 group-hover:text-white/50 transition-colors">
               <span className="text-[11px] font-mono tracking-widest uppercase">
-                [ Logo Placeholder ]
+                {homeCopy.logoPlaceholder.label}
               </span>
               <span className="text-[10px] text-white/20 font-mono">
-                340 × 155 px
+                {homeCopy.logoPlaceholder.dimensions}
               </span>
             </div>
           </div>
@@ -52,12 +55,11 @@ export default function HomePage({ onBeginJourney }) {
             "Are you ready to uncover it ?"
           */}
           <div className="space-y-1 sm:space-y-1.5 pt-1 font-exo2">
-            <p className="text-white text-base sm:text-lg md:text-[20px] lg:text-[21px] font-medium tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] leading-tight">
-              Every mission leaves a trace...
-            </p>
-            <p className="text-white text-base sm:text-lg md:text-[20px] lg:text-[21px] font-medium tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] leading-tight">
-              Are you ready to uncover it ?
-            </p>
+            {homeCopy.taglineLines.map((line, idx) => (
+              <p key={idx} className="text-white text-base sm:text-lg md:text-[20px] lg:text-[21px] font-medium tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] leading-tight">
+                {line}
+              </p>
+            ))}
           </div>
 
           {/* 
@@ -69,7 +71,7 @@ export default function HomePage({ onBeginJourney }) {
             <button
               onClick={onBeginJourney}
               className="relative group inline-flex items-center justify-center gap-3.5 px-8 sm:px-9 py-3 min-w-[235px] sm:min-w-[255px] h-[52px] transition-transform duration-300 cursor-pointer select-none active:scale-[0.98]"
-              title="Begin Your Journey"
+              title={homeCopy.ctaButton.title}
             >
               {/* Exact Pointed Pill SVG Silhouette (traced 1:1 from reference PNG) */}
               <svg 

@@ -47,7 +47,7 @@ test('unavailable navigation is disabled and closed search does not consume Ctrl
 
 test('keyboard confidence, waveform selection and dialogue work without skipping scenes', async ({ page }) => {
   await enterInvestigation(page);
-  const waveform = page.locator('[role="button"]').filter({ has: page.getByAltText(/Recording X is/) });
+  const waveform = page.locator('[role="button"]').filter({ has: page.getByRole('img', { name: /Recording X is/ }) });
   await waveform.press('Enter');
   await waveform.press('Enter');
   await waveform.press('Space');
@@ -86,7 +86,7 @@ test('verdict placement works with keyboard and confidence labels track the slid
 
 test('earning Test 3 directly does not award Tests 1 and 2', async ({ page }) => {
   await enterInvestigation(page);
-  await page.getByRole('button', { name: 'Go to Test 3' }).click();
+  await page.getByRole('button', { name: 'Go to Step 3' }).click();
   await page.getByTitle('Drag or click Bus (~12 m)').click();
   await page.getByTitle('Drag or click Great Pyramid (~146 m)').click();
   await page.getByRole('button', { name: 'Test Impact Speed' }).click();
@@ -192,6 +192,7 @@ test('all pages load without application errors or missing local assets', async 
     'go-technical-8',
     'go-technical-9',
     'go-technical-10',
+    'engineering-legacy',
   ]) {
     await page.goto(`/#${hash}`);
     await expect(page.locator('main')).toBeVisible();

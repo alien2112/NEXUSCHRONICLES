@@ -1,5 +1,8 @@
 import { activateOnKeyboard } from '../utils/keyboard';
 import { ArrowRight } from 'lucide-react';
+import siteContent from '../data/siteContent.json';
+
+const cwCopy = siteContent.chooseWorldPage;
 
 export default function ChooseWorld({ onSelectMars }) {
   const handleMarsClick = () => {
@@ -18,7 +21,7 @@ export default function ChooseWorld({ onSelectMars }) {
       <div 
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none"
         style={{ 
-          backgroundImage: `url('/choose-world-background.webp')`,
+          backgroundImage: `url('${cwCopy.backgroundImage}')`,
         }}
       />
 
@@ -35,13 +38,21 @@ export default function ChooseWorld({ onSelectMars }) {
         <div className="max-w-2xl mx-auto text-center space-y-2.5 sm:space-y-3">
           
           <h1 className="text-3xl sm:text-4xl md:text-[44px] lg:text-[48px] font-bold font-orbitron tracking-wider text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.9)] leading-tight">
-            Choose a World
+            {cwCopy.title}
           </h1>
 
           <p className="text-sm sm:text-base md:text-[18px] text-slate-200/90 font-exo2 font-normal tracking-wide leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-            Discover the equipment left behind by NASA's
-            <br className="hidden sm:inline" />
-            {' '}missions on the Moon and Mars
+            {cwCopy.subtitleLines.map((line, idx) => (
+              <span key={idx}>
+                {idx > 0 && (
+                  <>
+                    <br className="hidden sm:inline" />
+                    {' '}
+                  </>
+                )}
+                {line}
+              </span>
+            ))}
           </p>
 
         </div>
@@ -66,7 +77,7 @@ export default function ChooseWorld({ onSelectMars }) {
             <div 
               className="absolute inset-0 rounded-[28px] pointer-events-none"
               style={{
-                backgroundImage: `url('/choose-world-planets-background-clean.png')`,
+                backgroundImage: `url('${cwCopy.cardBackgroundClean}')`,
                 backgroundSize: '100% 100%',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -77,7 +88,7 @@ export default function ChooseWorld({ onSelectMars }) {
             <div 
               className="absolute inset-0 rounded-[28px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               style={{
-                backgroundImage: `url('/choose-world-planets-background.png')`,
+                backgroundImage: `url('${cwCopy.cardBackgroundHover}')`,
                 backgroundSize: '100% 100%',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -87,8 +98,8 @@ export default function ChooseWorld({ onSelectMars }) {
             {/* Top Planet Image */}
             <div className="relative z-10 w-[172px] h-[172px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5 pointer-events-none">
               <img
-                src="/moon.png"
-                alt="The Moon"
+                src={cwCopy.cards.moon.image}
+                alt={cwCopy.cards.moon.imageAlt}
                 className="w-full h-full object-contain pointer-events-none"
               />
             </div>
@@ -97,10 +108,10 @@ export default function ChooseWorld({ onSelectMars }) {
             <div className="relative z-10 w-full flex items-center justify-between px-2 pb-1 pt-2 pointer-events-none">
               <div className="text-left">
                 <h2 className="text-white font-medium text-lg sm:text-[20px] leading-tight tracking-wide font-public">
-                  The Moon
+                  {cwCopy.cards.moon.name}
                 </h2>
                 <p className="text-slate-400 text-xs sm:text-[13px] mt-0.5 font-normal tracking-wide">
-                  3+ equipment
+                  {cwCopy.cards.moon.countText}
                 </p>
               </div>
 
@@ -121,14 +132,14 @@ export default function ChooseWorld({ onSelectMars }) {
             className="group relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-pointer select-none shrink-0"
             role="button"
             tabIndex={0}
-            aria-label="Explore The Mars equipment"
+            aria-label={cwCopy.cards.mars.ariaLabel}
             onKeyDown={e => activateOnKeyboard(e, handleMarsClick)}
           >
             {/* Background 1: Clean Card WITHOUT purple outline (default state) */}
             <div 
               className="absolute inset-0 rounded-[28px] pointer-events-none"
               style={{
-                backgroundImage: `url('/choose-world-planets-background-clean.png')`,
+                backgroundImage: `url('${cwCopy.cardBackgroundClean}')`,
                 backgroundSize: '100% 100%',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -139,7 +150,7 @@ export default function ChooseWorld({ onSelectMars }) {
             <div 
               className="absolute inset-0 rounded-[28px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               style={{
-                backgroundImage: `url('/choose-world-planets-background.png')`,
+                backgroundImage: `url('${cwCopy.cardBackgroundHover}')`,
                 backgroundSize: '100% 100%',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -149,8 +160,8 @@ export default function ChooseWorld({ onSelectMars }) {
             {/* Top Planet Image */}
             <div className="relative z-10 w-[172px] h-[172px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5 pointer-events-none">
               <img
-                src="/mars.png"
-                alt="The Mars"
+                src={cwCopy.cards.mars.image}
+                alt={cwCopy.cards.mars.imageAlt}
                 className="w-full h-full object-contain pointer-events-none"
               />
             </div>
@@ -159,10 +170,10 @@ export default function ChooseWorld({ onSelectMars }) {
             <div className="relative z-10 w-full flex items-center justify-between px-2 pb-1 pt-2 pointer-events-none">
               <div className="text-left">
                 <h2 className="text-white font-medium text-lg sm:text-[20px] leading-tight tracking-wide font-public">
-                  The Mars
+                  {cwCopy.cards.mars.name}
                 </h2>
                 <p className="text-slate-400 text-xs sm:text-[13px] mt-0.5 font-normal tracking-wide">
-                  4+ equipment
+                  {cwCopy.cards.mars.countText}
                 </p>
               </div>
 

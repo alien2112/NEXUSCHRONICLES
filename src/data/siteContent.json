@@ -1,0 +1,3054 @@
+{
+  "app": {
+    "loadingLabel": "Loading investigation...",
+    "errorBoundary": {
+      "message": "This page could not be loaded. Please reload to try again.",
+      "reloadLabel": "Reload page"
+    },
+    "audioUnavailableError": "Audio is unavailable. You can continue using the waveform images."
+  },
+  "navigation": {
+    "navbar": {
+      "backToWorlds": "Worlds",
+      "backToHome": "Home",
+      "backToWorldsTitle": "Back to Choose a World",
+      "backToHomeTitle": "Return to Home Screen",
+      "investigationLabel": "Investigation",
+      "investigationTitle": "Open Investigation: Case 1094",
+      "missionsBanner": {
+        "title": "Choose a World: Moon & Mars Explorer",
+        "badge": "Interactive",
+        "description": "Explore artifacts, rovers, and descent modules left by NASA missions",
+        "cta": "Open Page →"
+      },
+      "featuredExploreLabel": "Explore",
+      "searchAriaLabel": "Search",
+      "menuAriaLabel": "Menu",
+      "returnHomeAriaLabel": "Return Home",
+      "returnHomeTitle": "National Aeronautics and Space Administration (Return Home)"
+    },
+    "items": [
+      {
+        "key": "explore",
+        "label": "Explore",
+        "title": "Explore the Cosmos",
+        "description": "From our home planet to the deepest edges of observable spacetime.",
+        "featured": {
+          "badge": "Earth Science",
+          "title": "Earth Information Center",
+          "desc": "Discover real-time satellite telemetry, climate vitals, and orbital perspectives of our home world.",
+          "href": "https://earth.gov"
+        },
+        "columns": [
+          {
+            "heading": "Solar System",
+            "items": [
+              {
+                "name": "Earth & Our Moon",
+                "desc": "Our planetary sanctuary and orbital satellite",
+                "href": "#"
+              },
+              {
+                "name": "Mars Exploration",
+                "desc": "Red planet geology, atmosphere, and past water",
+                "href": "#"
+              },
+              {
+                "name": "Jupiter & Saturn",
+                "desc": "Gas giants, rings, and oceanic icy moons",
+                "href": "#"
+              },
+              {
+                "name": "Asteroids & Comets",
+                "desc": "Near-Earth objects and primordial solar debris",
+                "href": "#"
+              }
+            ]
+          },
+          {
+            "heading": "Universe & Deep Space",
+            "items": [
+              {
+                "name": "James Webb Space Telescope",
+                "desc": "Unfolding the earliest galaxies and infrared cosmos",
+                "href": "#"
+              },
+              {
+                "name": "Hubble Space Telescope",
+                "desc": "Over 30 years of cosmic clarity and discoveries",
+                "href": "#"
+              },
+              {
+                "name": "Black Holes & Quasars",
+                "desc": "Gravitational singularities and extreme astrophysics",
+                "href": "#"
+              },
+              {
+                "name": "Exoplanet Exploration",
+                "desc": "Over 5,500 alien worlds mapped beyond our sun",
+                "href": "#"
+              }
+            ]
+          },
+          {
+            "heading": "Aeronautics & Technology",
+            "items": [
+              {
+                "name": "X-59 QueSST",
+                "desc": "Quiet supersonic commercial aviation research",
+                "href": "#"
+              },
+              {
+                "name": "Space Propulsion & Ion Thrusters",
+                "desc": "Deep space transit and nuclear thermal rockets",
+                "href": "#"
+              },
+              {
+                "name": "Autonomous Robotics",
+                "desc": "AI rovers, drones, and autonomous navigation",
+                "href": "#"
+              },
+              {
+                "name": "Climate & Atmosphere",
+                "desc": "Global carbon monitoring and atmospheric telemetry",
+                "href": "#"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "missions",
+        "label": "Missions",
+        "title": "NASA Missions",
+        "description": "Pioneering scientific expeditions on Earth, the Moon, Mars, and into interstellar space.",
+        "featured": {
+          "badge": "Flagship Program",
+          "title": "Artemis II — Moon Orbit",
+          "desc": "Four astronauts preparing to venture around the far side of the Moon on humanity’s first crewed lunar mission in over 50 years.",
+          "href": "https://www.nasa.gov/artemis"
+        },
+        "columns": [
+          {
+            "heading": "Active Missions",
+            "items": [
+              {
+                "name": "Artemis Program",
+                "desc": "Returning humans to the lunar south pole and beyond",
+                "href": "#"
+              },
+              {
+                "name": "International Space Station",
+                "desc": "Continuous human presence and microgravity science",
+                "href": "#"
+              },
+              {
+                "name": "Perseverance & Ingenuity",
+                "desc": "Jezero Crater core sample caching for return",
+                "href": "#"
+              },
+              {
+                "name": "Europa Clipper",
+                "desc": "Investigating Jupiter’s moon Europa for habitability",
+                "href": "#"
+              }
+            ]
+          },
+          {
+            "heading": "Upcoming Launches",
+            "items": [
+              {
+                "name": "Nancy Grace Roman Telescope",
+                "desc": "Ultra-widefield infrared survey of dark energy",
+                "href": "#"
+              },
+              {
+                "name": "Dragonfly to Titan",
+                "desc": "Rotorcraft lander exploring Saturn’s prebiotic moon",
+                "href": "#"
+              },
+              {
+                "name": "DAVINCI to Venus",
+                "desc": "Atmospheric probe plunging into hellish clouds",
+                "href": "#"
+              },
+              {
+                "name": "Mars Sample Return",
+                "desc": "Retrieving Martian rock cores to terrestrial labs",
+                "href": "#"
+              }
+            ]
+          },
+          {
+            "heading": "Historic Pioneers",
+            "items": [
+              {
+                "name": "Voyager 1 & 2",
+                "desc": "Humanity’s farthest probes in interstellar space",
+                "href": "#"
+              },
+              {
+                "name": "Apollo Lunar Landings",
+                "desc": "The historic missions that first walked the Moon",
+                "href": "#"
+              },
+              {
+                "name": "Space Shuttle Fleet",
+                "desc": "Thirty years of reusable orbital flight and construction",
+                "href": "#"
+              },
+              {
+                "name": "InSight & Opportunity",
+                "desc": "Seismology and endurance records on Martian sands",
+                "href": "#"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "discover",
+        "label": "Discover",
+        "title": "Discover & Experience",
+        "description": "Immerse yourself in NASA’s latest imagery, 4K video feeds, audio archives, and interactive apps.",
+        "featured": {
+          "badge": "Official Streaming",
+          "title": "NASA+ Streaming Platform",
+          "desc": "Free, family-friendly, ad-free streaming with original series, live coverage, and documentaries.",
+          "href": "https://plus.nasa.gov"
+        },
+        "columns": [
+          {
+            "heading": "Multimedia",
+            "items": [
+              {
+                "name": "Astronomy Picture of the Day (APOD)",
+                "desc": "Daily cosmic photography with expert commentary",
+                "href": "#"
+              },
+              {
+                "name": "NASA+ Live Broadcasts",
+                "desc": "Rocket launches, spacewalks, and press conferences",
+                "href": "#"
+              },
+              {
+                "name": "Ultra-HD Image Galleries",
+                "desc": "Public domain high-resolution space photography",
+                "href": "#"
+              },
+              {
+                "name": "Podcasts & Audio Archives",
+                "desc": "Houston We Have a Podcast and sounds of space",
+                "href": "#"
+              }
+            ]
+          },
+          {
+            "heading": "Interactive Tools",
+            "items": [
+              {
+                "name": "Eyes on the Solar System",
+                "desc": "Real-time 3D flight paths of planets and probes",
+                "href": "#"
+              },
+              {
+                "name": "Eyes on the Earth",
+                "desc": "Monitor Earth’s vital signs, sea level, and air quality",
+                "href": "#"
+              },
+              {
+                "name": "3D Spacecraft Models",
+                "desc": "Interactive CAD-accurate orbiters, landers, and rockets",
+                "href": "#"
+              },
+              {
+                "name": "Virtual Mars Rovers",
+                "desc": "Drive Perseverance across 3D reconstructed terrain",
+                "href": "#"
+              }
+            ]
+          },
+          {
+            "heading": "Learning & Data",
+            "items": [
+              {
+                "name": "Open Science Data (PDS)",
+                "desc": "Access terabytes of raw scientific planetary archives",
+                "href": "#"
+              },
+              {
+                "name": "E-Books & Publications",
+                "desc": "Free historical and scientific monographs",
+                "href": "#"
+              },
+              {
+                "name": "NASA Mobile Apps",
+                "desc": "Satellite tracking and augmented reality for iOS & Android",
+                "href": "#"
+              },
+              {
+                "name": "Citizen Science",
+                "desc": "Help scientists classify craters, galaxies, and storms",
+                "href": "#"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "about",
+        "label": "About",
+        "title": "About NASA",
+        "description": "The National Aeronautics and Space Administration leads America’s civil space exploration.",
+        "featured": {
+          "badge": "Mission Overview",
+          "title": "For the Benefit of All",
+          "desc": "Since 1958, NASA has pioneered aeronautics, space exploration, and scientific research.",
+          "href": "https://www.nasa.gov/about"
+        },
+        "columns": [
+          {
+            "heading": "The Agency",
+            "items": [
+              {
+                "name": "Agency Leadership",
+                "desc": "NASA Administrator and executive directorates",
+                "href": "#"
+              },
+              {
+                "name": "Organization & Structure",
+                "desc": "Mission directorates and management branches",
+                "href": "#"
+              },
+              {
+                "name": "Budget & Financial Reports",
+                "desc": "Congressional appropriations and transparency data",
+                "href": "#"
+              },
+              {
+                "name": "History & Heritage",
+                "desc": "Decades of aeronautics and astronautical achievements",
+                "href": "#"
+              }
+            ]
+          },
+          {
+            "heading": "Field Centers",
+            "items": [
+              {
+                "name": "Kennedy Space Center (KSC)",
+                "desc": "Florida spaceport and Artemis launch facilities",
+                "href": "#"
+              },
+              {
+                "name": "Jet Propulsion Laboratory (JPL)",
+                "desc": "Robotic planetary exploration and deep space tracking",
+                "href": "#"
+              },
+              {
+                "name": "Johnson Space Center (JSC)",
+                "desc": "Astronaut training and Mission Control Center Houston",
+                "href": "#"
+              },
+              {
+                "name": "Goddard Space Flight Center",
+                "desc": "Astrophysics, Earth science, and communication grids",
+                "href": "#"
+              }
+            ]
+          },
+          {
+            "heading": "Connect & Engage",
+            "items": [
+              {
+                "name": "News & Press Releases",
+                "desc": "Latest agency statements, media alerts, and briefings",
+                "href": "#"
+              },
+              {
+                "name": "Careers & Astronaut Selection",
+                "desc": "Join NASA as an engineer, scientist, or astronaut",
+                "href": "#"
+              },
+              {
+                "name": "STEM Engagement",
+                "desc": "Resources, contests, and internships for students",
+                "href": "#"
+              },
+              {
+                "name": "NASA Space Apps Challenge",
+                "desc": "The world’s largest annual global space hackathon",
+                "href": "#"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "popularSearchSuggestions": [
+      "Artemis II Lunar Mission",
+      "James Webb Space Telescope Images",
+      "Mars Perseverance Rover Samples",
+      "International Space Station Live Track",
+      "Europa Clipper Trajectory",
+      "Astronomy Picture of the Day (APOD)",
+      "Total Solar Eclipse Archives",
+      "Voyager Interstellar Telemetry"
+    ],
+    "drawer": {
+      "modalLabel": "Navigation menu",
+      "brandTitle": "NASA",
+      "brandSubtitle": "National Aeronautics and Space Administration",
+      "brandTitleTooltip": "Return to NASA Home",
+      "closeAriaLabel": "Close navigation drawer",
+      "searchPrompt": "Search NASA archives & missions...",
+      "searchShortcut": "Ctrl+K",
+      "featuredCard": {
+        "badge": "Featured Experience",
+        "ctaBadge": "Explore Worlds",
+        "title": "Choose a World: Moon & Mars",
+        "description": "Discover the historic equipment and rovers left behind by NASA missions on the lunar regolith and Martian surface."
+      },
+      "navigationHeading": "Navigation",
+      "toggleSubcategoriesTitle": "Toggle subcategories",
+      "liveServicesHeading": "Official Live Services",
+      "liveServices": [
+        {
+          "id": "nasa-plus",
+          "label": "NASA+ Streaming",
+          "href": "https://plus.nasa.gov"
+        },
+        {
+          "id": "nasa-tv",
+          "label": "NASA TV & Coverage",
+          "href": "https://www.nasa.gov/live"
+        }
+      ],
+      "footerLeft": "nasa.gov",
+      "footerRight": "Official US Government Space Agency"
+    },
+    "searchModal": {
+      "modalLabel": "Search",
+      "inputAriaLabel": "Search missions and science",
+      "inputPlaceholder": "Search NASA missions, science, news, and multimedia...",
+      "clearTitle": "Clear query",
+      "escBadge": "ESC",
+      "resultsPrefix": "Results for",
+      "noMatches": "No direct matches found",
+      "popularTopicsHeading": "Popular Topics",
+      "officialPortalsHeading": "Official Portals",
+      "officialPortals": [
+        {
+          "title": "NASA+ Streaming",
+          "description": "Ad-free live events and shows",
+          "href": "https://plus.nasa.gov"
+        },
+        {
+          "title": "Earth Information Center",
+          "description": "Climate data & satellite views",
+          "href": "https://earth.gov"
+        }
+      ]
+    }
+  },
+  "homePage": {
+    "backgroundImage": "/homepagebg.webp",
+    "logoPlaceholder": {
+      "title": "Empty Logo Placeholder - Logo will be placed here",
+      "label": "[ Logo Placeholder ]",
+      "dimensions": "340 × 155 px"
+    },
+    "taglineLines": [
+      "Every mission leaves a trace...",
+      "Are you ready to uncover it ?"
+    ],
+    "ctaButton": {
+      "label": "Begin Your Journey",
+      "title": "Begin Your Journey"
+    }
+  },
+  "chooseWorldPage": {
+    "backgroundImage": "/choose-world-background.webp",
+    "cardBackgroundClean": "/choose-world-planets-background-clean.png",
+    "cardBackgroundHover": "/choose-world-planets-background.png",
+    "title": "Choose a World",
+    "subtitleLines": [
+      "Discover the equipment left behind by NASA's",
+      "missions on the Moon and Mars"
+    ],
+    "cards": {
+      "moon": {
+        "name": "The Moon",
+        "image": "/moon.png",
+        "imageAlt": "The Moon",
+        "countText": "3+ equipment"
+      },
+      "mars": {
+        "name": "The Mars",
+        "image": "/mars.png",
+        "imageAlt": "The Mars",
+        "countText": "4+ equipment",
+        "ariaLabel": "Explore The Mars equipment"
+      }
+    }
+  },
+  "marsPage": {
+    "backgroundImage": "/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp",
+    "backAriaLabel": "Back to Choose a World",
+    "backTitle": "Back to Choose a World",
+    "title": "The Mars",
+    "planetImage": "/mars-page-planet3rd.png",
+    "planetAlt": "The Mars",
+    "featureCards": [
+      {
+        "id": "distance",
+        "label": "Distance from Earth",
+        "valueLines": [
+          "54.6 – 401.4 Million km"
+        ]
+      },
+      {
+        "id": "missions",
+        "label": "NASA Missions",
+        "valueLines": [
+          "+25 Missions"
+        ]
+      },
+      {
+        "id": "feature",
+        "label": "Key Feature",
+        "valueLines": [
+          "Largest volcano in the",
+          "Solar System"
+        ]
+      }
+    ],
+    "aboutCard": {
+      "title": "About Mars",
+      "subtitleLines": [
+        "A cold , dusty world with",
+        "incredible stories to tell"
+      ],
+      "image": "/rectangle-page3.png",
+      "imageAlt": "Mars Surface Landscape"
+    },
+    "ctaButton": {
+      "label": "Explore Missions",
+      "title": "Explore NASA Mars Missions"
+    }
+  },
+  "marsMissionsPage": {
+    "backgroundImage": "/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp",
+    "horizonImage": "/mars-page4.webp",
+    "horizonAlt": "Mars Horizon Surface",
+    "backAriaLabel": "Back to The Mars Overview",
+    "backTitle": "Back to The Mars Overview",
+    "title": "The Mars",
+    "pins": [
+      {
+        "id": "insight",
+        "name": "Insight",
+        "subtitle": "Full Mission",
+        "equipmentId": "insight-lander",
+        "positionClass": "top-[31%] left-[20%] sm:top-[33%] sm:left-[23%] md:top-[34%] md:left-[24%]",
+        "pinWidth": "w-10 sm:w-12",
+        "pinHeight": "h-13 sm:h-16",
+        "cardPadding": "pl-3 pr-4 py-1.5 sm:pl-3.5 sm:pr-5 sm:py-2",
+        "titleSizeClass": "text-xs sm:text-base md:text-[17px]",
+        "subSizeClass": "text-[10px] sm:text-xs md:text-[12px]"
+      },
+      {
+        "id": "maven",
+        "name": "Maven",
+        "subtitle": "Preview",
+        "equipmentId": "perseverance-rover",
+        "positionClass": "top-[27%] left-[63%] sm:top-[28%] sm:left-[66%] md:top-[29%] md:left-[67%]",
+        "pinWidth": "w-9 sm:w-11",
+        "pinHeight": "h-12 sm:h-14",
+        "cardPadding": "pl-2.5 pr-3.5 py-1 sm:pl-3 sm:pr-4 sm:py-1.5",
+        "titleSizeClass": "text-xs sm:text-sm md:text-[15px]",
+        "subSizeClass": "text-[9px] sm:text-[11px] md:text-xs"
+      },
+      {
+        "id": "curiosity",
+        "name": "Curiosity",
+        "subtitle": "Preview",
+        "equipmentId": "curiosity-rover",
+        "positionClass": "top-[49%] left-[53%] sm:top-[51%] sm:left-[56%] md:top-[52%] md:left-[57%]",
+        "pinWidth": "w-11 sm:w-13 md:w-14",
+        "pinHeight": "h-14 sm:h-17 md:h-18",
+        "cardPadding": "pl-3 pr-4 py-1.5 sm:pl-4 sm:pr-5 sm:py-2.5",
+        "titleSizeClass": "text-sm sm:text-lg md:text-[19px]",
+        "subSizeClass": "text-[11px] sm:text-xs md:text-[13px]"
+      },
+      {
+        "id": "phoenix",
+        "name": "Phoenix",
+        "subtitle": "Preview",
+        "equipmentId": "viking-landers",
+        "positionClass": "top-[61%] left-[7%] sm:top-[63%] sm:left-[9%] md:top-[65%] md:left-[10%]",
+        "pinWidth": "w-12 sm:w-15 md:w-16",
+        "pinHeight": "h-16 sm:h-19 md:h-21",
+        "cardPadding": "pl-3.5 pr-5 py-2 sm:pl-4 sm:pr-6 sm:py-3",
+        "titleSizeClass": "text-base sm:text-xl md:text-[22px]",
+        "subSizeClass": "text-xs sm:text-sm md:text-[14px]"
+      }
+    ]
+  },
+  "marsInsightPage": {
+    "backgroundImage": "/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp",
+    "horizonImage": "/mars-page4.webp",
+    "horizonAlt": "Mars Horizon Zoomed on Left",
+    "backAriaLabel": "Back to Mars Missions",
+    "backTitle": "Back to Mars Missions",
+    "title": "The Mars",
+    "pin": {
+      "name": "Insight",
+      "subtitle": "Full Mission"
+    },
+    "card": {
+      "image": "/insight-lander-photo.jpg",
+      "imageAlt": "NASA InSight Lander on Mars",
+      "title": "Insight",
+      "meta": "Mars . 2018-2022",
+      "description": "NASA's Insight was a robotic lander that studied Mars' interior, detecting marsquakes and measuring underground heat flow to understand the planet's structure.",
+      "statusLabel": "Status:",
+      "statusValue": "Mission ended",
+      "ctaLabel": "Explore Missions",
+      "ctaTitle": "Explore Missions"
+    }
+  },
+  "insightMissionPage": {
+    "backAriaLabel": "Back",
+    "backTitle": "Back",
+    "title": "Insight",
+    "headlineLines": [
+      "A Tiny Listener",
+      "on a Big Planet"
+    ],
+    "subtitleLines": [
+      "Insight landed on Mars to listen",
+      "to the planet's natural quakes"
+    ],
+    "ctaLabel": "Watch the story",
+    "ctaTitle": "Watch the story"
+  },
+  "insightStory1Page": {
+    "backgroundImage": "/story1bg.webp",
+    "backAriaLabel": "Back to Insight Trailer",
+    "backTitle": "Back",
+    "headerTitle": "Mission Chronicles",
+    "titleLines": [
+      "The Machine That",
+      "Took Mars’s Pulse"
+    ],
+    "paragraphs": [
+      {
+        "lines": [
+          {
+            "breakMode": "always",
+            "segments": [
+              {
+                "text": "“I’m here. I’m home.”",
+                "highlight": true
+              }
+            ]
+          },
+          {
+            "breakMode": "responsive",
+            "segments": [
+              "That is what NASA’s InSight account"
+            ]
+          },
+          {
+            "breakMode": "responsive",
+            "segments": [
+              "posted, in the lander’s own voice, on the"
+            ]
+          },
+          {
+            "breakMode": "none",
+            "segments": [
+              "day it landed on Mars: ",
+              {
+                "text": "26 November 2018",
+                "highlight": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "lines": [
+          {
+            "breakMode": "responsive",
+            "segments": [
+              "Today that machine is still there, and it"
+            ]
+          },
+          {
+            "breakMode": "responsive",
+            "segments": [
+              "hasn't said a word in almost four years."
+            ]
+          },
+          {
+            "breakMode": "responsive",
+            "segments": [
+              "Dust covers its solar panels. NASA last"
+            ]
+          },
+          {
+            "breakMode": "none",
+            "segments": [
+              "heard from it on ",
+              {
+                "text": "15 December 2022",
+                "highlight": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "maxWidth": true,
+        "lines": [
+          {
+            "breakMode": "responsive",
+            "segments": [
+              "But before it went quiet, it did something NASA calls a first:"
+            ]
+          },
+          {
+            "breakMode": "responsive",
+            "segments": [
+              {
+                "text": "it studied the inside of Mars in depth",
+                "highlight": true
+              },
+              " . For decades, we met"
+            ]
+          },
+          {
+            "breakMode": "none",
+            "segments": [
+              "Mars the way you meet a stranger, by its face: canyons,"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "investigation": {
+    "backgroundImage": "/investigationpage-bg.webp",
+    "header": {
+      "backAriaLabel": "Back",
+      "backTitle": "Back",
+      "title": "Investigation",
+      "caseTitle": "Prove It: Case 1094",
+      "subtitle": "Don't just trust the mission. Check the evidence"
+    },
+    "steps": [
+      {
+        "number": 1,
+        "lines": [
+          "The Ground shook"
+        ],
+        "leftPct": "21.6%"
+      },
+      {
+        "number": 2,
+        "lines": [
+          "Something",
+          "new formed"
+        ],
+        "leftPct": "37.2%"
+      },
+      {
+        "number": 3,
+        "lines": [
+          "Can a small",
+          "Rock do this?"
+        ],
+        "leftPct": "52.8%"
+      },
+      {
+        "number": 4,
+        "lines": [
+          "Is it really ice?"
+        ],
+        "leftPct": "68.2%"
+      },
+      {
+        "number": 5,
+        "lines": [
+          "Case Board"
+        ],
+        "leftPct": "83.8%"
+      }
+    ],
+    "chapterToasts": {
+      "intro1": {
+        "code": "BRIEFING",
+        "title": "Meet NEXUS · Case 1094"
+      },
+      "test-1": {
+        "code": "SEISMIC CHECK",
+        "title": "Real quake or just noise?"
+      },
+      "intro2": {
+        "code": "WITNESS 02",
+        "title": "A second witness in orbit"
+      },
+      "test-2": {
+        "code": "ORBITAL CHECK",
+        "title": "Something new, right place & time?"
+      },
+      "intro3": {
+        "code": "DOUBT CHECK",
+        "title": "Can a small rock do this?"
+      },
+      "test-3": {
+        "code": "IMPACT SCALE",
+        "title": "Crater scale & impact energy"
+      },
+      "intro4": {
+        "code": "FINAL CLUE",
+        "title": "White patches around the crater"
+      },
+      "test-4": {
+        "code": "ICE ANALYSIS",
+        "title": "Is it really water ice?"
+      },
+      "case-board": {
+        "code": "CASE BOARD",
+        "title": "Final evidence synthesis"
+      }
+    },
+    "trustOptions": [
+      "Not yet",
+      "A little",
+      "Somewhat",
+      "Mostly",
+      "Totally"
+    ],
+    "caseStamps": [
+      {
+        "id": 1,
+        "label": "THE GROUND SHOOK",
+        "detail": "Sol 1094 seismic waveform confirmed a real marsquake, not wind noise."
+      },
+      {
+        "id": 2,
+        "label": "SOMETHING NEW FORMED",
+        "detail": "MRO orbital before/after imagery reveals a fresh 150 m crater."
+      },
+      {
+        "id": 3,
+        "label": "A SMALL ROCK CAN DO THIS",
+        "detail": "High impact velocity (~10+ km/s) multiplies kinetic energy to excavate 21 m deep & fling debris 37 km."
+      },
+      {
+        "id": 4,
+        "label": "PROBABLY WATER ICE",
+        "detail": "Blue-white false-color signature and Dec 2022 sublimation match exposed subsurface water ice."
+      }
+    ],
+    "caseSuspects": [
+      {
+        "id": "A",
+        "name": "Space Rock Impact",
+        "status": "Alive",
+        "alive": true,
+        "summary": "Confirmed by Sol 1094 seismic waves, fresh 150 m crater, impact energy & exposed ice."
+      },
+      {
+        "id": "B",
+        "name": "Mars Cracked by Itself",
+        "status": "Out",
+        "alive": false,
+        "summary": "Ruled out — MRO orbiter spotted a brand-new impact crater & 37 km ejecta blanket."
+      },
+      {
+        "id": "C",
+        "name": "Just Wind Noise",
+        "status": "Out",
+        "alive": false,
+        "summary": "Ruled out — Sol 1094 waveform shows clear surface waves well above Martian wind."
+      }
+    ],
+    "verdictSlots": [
+      {
+        "id": "observation",
+        "label": "Observation:",
+        "correctPartId": "quakes-1319",
+        "hint": "What did InSight directly record in its catalog?"
+      },
+      {
+        "id": "evidence",
+        "label": "Evidence:",
+        "correctPartId": "water-ice",
+        "hint": "Which careful orbital finding supports the impact clue?"
+      },
+      {
+        "id": "interpretation",
+        "label": "Interpretation:",
+        "correctPartId": "rock-estimate",
+        "hint": "Which physical value is modeled rather than directly weighed?"
+      },
+      {
+        "id": "conclusion",
+        "label": "Conclusion:",
+        "correctPartId": "space-rock-verdict",
+        "hint": "Which statement sums up the final ruling for Case 1094?"
+      }
+    ],
+    "verdictParts": [
+      {
+        "id": "rock-estimate",
+        "text": "Our rock size is an estimate",
+        "targetSlot": "interpretation"
+      },
+      {
+        "id": "quakes-1319",
+        "text": "This is one event among 1,319 quakes",
+        "targetSlot": "observation"
+      },
+      {
+        "id": "water-ice",
+        "text": "The ice is described as consistent with water ice",
+        "targetSlot": "evidence"
+      },
+      {
+        "id": "space-rock-verdict",
+        "text": "A space rock impact best explains Case 1094",
+        "targetSlot": "conclusion"
+      }
+    ],
+    "nexusSpeakerLabel": "NEXUS",
+    "robotAlt": "NEXUS Companion Robot",
+    "robotImages": {
+      "intro": "/robot-intro-scences.png",
+      "investigate": "/robot-investigate-page.png",
+      "amazed": "/robot-amazed.png",
+      "front": "/robot-front.png"
+    },
+    "continuePrompt": "Click to continue",
+    "continueDialogueSrLabel": "Continue NEXUS dialogue",
+    "hintsTitle": "Hints",
+    "trustMeterTitle": "Trust Meter",
+    "introScenes": {
+      "intro1-1": {
+        "lines": [
+          "Hey. I'm NEXUS.",
+          "I live in the mission archive."
+        ]
+      },
+      "intro1-2": {
+        "lines": [
+          "I've read every log. I've never",
+          "seen Mars. I need your eyes."
+        ]
+      },
+      "intro1-3": {
+        "prompt": "Pick a codename.",
+        "inputAriaLabel": "Codename",
+        "inputPlaceholder": "Enter codename...",
+        "submitLabel": "Continue"
+      },
+      "intro1-4": {
+        "defaultCodename": "{name}",
+        "lines": [
+          "Okay, {codename}. The story says a",
+          "space rock hit Mars on",
+          "Christmas Eve 2021."
+        ]
+      },
+      "intro1-5": {
+        "lines": [
+          "Big claim.",
+          "We check big claims."
+        ]
+      },
+      "intro1-6": {
+        "lines": [
+          "The Suspects",
+          "A: a space rock.",
+          "B: Mars cracked by itself.",
+          "C: just noise."
+        ]
+      },
+      "intro1-7": {
+        "lines": [
+          "Three suspects.",
+          "Let's see who survives."
+        ]
+      },
+      "intro1-8": {
+        "lines": [
+          "Three suspects.",
+          "Let's see who survives."
+        ],
+        "confidencePrompt": "How sure are you a space rock did this?"
+      },
+      "intro2-1": {
+        "lines": [
+          "Suspect B says Mars just",
+          "cracked. No rock needed.",
+          "Prove B wrong."
+        ]
+      },
+      "intro2-2": {
+        "lines": [
+          "We need a second witness.",
+          "One that can see."
+        ]
+      },
+      "intro3": {
+        "lines": [
+          "Claim three: a rock made this.",
+          "I'm doubtful. Look at the size"
+        ]
+      },
+      "intro4": {
+        "lines": [
+          "My favorite. White patches",
+          "around the crater. NASA says",
+          "water ice."
+        ]
+      }
+    },
+    "test01": {
+      "title": "Real quake or just noise?",
+      "hints": [
+        "calm line, then a jump",
+        "bigger wiggles mean more shaking.",
+        "a glow marks the area."
+      ],
+      "hintButtonLabel": "Hint",
+      "hintButtonTitle": "Reveal next hint",
+      "quakeButtonLabel": "QUAKE",
+      "quakeButtonTitle": "Drag QUAKE onto Recording X or Y (or click to test)",
+      "audioCaption": "Sped up 100 times so human ears can hear it.",
+      "recordingX": {
+        "playTitle": "Play Recording X (sped up 100x)",
+        "imageAlt": "Recording X is the sol 1094 seismogram from NASA's video",
+        "onsetTitle": "Seismic surface wave onset",
+        "captionLines": [
+          "Recording X is the sol 1094",
+          "seismogram from NASA's video"
+        ]
+      },
+      "recordingY": {
+        "playTitle": "Play Recording Y (sped up 100x)",
+        "imageAlt": "Recording Y is a windy-day noise sample",
+        "captionLines": [
+          "Recording Y is a windy-day",
+          "noise sample."
+        ]
+      },
+      "tapHints": {
+        "wrongTrackY": "That is Recording Y (windy noise). Tap the sharp jump on Recording X!",
+        "wrongRegionX": "Look further right on Recording X where the calm line suddenly jumps!"
+      },
+      "beats": {
+        "0": [
+          "Mars has wind. Wind shakes",
+          "sensors too.",
+          "Which recording is a quake?"
+        ],
+        "1": [
+          "drag the label QUAKE",
+          "onto X or Y."
+        ],
+        "2": [
+          "Interesting pick. Look",
+          "at how the wiggles",
+          "start."
+        ],
+        "3": [
+          "InSight carried a weather",
+          "station for this. It tells",
+          "quakes from wind."
+        ],
+        "4": [
+          "tap where the shaking",
+          "starts."
+        ],
+        "5": [
+          "A magnitude 4 quake,",
+          "about 3,500 km away."
+        ],
+        "6": [
+          "NASA says it was the",
+          "first quake seen with",
+          "surface waves. They",
+          "ripple along the ground."
+        ],
+        "7": [
+          "A seismometer tells us",
+          "when and how hard.",
+          "Not why."
+        ]
+      },
+      "continueLabel": "Continue to Step 2 →"
+    },
+    "test02": {
+      "title": "Something new, at the right place and time?",
+      "hints": [
+        "go slow, look for something on one side only.",
+        "one round shape is on the after side.",
+        "dark material spreads from it."
+      ],
+      "hintButtonLabel": "Hint",
+      "hintButtonTitle": "Reveal next hint",
+      "beforeBadge": "Before 11 February 2022",
+      "beforeAriaLabel": "Before image: terrain without the new crater",
+      "afterBadge": "After 11 February 2022",
+      "afterAriaPrefix": "After image: a new dark-rayed crater",
+      "afterCircledSuffix": ", circled",
+      "afterTitle": "Click to circle the new impact crater",
+      "slideInstruction": "Slide between before and after . Circle anything that's different",
+      "clueMatchHeading": "Clue match Pick the two that tie the crater to the quake",
+      "clueCards": [
+        {
+          "id": "place",
+          "title": "PLACE",
+          "lines": [
+            "the crater matches",
+            "where the quake",
+            "came from"
+          ]
+        },
+        {
+          "id": "time",
+          "title": "TIME",
+          "lines": [
+            "daily Mars weather",
+            "maps narrowed the",
+            "impact to 24 hours"
+          ]
+        },
+        {
+          "id": "looks",
+          "title": "LOOKS",
+          "lines": [
+            "the crater looks",
+            "fresh"
+          ]
+        }
+      ],
+      "clueLooksFeedback": "Appearance alone shows freshness, not when or where the quake happened.",
+      "whatElseLabel": "What else would you check?",
+      "whatElsePlaceholder": "I would check...",
+      "whatElseSubmitTitle": "Submit check",
+      "beats": {
+        "intro": [
+          "slide between before and",
+          "after Context Camera images.",
+          "Circle what's different."
+        ],
+        "spotted": [
+          "Scientists first spotted it on",
+          "11 February 2022."
+        ],
+        "question": [
+          "A crater in a photo. Does it",
+          "belong to this quake?"
+        ],
+        "linked": [
+          "Yes. Same time, same place.",
+          "That's a link."
+        ],
+        "orbiter": [
+          "One seismometer gives",
+          "distance well. Direction",
+          "is fuzzy. The orbiter",
+          "pins the spot."
+        ]
+      },
+      "continueLabel": "Continue to Step 3 →"
+    },
+    "test03": {
+      "title": "Can a small rock do this?",
+      "craterAlt": "150m wide, 21m deep Martian crater",
+      "dropZoneTitle": "Drop scale object here (or click)",
+      "bus": {
+        "placedAlt": "12m Bus",
+        "placedLabel": "12 m",
+        "trayAlt": "Bus (~12m)",
+        "trayTitle": "Drag or click Bus (~12 m)"
+      },
+      "pyramid": {
+        "placedAlt": "146m Great Pyramid",
+        "placedLabel": "Great Pyramid ~146 m",
+        "trayAlt": "Great Pyramid (~146m)",
+        "trayTitle": "Drag or click Great Pyramid (~146 m)"
+      },
+      "captions": {
+        "bus": "drag the bus onto the scale bar next to the crater",
+        "pyramid": "drag the Great Pyramid over.",
+        "pyramidPlaced": "Compare the 12 m rock to the 150 m crater — next, test its impact speed."
+      },
+      "testSpeedButtonLabel": "Test Impact Speed",
+      "speedStage": {
+        "instruction": "speed slider. Energy bar grows as the rock speeds up.",
+        "meteorAlt": "High-speed meteoroid impact energy visualization",
+        "speedLabel": "Speed",
+        "speedSliderAriaLabel": "Meteoroid speed slider",
+        "energyLabel": "Energy"
+      },
+      "dialogues": {
+        "bus": [
+          "NASA estimates the rock at",
+          "5 to 12 meters.",
+          "A bus is about 12."
+        ],
+        "pyramid": [
+          "About as wide as the Great",
+          "Pyramid was tall."
+        ],
+        "speed0": [
+          "Double the speed, four",
+          "times the energy."
+        ],
+        "speed1": [
+          "Debris flew up to 37 km."
+        ],
+        "speed2": [
+          "Plausible isn't proof. But",
+          "every piece fits so far."
+        ]
+      },
+      "continueLabel": "Continue to Step 4 Intro"
+    },
+    "test04": {
+      "title": "Is it really ice?",
+      "monthLabels": [
+        "Feb 2022",
+        "Mar 2022",
+        "Apr 2022",
+        "May 2022",
+        "Jun 2022",
+        "Jul 2022",
+        "Aug 2022",
+        "Sep 2022",
+        "Oct 2022",
+        "Nov 2022",
+        "Dec 2022"
+      ],
+      "craterAriaTemplate": "Crater in {mode}; time-lapse progress {progress} percent",
+      "colourModeName": "colour",
+      "bwModeName": "black and white",
+      "scaleLabel": "100 m",
+      "modeBadges": {
+        "colour": "HiRISE · Colour Mode",
+        "bw": "HiRISE · Black & White"
+      },
+      "prompts": {
+        "bw": "switch from black and white to colour",
+        "fingerprint": "Light fingerprint: Match the crater's fingerprint."
+      },
+      "toggleButtons": {
+        "colourOn": "Colour ON",
+        "bw": "Black & White",
+        "next": "Next →"
+      },
+      "matchedBadge": "H₂O Matched",
+      "timeline": {
+        "question": "If this is ice, what happens over months?",
+        "startLabel": "Feb 2022",
+        "endLabel": "Dec 2022",
+        "sliderAriaLabel": "Time-lapse ice sublimation slider from Feb 2022 to Dec 2022"
+      },
+      "fingerprintMatcher": {
+        "heading": "Light Fingerprint (1.0 – 2.5 μm)",
+        "matchBadge": "Match!",
+        "noMatchBadge": "No Match",
+        "axis15Label": "1.5 μm",
+        "axis20Label": "2.0 μm",
+        "craterPatchLabel": "Crater patch",
+        "defaultPrompt": "Pick a mineral spectrum to match the crater dips.",
+        "candidates": [
+          {
+            "id": "rock",
+            "label": "Bright Rock",
+            "sublabel": "Silica / Dust",
+            "points": "8,26 42,24 72,22 98,25 130,24 162,26 196,25 232,27",
+            "isMatch": false,
+            "feedback": "Mismatch — bright rock lacks the deep 1.5 μm & 2.0 μm dips."
+          },
+          {
+            "id": "water-ice",
+            "label": "Water Ice (H₂O)",
+            "sublabel": "1.5 & 2.0 μm dips",
+            "points": "8,22 36,24 58,28 76,68 95,30 124,26 146,74 168,36 198,32 232,38",
+            "isMatch": true,
+            "feedback": "Match confirmed — 1.5 μm & 2.0 μm dips fit water ice."
+          },
+          {
+            "id": "co2-ice",
+            "label": "Dry Ice (CO₂)",
+            "sublabel": "1.43 & 2.01 μm",
+            "points": "8,20 34,20 56,56 70,22 104,20 132,22 154,60 172,24 202,24 232,26",
+            "isMatch": false,
+            "feedback": "Mismatch — CO₂ dry ice bands are narrower and shifted."
+          }
+        ]
+      },
+      "dialogues": {
+        "beat0Lines": [
+          "Could be bright rock.",
+          "How would we tell?"
+        ],
+        "beat0Cta": "Switch to Colour →",
+        "beat1Lines": [
+          "In this colour mode, ice looks",
+          "blue-white."
+        ],
+        "beat1Cta": "Check light fingerprint →",
+        "beat2Lines": [
+          "Nobody touched it.",
+          "Scientists say the evidence",
+          "is consistent with water ice.",
+          "That's careful wording"
+        ],
+        "beat2Cta": "Verify & continue →",
+        "beat34Text": "It's the lowest-latitude ice exposed by an impact seen on Mars.",
+        "beat3Cta": "Stamp Case Board",
+        "beat4Cta": "Open Case Board"
+      }
+    },
+    "caseBoard": {
+      "stripTitle": "Case Board",
+      "stripDefaultAction": "Open Final Board →",
+      "defaultCodename": "Investigator",
+      "suspectStripTitle": "Suspect strip",
+      "stampsSuffix": "/4 Stamps",
+      "suspectPrefix": "Suspect",
+      "closeSuspectNoteAriaLabel": "Close suspect note",
+      "verdictBuilder": {
+        "title": "Verdict Builder",
+        "subtitle": "Drag the correct parts to build the verdict",
+        "resetLabel": "Reset",
+        "placeSelectedPrompt": "Click to place selected part...",
+        "dragHerePrompt": "Drag here...",
+        "partTitle": "Drag into a slot above (or click to select, then click a slot)",
+        "errorPrefix": "Not quite",
+        "lockedInSuffix": "locked in.",
+        "completeStrong": "Case 1094 Verdict Built!",
+        "completeBody": "Observation, evidence, interpretation, and conclusion aligned.",
+        "removeAriaPrefix": "Remove",
+        "placeAriaLabel": "Place selected evidence"
+      },
+      "nexusMessages": {
+        "initial": "Honest question again. How sure are you a space rock did this?",
+        "verdictComplete": "Verdict built, {name}. Careful science holds up — ready for Case 1222?",
+        "highConfidence": "That's what evidence does.",
+        "lowConfidence": "Good. Skeptics make good scientists. Tell me what's bugging you?"
+      },
+      "confidence": {
+        "title": "Your Confidence",
+        "initialHint": "Slide C0 → C1",
+        "minLabel": "C0",
+        "maxLabel": "C1",
+        "sliderAriaLabel": "Your Confidence from C0 to C1"
+      },
+      "nextCase": {
+        "title": "Next case",
+        "badge": "SOL 1222 · S1222A",
+        "description": "InSight's strongest recorded marsquake (M4.7). Was it another space rock — or Mars itself?",
+        "initialLabel": "Initial:",
+        "notSetLabel": "Not set",
+        "ctaLabel": "Open Case 1222"
+      },
+      "exploreFurther": {
+        "title": "After the Investigation",
+        "badge": "EXPLORE FURTHER",
+        "description": "Dive into the seismic science behind the quakes or inspect how InSight was engineered.",
+        "goDeeperLabel": "Go deeper",
+        "goDeeperTitle": "Go deeper: Science Behind It",
+        "goTechnicalLabel": "Go technical",
+        "goTechnicalTitle": "Go technical: Engineering the Mission",
+        "engineeringLegacyTitle": "Engineering Legacy: Mars Legacy Outpost",
+        "unlockedBadge": "Unlocked",
+        "optionalBadge": "Optional · Case Bonus",
+        "unlockedDescription": "Case 1094 complete. Apply InSight’s lessons in a fictional future Mars outpost strategy simulation.",
+        "lockedDescription": "Complete the 4 stamps & verdict to fully unlock in story order, or launch the optional outpost simulation now.",
+        "engineeringLegacyLabel": "Engineering Legacy",
+        "engineeringLegacyTitleAttr": "Engineering Legacy: Mars Legacy Outpost"
+      },
+      "actions": {
+        "replayLabel": "Replay Case",
+        "exitLabel": "Return Home"
+      },
+      "stampsModal": {
+        "modalLabel": "Case 1094 evidence stamps",
+        "title": "Case 1094 Evidence Stamps",
+        "subtitle": "Collected across Case 1094",
+        "closeAriaLabel": "Close",
+        "emptyMessage": "No evidence stamps collected yet.",
+        "testPrefix": "CLUE 0"
+      },
+      "case1222Modal": {
+        "modalLabel": "Next investigation dossier",
+        "eyebrow": "NEXT INVESTIGATION DOSSIER",
+        "title": "Prove It: Case 1222 (S1222a)",
+        "closeAriaLabel": "Close",
+        "leadBeforeDate": "On ",
+        "dateBold": "May 4, 2022 (Sol 1222)",
+        "leadBetween": ", NASA's InSight lander recorded a ",
+        "magHighlight": "magnitude 4.7",
+        "leadAfterMag": " marsquake — the strongest ever detected on Mars, shaking the planet for over 6 hours.",
+        "previewHeadingPrefix": "Briefing Preview for ",
+        "bullet1BeforeNone": "• Orbital teams searched Mars for a fresh crater huge enough to match a M4.7 quake — and found ",
+        "bullet1NoneBold": "none",
+        "bullet1AfterNone": ".",
+        "bullet2": "• Ruling out an impact revealed that Mars's crust still releases tectonic stress today.",
+        "replayLabel": "Replay Case 1094",
+        "returnHomeLabel": "Return Home",
+        "closeLabel": "Close"
+      }
+    }
+  },
+  "goDeeper": {
+    "sectionLabel": "SCIENCE BEHIND IT",
+    "backRootLabel": "Case Board",
+    "secondaryActions": {
+      "page4": {
+        "label": "Review Case 1094",
+        "title": "Return to Case 1094 Case Board"
+      },
+      "lastPage": {
+        "label": "Go technical",
+        "title": "Explore Go technical: Engineering the Mission"
+      }
+    },
+    "finalAction": {
+      "label": "Back to Case Board",
+      "title": "Return to Investigation Case Board"
+    },
+    "pages": [
+      {
+        "number": 1,
+        "page": "go-deeper-1",
+        "bgVariant": "deep",
+        "title": "The Planet That Whispers",
+        "subtitle": "Mars has no tectonic plates. So why does it shake?",
+        "paragraphs": [
+          [
+            "On Earth, moving plates cause many quakes. ",
+            {
+              "text": "Mars has none:",
+              "highlight": true
+            },
+            " its crust acts like one giant plate, and it still trembles. Faults form as the planet slowly cools and shrinks. And sometimes a space rock falls from the sky."
+          ],
+          [
+            {
+              "text": "InSight listened",
+              "highlight": true
+            },
+            " for all of it. What it heard was not a roar. It was a whisper. The strongest quake was magnitude ",
+            {
+              "text": "4.7",
+              "highlight": true
+            },
+            ". The final catalogue lists ",
+            {
+              "text": "1,323",
+              "highlight": true
+            },
+            " main events plus 1,392 very short, high-pitched signals, and only ",
+            {
+              "text": "14",
+              "highlight": true
+            },
+            " of the ",
+            {
+              "text": "1,323",
+              "highlight": true
+            },
+            " earned the top quality grade, meaning clear, repeated wave arrivals. ",
+            {
+              "text": "InSight's legacy",
+              "highlight": true
+            },
+            " isn't a photograph. It's a recording."
+          ]
+        ]
+      },
+      {
+        "number": 2,
+        "page": "go-deeper-2",
+        "bgVariant": "nebula",
+        "title": "How a whisper becomes a map",
+        "paragraphs": [
+          [
+            "A quake sends two kinds of waves, ",
+            {
+              "text": "P waves",
+              "highlight": true
+            },
+            " first and ",
+            {
+              "text": "S waves",
+              "highlight": true
+            },
+            " second. They speed up, slow down, bounce and bend ",
+            {
+              "text": "depending on",
+              "highlight": true
+            },
+            " what they pass through. Time them, and you can read layers you could never dig to."
+          ],
+          [
+            "That is how the first measurements of Mars's layers arrived in ",
+            {
+              "text": "2021",
+              "highlight": true
+            },
+            ": a crust about ",
+            {
+              "text": "20 km",
+              "highlight": true
+            },
+            " thick (or about ",
+            {
+              "text": "37 km",
+              "highlight": true
+            },
+            " if it has three sub-layers), a mantle reaching about ",
+            {
+              "text": "1,560 km",
+              "highlight": true
+            },
+            " down, and a liquid core about ",
+            {
+              "text": "1,830 km",
+              "highlight": true
+            },
+            " in radius, the distance from the centre to its edge. And here's the shocker: it took InSight about ",
+            {
+              "text": "two years to measure Mars's core",
+              "highlight": true
+            },
+            ". For Earth, it took hundreds of years."
+          ]
+        ]
+      },
+      {
+        "number": 3,
+        "page": "go-deeper-3",
+        "bgVariant": "deep",
+        "title": "The quake with no crater",
+        "paragraphs": [
+          [
+            "On ",
+            {
+              "text": "4 May 2022",
+              "highlight": true
+            },
+            ", SEIS recorded the biggest quake of the mission: magnitude ",
+            {
+              "text": "4.7",
+              "highlight": true
+            },
+            ", about five times larger than the previous record, a ",
+            {
+              "text": "4.2 in August 2021",
+              "highlight": true
+            },
+            ". It struck roughly ",
+            {
+              "text": "2,000 km",
+              "highlight": true
+            },
+            " from the lander, far from Cerberus Fossae, where the best-known quakes came from."
+          ],
+          [
+            "Its signal looked like earlier impact quakes, so scientists ",
+            {
+              "text": "suspected a meteoroid",
+              "highlight": true
+            },
+            ". A fresh crater would have been about ",
+            {
+              "text": "300 m wide",
+              "highlight": true
+            },
+            ". Every spacecraft orbiting Mars joined the search, and it took months. They found nothing. ",
+            {
+              "text": "A 2023",
+              "highlight": true
+            },
+            " study concluded the quake was highly likely tectonic, a ",
+            {
+              "text": "release of stress inside the crust",
+              "highlight": true
+            },
+            ". A crater that never was told scientists something too."
+          ]
+        ]
+      },
+      {
+        "number": 4,
+        "page": "go-deeper-4",
+        "bgVariant": "nebula",
+        "title": "Where the shaking comes from",
+        "paragraphs": [
+          [
+            {
+              "text": "Up to 2021",
+              "highlight": true
+            },
+            ", the most significant quakes came from one place: ",
+            {
+              "text": "Cerberus Fossae",
+              "highlight": true
+            },
+            ", a region that was volcanically active in the recent geologic past. None came from ",
+            {
+              "text": "Tharsis",
+              "highlight": true
+            },
+            ", the giant volcano region, though the core's ",
+            {
+              "text": "“shadow zones”",
+              "highlight": true
+            },
+            ", areas that some waves can't easily reach, may hide some."
+          ],
+          [
+            "Impacts shake Mars too. At least ",
+            {
+              "text": "eight of InSight's 1,300",
+              "highlight": true
+            },
+            "-plus quakes came from meteoroid impacts, and the two largest left craters about ",
+            {
+              "text": "150 m wide",
+              "highlight": true
+            },
+            ". One of them was on Christmas Eve ",
+            {
+              "text": "2021",
+              "highlight": true
+            },
+            ", the case file you can open next."
+          ]
+        ]
+      },
+      {
+        "number": 5,
+        "page": "go-deeper-5",
+        "bgVariant": "deep",
+        "title": "The core that shrank twice",
+        "bullets": [
+          [
+            {
+              "text": "2021:",
+              "highlight": true
+            },
+            " a liquid core with a radius of about ",
+            {
+              "text": "1,830 km",
+              "highlight": true
+            },
+            "."
+          ],
+          [
+            {
+              "text": "April 2023:",
+              "highlight": true
+            },
+            " about ",
+            {
+              "text": "1,780–1,810 km",
+              "highlight": true
+            },
+            ", from waves of one far-side marsquake and one meteoroid impact."
+          ],
+          [
+            {
+              "text": "October 2023:",
+              "highlight": true
+            },
+            " about ",
+            {
+              "text": "1,650 km",
+              "highlight": true
+            },
+            " (±20 km), about ",
+            {
+              "text": "5–8% denser",
+              "highlight": true
+            },
+            " than first estimated, topped by a layer of molten rock."
+          ]
+        ],
+        "paragraphs": [
+          [
+            "The newest study plays the plot twist. Each answer improved on the one before."
+          ]
+        ],
+        "closing": "That's not a mistake. That's evidence arriving."
+      },
+      {
+        "number": 6,
+        "page": "go-deeper-6",
+        "bgVariant": "nebula",
+        "title": "Why Earth should care",
+        "paragraphs": [
+          [
+            {
+              "text": "Mars doesn't recycle",
+              "highlight": true
+            },
+            " its crust like Earth does, so it keeps clues that Earth's active geology has likely erased. ",
+            {
+              "text": "In 2025",
+              "highlight": true
+            },
+            ", a study found lumps of rock up to about ",
+            {
+              "text": "4 km",
+              "highlight": true
+            },
+            " across scattered through Mars's mantle, probably leftovers from giant impacts about ",
+            {
+              "text": "4.5 billion years ago",
+              "highlight": true
+            },
+            ". NASA's science chief said the data gives insight into other rocky bodies, ",
+            {
+              "text": "Earth included",
+              "highlight": true
+            },
+            "."
+          ],
+          [
+            "And the data didn't leave. It sits in NASA's ",
+            {
+              "text": "Planetary Data System",
+              "highlight": true
+            },
+            " and in ",
+            {
+              "text": "IRIS",
+              "highlight": true
+            },
+            ", the international seismology archive, open to students and researchers anywhere. You can look at it yourself with the ",
+            {
+              "text": "IRIS Mars Monitor",
+              "highlight": true
+            },
+            "."
+          ]
+        ],
+        "secondarySection": {
+          "title": "Three questions nobody can answer yet",
+          "questions": [
+            {
+              "question": "Is Mars's core like Earth's?",
+              "answer": "Earth's outer core is liquid and its inner core is solid. NASA said scientists would keep checking InSight's data to see whether Mars is similar."
+            },
+            {
+              "question": "How big is the core, really?",
+              "answer": "1,830, then 1,780–1,810, then 1,650. The newest number isn't a final answer."
+            },
+            {
+              "question": "Where are the missing quakes?",
+              "answer": "Cerberus Fossae speaks clearly. Tharsis stays silent. Shadow zones may hide some."
+            }
+          ]
+        },
+        "closing": "The mission ended. The questions remain."
+      }
+    ]
+  },
+  "goTechnical": {
+    "sectionLabel": "ENGINEERING THE MISSION",
+    "backRootLabel": "Case Board",
+    "secondaryActions": {
+      "lastPage": {
+        "label": "Go deeper",
+        "title": "Explore Go deeper: Science Behind It"
+      }
+    },
+    "finalAction": {
+      "label": "Back to Case Board",
+      "title": "Return to Investigation Case Board"
+    },
+    "pages": [
+      {
+        "number": 1,
+        "page": "go-technical-1",
+        "bgVariant": "nebula",
+        "title": "Inside the Machine That Listened to Mars",
+        "paragraphs": [
+          [
+            {
+              "text": "Imagine",
+              "highlight": true
+            },
+            " being sent to another planet. You can't walk around. You ",
+            {
+              "text": "can't fix",
+              "highlight": true
+            },
+            " anything yourself. You have one machine, and it must make its own power, place its ",
+            {
+              "text": "own instruments",
+              "highlight": true
+            },
+            " and send its discoveries home across space. That machine was ",
+            {
+              "text": "InSight",
+              "highlight": true
+            },
+            "."
+          ],
+          [
+            "So how do you build a machine that listens to a planet? ",
+            {
+              "text": "Every component has a story.",
+              "highlight": true
+            }
+          ]
+        ]
+      },
+      {
+        "number": 2,
+        "page": "go-technical-2",
+        "bgVariant": "deep",
+        "title": "1. The solar panels: the machine's lifeline",
+        "paragraphs": [
+          [
+            "There are no power outlets on Mars. So InSight carried two circular solar panels, each about ",
+            {
+              "text": "2.2 metres",
+              "highlight": true
+            },
+            " across, that gave the lander its electricity."
+          ],
+          [
+            "At landing, the panels made about ",
+            {
+              "text": "5,000 watt-hours",
+              "highlight": true
+            },
+            " of energy per Martian day. A watt-hour is a unit of energy, and 5,000 is enough to run an electric oven for ",
+            {
+              "text": "1 hour 40 minutes. By May 2022,",
+              "highlight": true
+            },
+            " dust had cut that to about ",
+            {
+              "text": "500. In May 2021,",
+              "highlight": true
+            },
+            " engineers had the arm trickle sand beside a panel so the wind would knock dust loose, which added about ",
+            {
+              "text": "30 watt-hours per day",
+              "highlight": true
+            },
+            ". It couldn't stop the decline, so the team switched instruments off one by one until the seismometer was the last one running."
+          ],
+          [
+            {
+              "text": "What this teaches us:",
+              "highlight": true
+            },
+            " A spacecraft needs a plan for its whole life, not only its first day."
+          ]
+        ],
+        "promptBox": {
+          "label": "THINK LIKE AN ENGINEER:",
+          "text": "If you were designing InSight, how would you protect its power supply in a dusty place?"
+        }
+      },
+      {
+        "number": 3,
+        "page": "go-technical-3",
+        "bgVariant": "nebula",
+        "title": "2. The lander body: built to stay put",
+        "paragraphs": [
+          [
+            {
+              "text": "InSight",
+              "highlight": true
+            },
+            " was built on the proven design of NASA's ",
+            {
+              "text": "Phoenix lander",
+              "highlight": true
+            },
+            ". The basic structure of its arm was first built for a Mars lander planned for ",
+            {
+              "text": "2001",
+              "highlight": true
+            },
+            " and later cancelled, then ",
+            {
+              "text": "refurbished by JPL",
+              "highlight": true
+            },
+            ". Its temperature and wind sensors were refurbished spares from ",
+            {
+              "text": "Curiosity",
+              "highlight": true
+            },
+            "."
+          ],
+          [
+            "Unlike a rover, InSight never travelled. Studying the inside of ",
+            {
+              "text": "Mars doesn't need a journey.",
+              "highlight": true
+            },
+            " It needs a stable place to listen from."
+          ],
+          [
+            {
+              "text": "What this teaches us:",
+              "highlight": true
+            },
+            " Good engineering reuses what already works, then focuses on the one job that matters."
+          ]
+        ]
+      },
+      {
+        "number": 4,
+        "page": "go-technical-4",
+        "bgVariant": "deep",
+        "title": "3. The robotic arm: the hands of the mission",
+        "paragraphs": [
+          [
+            "Imagine working in a lab where you can only touch things through a robot arm, controlled from another planet. The arm was ",
+            {
+              "text": "1.8 metres",
+              "highlight": true
+            },
+            " long, with a ",
+            {
+              "text": "five-finger grapple,",
+              "highlight": true
+            },
+            " like a claw, at the end and a camera on the forearm."
+          ],
+          [
+            "It lifted ",
+            {
+              "text": "SEIS",
+              "highlight": true
+            },
+            " and the heat probe off the deck and set them on the ground. NASA lists ",
+            {
+              "text": "InSight",
+              "highlight": true
+            },
+            " as the first mission to use a robotic arm to place instruments on the surface of another planet. ",
+            {
+              "text": "The arm's scoop",
+              "highlight": true
+            },
+            " was meant for emergencies, such as helping the stuck mole. Before trying any move on Mars, the team practised on ",
+            {
+              "text": "ForeSight, a full-size twin at JPL",
+              "highlight": true
+            },
+            "."
+          ],
+          [
+            {
+              "text": "What this teaches us:",
+              "highlight": true
+            },
+            " The most sensitive instruments worked best in direct contact with the ground."
+          ]
+        ],
+        "promptBox": {
+          "label": "THINK LIKE AN ENGINEER:",
+          "text": "Why use an arm instead of attaching the instruments to the lander?"
+        }
+      },
+      {
+        "number": 5,
+        "page": "go-technical-5",
+        "bgVariant": "nebula",
+        "title": "4. SEIS: the ears that listened to Mars",
+        "paragraphs": [
+          [
+            {
+              "text": "Imagine",
+              "highlight": true
+            },
+            " standing blindfolded in a room while someone knocks on the walls. Could the sounds tell you what's inside? That is the idea behind ",
+            {
+              "text": "SEIS:",
+              "highlight": true
+            },
+            " it listens to waves travelling through a planet."
+          ],
+          [
+            {
+              "text": "SEIS",
+              "highlight": true
+            },
+            " has two sets of sensors, one for slow, deep rumbles, sealed in a vacuum container, and one for quicker tremors. But wind and temperature swings add noise. ",
+            {
+              "text": "On Earth,",
+              "highlight": true
+            },
+            " seismometers are often buried about ",
+            {
+              "text": "1.2 metres",
+              "highlight": true
+            },
+            " underground to keep their temperature steady. ",
+            {
+              "text": "InSight",
+              "highlight": true
+            },
+            " couldn't build a vault on Mars, so engineers put ",
+            {
+              "text": "SEIS",
+              "highlight": true
+            },
+            " directly on the ground and covered it with the ",
+            {
+              "text": "Wind and Thermal Shield,",
+              "highlight": true
+            },
+            " built ",
+            {
+              "text": "by JPL,",
+              "highlight": true
+            },
+            " with a skirt of chain mail and thermal blankets that settles over rocks."
+          ],
+          [
+            {
+              "text": "What this teaches us:",
+              "highlight": true
+            },
+            " Discovering what's hidden doesn't always mean seeing it. It means knowing how to read its signals."
+          ]
+        ],
+        "promptBox": {
+          "label": "THINK LIKE A SCIENTIST:",
+          "text": "If waves travel differently through different materials, what could that tell us about the layers inside Mars?"
+        }
+      },
+      {
+        "number": 6,
+        "page": "go-technical-6",
+        "bgVariant": "deep",
+        "title": "5. HP³: the explorer that tried to dig deeper",
+        "paragraphs": [
+          [
+            {
+              "text": "The mole,",
+              "highlight": true
+            },
+            " built by ",
+            {
+              "text": "Germany's space agency DLR,",
+              "highlight": true
+            },
+            " was a self-hammering spike that pulled a tether of temperature sensors behind it. Its target was about ",
+            {
+              "text": "5 metres",
+              "highlight": true
+            },
+            " down, to measure heat flowing out of Mars."
+          ],
+          [
+            "It needed friction from the soil to keep moving. ",
+            {
+              "text": "Mars's soil",
+              "highlight": true
+            },
+            " was clumpier than expected and didn't give it enough grip. ",
+            {
+              "text": "From 28 February 2019 until 9 January 2021,",
+              "highlight": true
+            },
+            " engineers tried new ideas, even pressing on the mole with the arm's scoop. The last session, about ",
+            {
+              "text": "500 hammer blows,",
+              "highlight": true
+            },
+            " made no visible progress. The heat-flow goal was not completed, but the effort taught scientists about the soil."
+          ],
+          [
+            {
+              "text": "What this teaches us:",
+              "highlight": true
+            },
+            " Engineering models are built on assumptions, and the real world doesn't always follow them."
+          ]
+        ],
+        "promptBox": {
+          "label": "THINK LIKE AN ENGINEER:",
+          "text": "If you could redesign the mole, what would you change to help it grip unfamiliar soil?"
+        }
+      },
+      {
+        "number": 7,
+        "page": "go-technical-7",
+        "bgVariant": "nebula",
+        "title": "6. RISE: measuring the invisible",
+        "paragraphs": [
+          [
+            {
+              "text": "RISE",
+              "highlight": true
+            },
+            " needed no extra instrument on the ground. It used ",
+            {
+              "text": "the lander's own radio",
+              "highlight": true
+            },
+            ". Scientists on Earth sent a signal through NASA's Deep Space Network, and the lander sent it back. Tiny changes in its frequency, ",
+            {
+              "text": "called the Doppler shift,",
+              "highlight": true
+            },
+            " work like an ambulance siren changing pitch, and they reveal how Mars moves."
+          ],
+          [
+            "Those measurements showed how the planet wobbles because of ",
+            {
+              "text": "the sloshing of its liquid core",
+              "highlight": true
+            },
+            "."
+          ],
+          [
+            {
+              "text": "What this teaches us:",
+              "highlight": true
+            },
+            " Not every instrument has to touch what it studies. Sometimes the information travels in the signals between two distant points."
+          ]
+        ]
+      },
+      {
+        "number": 8,
+        "page": "go-technical-8",
+        "bgVariant": "deep",
+        "title": "7. TWINS and the weather station: the noise detectives",
+        "paragraphs": [
+          [
+            {
+              "text": "Imagine",
+              "highlight": true
+            },
+            " recording a whisper in a room full of people talking. ",
+            {
+              "text": "SEIS",
+              "highlight": true
+            },
+            " has the same problem: air pressure changes and wind create movements that can ",
+            {
+              "text": "mask real marsquakes",
+              "highlight": true
+            },
+            "."
+          ],
+          [
+            "So ",
+            {
+              "text": "InSight",
+              "highlight": true
+            },
+            " carried a weather station. ",
+            {
+              "text": "TWINS,",
+              "highlight": true
+            },
+            " supplied ",
+            {
+              "text": "by Spain's Centro de Astrobiología,",
+              "highlight": true
+            },
+            " measured wind and air temperature, a pressure sensor measured air pressure, and a magnetometer, ",
+            {
+              "text": "the first ever",
+              "highlight": true
+            },
+            " placed on the surface of another planet, measured magnetic changes. They collected data constantly so scientists could spot noise."
+          ],
+          [
+            {
+              "text": "What this teaches us:",
+              "highlight": true
+            },
+            " To understand a signal, you must understand the place where it was recorded."
+          ]
+        ]
+      },
+      {
+        "number": 9,
+        "page": "go-technical-9",
+        "bgVariant": "nebula",
+        "title": "8. The cameras: the eyes that connected Mars to Earth",
+        "paragraphs": [
+          [
+            "One camera, ",
+            {
+              "text": "the Instrument Deployment Camera,",
+              "highlight": true
+            },
+            " sat on the arm. The other, ",
+            {
+              "text": "the Instrument Context Camera,",
+              "highlight": true
+            },
+            " sat on the lander below the deck, facing the work area. Both took ",
+            {
+              "text": "colour pictures",
+              "highlight": true
+            },
+            "."
+          ],
+          [
+            "On landing day, a radio signal took ",
+            {
+              "text": "8 minutes and 7 seconds",
+              "highlight": true
+            },
+            " to reach Earth. So the team couldn't steer the arm like a video game. They planned each move, sent commands, then checked the returned images."
+          ],
+          [
+            {
+              "text": "What this teaches us:",
+              "highlight": true
+            },
+            " Remote robotics means making decisions with delayed information."
+          ]
+        ]
+      },
+      {
+        "number": 10,
+        "page": "go-technical-10",
+        "bgVariant": "deep",
+        "title": "9. The long-distance link: from a dome on Mars to a file on your laptop",
+        "paragraphs": [
+          [
+            {
+              "text": "InSight",
+              "highlight": true
+            },
+            " sent data ",
+            {
+              "text": "by radio",
+              "highlight": true
+            },
+            " to orbiters circling Mars, which relayed it to NASA's Deep Space Network on Earth. Teams in ",
+            {
+              "text": "France and Switzerland, including the Marsquake Service led by ETH Zurich,",
+              "highlight": true
+            },
+            " then reviewed it to detect, locate and classify every event. The data was archived for everyone to use. A team of only ",
+            {
+              "text": "25–30 people",
+              "highlight": true
+            },
+            " ran the whole mission."
+          ]
+        ],
+        "secondarySection": {
+          "title": "The machine was more than its parts",
+          "paragraphs": [
+            [
+              {
+                "text": "You've explored the machine:",
+                "highlight": true
+              },
+              "\n",
+              "how its panels collected energy, how its arm placed delicate instruments, how SEIS listened, and how engineers used radio signals to investigate what they couldn't see."
+            ],
+            [
+              {
+                "text": "InSight",
+                "highlight": true
+              },
+              " wasn't successful because every part worked as planned. Some instruments achieved remarkable science. Others faced problems engineers couldn't overcome. Both outcomes taught us something."
+            ],
+            [
+              {
+                "text": "Three problems it couldn't fully solve:",
+                "highlight": true
+              },
+              "\n",
+              "grip, dust, noise. What would you change? That's your next challenge."
+            ]
+          ]
+        },
+        "closing": "The mission ended. The lessons remain.",
+        "closingStyle": "orbitron"
+      }
+    ]
+  },
+  "missionSeriesUi": {
+    "previousLabel": "Previous",
+    "nextLabel": "Next"
+  },
+  "engineeringLegacy": {
+    "introLines": [
+      "Years ago, a machine listened to the heartbeat of Mars.",
+      "It discovered what humans could not see.",
+      "Now its mission is over.",
+      "But its legacy is still waiting."
+    ],
+    "header": {
+      "returnAriaLabel": "Return to NEXUS",
+      "returnTitle": "Return to NEXUS",
+      "title": "NEXUS — Mars Legacy Outpost",
+      "badge": "FICTIONAL FUTURE CONCEPT",
+      "subtitle": "From exploring the discoveries of yesterday to engineering the solutions of tomorrow."
+    },
+    "hud": {
+      "statusAriaLabel": "Outpost status indicators",
+      "energyLabel": "ENERGY",
+      "safetyLabel": "HABITAT SAFETY",
+      "scienceLabel": "SCIENCE",
+      "legacyButtonPrefix": "InSight Legacy",
+      "controlsHint": "Click ground to walk · Click objects to inspect",
+      "seismicMonitorLabel": "SEISMIC MONITOR:",
+      "canvasAriaLabel": "Isometric Mars Legacy Outpost research zone"
+    },
+    "constructionDock": {
+      "heading": "OUTPOST CONSTRUCTION · DRAG OR TAP TO PLACE",
+      "subtext": "Simplified educational placement rules",
+      "statusBuilt": "Built",
+      "statusSelected": "Selected",
+      "statusSelect": "Select"
+    },
+    "introOverlay": {
+      "badge": "Fictional Future Concept · Elysium Planitia",
+      "disclaimer": "NASA's real InSight mission ended in December 2022. This interactive outpost scenario is a fictional future engineering concept.",
+      "nextLabel": "Next",
+      "skipLabel": "Skip Intro",
+      "beginLabel": "Begin Mission",
+      "beginBannerText": "Explore the abandoned InSight lander by clicking it or walking near it."
+    },
+    "objectives": {
+      "arrival": {
+        "label": "PHASE 1 · ARRIVAL ON MARS",
+        "text": "Explore the abandoned InSight lander.",
+        "actionLabel": "Inspect InSight"
+      },
+      "build": {
+        "labelTemplate": "PHASE 2 · BUILD OUTPOST ({count}/3)",
+        "text": "Place Research Habitat, Solar Power Unit, and Scientific Station."
+      },
+      "buildReady": {
+        "label": "PHASE 2 · OUTPOST COMPLETE",
+        "text": "Outpost systems initialized. Ready for operational stress testing.",
+        "actionLabel": "Start Operations"
+      },
+      "summary": {
+        "label": "PHASE 5 · MISSION ANALYSIS COMPLETE",
+        "text": "Review your outpost engineering summary and Earth connections.",
+        "actionLabel": "View Mission Analysis"
+      },
+      "openModulePrefix": "Open "
+    },
+    "banners": {
+      "startConstruction": "Drag a module onto Mars—or select one below and tap a highlighted site to build.",
+      "missionReset": "Mission reset. Explore the abandoned InSight lander to begin.",
+      "summaryComplete": "Mission Analysis Complete — review your outpost engineering legacy.",
+      "installedSuffix": "installed.",
+      "operationalInfix": ": Operational on ",
+      "defaultTerrain": "Martian regolith",
+      "legacyUnlockedPrefix": "InSight Legacy Unlocked:",
+      "scenarioPromptTemplate": "{title}: Click the {target} to choose your engineering response.",
+      "defaultTerrainShort": "Mars Surface",
+      "defaultModuleShort": "Module",
+      "defaultOutpostModule": "Outpost Module"
+    },
+    "simulation": {
+      "moduleDefinitions": {
+        "habitat": {
+          "id": "habitat",
+          "name": "Research Habitat",
+          "shortName": "Habitat",
+          "summary": "Pressurized crew shelter and thermal control hub.",
+          "idealZone": "basin",
+          "idealHint": "Benefits from sheltered terrain to reduce heat loss."
+        },
+        "solar": {
+          "id": "solar",
+          "name": "Solar Power Unit",
+          "shortName": "Solar Unit",
+          "summary": "Deployable photovoltaic array with dust-management rig.",
+          "idealZone": "ridge",
+          "idealHint": "Generates maximum power on open, high-sunlight ridges."
+        },
+        "science": {
+          "id": "science",
+          "name": "Scientific Station",
+          "shortName": "Science Lab",
+          "summary": "Seismic and environmental monitoring rig inspired by SEIS.",
+          "idealZone": "bedrock",
+          "idealHint": "Performs best on stable bedrock away from habitat vibration."
+        }
+      },
+      "moduleOrder": [
+        "habitat",
+        "solar",
+        "science"
+      ],
+      "terrainMeta": {
+        "rock": {
+          "label": "Basalt Boulder",
+          "buildable": false,
+          "walkable": false,
+          "note": "Rocky terrain — uneven ground cannot support module foundations."
+        },
+        "insight_zone": {
+          "label": "InSight Heritage Zone",
+          "buildable": false,
+          "walkable": true,
+          "note": "Protected historical site — keep clear of the retired InSight lander."
+        },
+        "ridge": {
+          "label": "High-Sunlight Ridge",
+          "buildable": true,
+          "walkable": true,
+          "note": "Open exposure (+Solar output, slightly higher wind chill)."
+        },
+        "basin": {
+          "label": "Sheltered Crater Lee",
+          "buildable": true,
+          "walkable": true,
+          "note": "Natural windbreak (+Habitat safety, slight low-angle shade)."
+        },
+        "bedrock": {
+          "label": "Quiet Bedrock Flat",
+          "buildable": true,
+          "walkable": true,
+          "note": "Dense low-vibration ground (+Science instrument stability)."
+        },
+        "plain": {
+          "label": "Elysium Regolith Plain",
+          "buildable": true,
+          "walkable": true,
+          "note": "Stable flat Martian regolith suitable for general construction."
+        }
+      },
+      "insightHistoricalFacts": {
+        "landed": "November 26, 2018 — Elysium Planitia",
+        "ended": "December 15, 2022 — Solar power exhausted",
+        "note": "Real NASA mission data. The astronaut outpost and repair scenarios in this game are fictional future concepts.",
+        "powerComparison": [
+          {
+            "label": "Landing (Nov 2018)",
+            "whPerSol": 5000,
+            "pct": 100,
+            "detail": "~5,000 Wh/sol — full science operations"
+          },
+          {
+            "label": "Late Mission (May 2022)",
+            "whPerSol": 500,
+            "pct": 10,
+            "detail": "~500 Wh/sol — 90% lost to Martian dust"
+          }
+        ]
+      },
+      "insightDiagnostics": [
+        {
+          "id": "power_margin",
+          "title": "Solar Array Dust Telemetry",
+          "evidence": "InSight dropped from ~5,000 to ~500 Wh/sol as dust coated its 2.2 m circular panels. A May 2021 sand-trickle test recovered ~30 Wh/sol briefly.",
+          "lesson": "Power Margin Planning",
+          "application": "Applied to Outpost: +6 Energy reserve efficiency for future power operations.",
+          "bonus": {
+            "energy": 6,
+            "safety": 0,
+            "science": 0
+          }
+        },
+        {
+          "id": "soil_cohesion",
+          "title": "HP³ Heat Probe Soil Analysis",
+          "evidence": "The self-hammering \"mole\" encountered unexpectedly clumpy duricrust regolith that lacked loose friction, preventing it from reaching 5 m depth.",
+          "lesson": "Regolith & Anchoring Realism",
+          "application": "Applied to Outpost: +6 Habitat Safety from improved foundation & anchoring awareness.",
+          "bonus": {
+            "energy": 0,
+            "safety": 6,
+            "science": 0
+          }
+        },
+        {
+          "id": "instrument_isolation",
+          "title": "SEIS Wind & Thermal Shielding",
+          "evidence": "Placing SEIS directly on the ground under a thermal & wind shield isolated faint marsquakes from wind gusts and temperature swings.",
+          "lesson": "Sensor Isolation",
+          "application": "Applied to Outpost: +6 Science clarity by protecting instruments from interference.",
+          "bonus": {
+            "energy": 0,
+            "safety": 0,
+            "science": 6
+          }
+        }
+      ],
+      "engineeringScenarios": {
+        "engineering": {
+          "id": "engineering",
+          "phaseLabel": "PHASE 3 · ENGINEERING DECISION",
+          "title": "Dust Accumulation on Solar Unit",
+          "targetModule": "solar",
+          "disclaimer": "Hypothetical future outpost engineering scenario (not historical InSight capability).",
+          "alertText": "Solar efficiency decreasing. Martian dust accumulation detected.",
+          "prompt": "Choose how to respond before regional winds intensify:",
+          "options": [
+            {
+              "id": "clean",
+              "label": "A. Activate cleaning mechanism",
+              "summary": "Sweeps dust off panels; draws startup surge power and adds slight mechanical wear.",
+              "tradeoff": "+12 Energy recovery · Minor actuator wear noted",
+              "delta": {
+                "energy": 12,
+                "safety": 0,
+                "science": 0
+              },
+              "animation": "clean",
+              "outcome": "Electromechanical wipers cleared most settled dust. Output recovered after a short startup power draw, though actuator wear increased slightly.",
+              "strength": "Balanced recovery — effective when power reserves allow the cleaning surge."
+            },
+            {
+              "id": "conserve",
+              "label": "B. Conserve power",
+              "summary": "Throttles nonessential loads to protect battery reserves, slowing science.",
+              "tradeoff": "+8 Energy reserve · -6 Science output",
+              "delta": {
+                "energy": 8,
+                "safety": 2,
+                "science": -6
+              },
+              "animation": "conserve",
+              "outcome": "Nonessential lab heaters and secondary relays entered low-power mode. Reserves stabilized cleanly, at the cost of paused science measurements.",
+              "strength": "Low-risk preservation — avoids mechanical wear while keeping reserves steady."
+            },
+            {
+              "id": "orient",
+              "label": "C. Adjust panel orientation",
+              "summary": "Tilts arrays toward afternoon sunlight; does not guarantee dust removal.",
+              "tradeoff": "+6 Energy · Zero wear · Dust layer remains",
+              "delta": {
+                "energy": 6,
+                "safety": 0,
+                "science": 0
+              },
+              "animation": "orient",
+              "outcome": "Tracking actuators tilted the array to catch higher-angle sunlight without spending cleaning power, though settled dust still limits peak output.",
+              "strength": "Zero-wear adjustment — modest gain without risking delicate moving parts."
+            }
+          ]
+        },
+        "event_1": {
+          "id": "event_1",
+          "phaseLabel": "EVENT 1 OF 3 · DUST STORM",
+          "title": "Regional Martian Dust Storm",
+          "targetModule": "solar",
+          "disclaimer": "Simplified educational simulation of dust storm power trade-offs.",
+          "alertText": "Suspended atmospheric dust is dimming incoming sunlight across Elysium Planitia.",
+          "prompt": "Solar generation is falling. How will you manage the outpost grid?",
+          "initialDrop": {
+            "energy": -18,
+            "safety": -4,
+            "science": -4
+          },
+          "options": [
+            {
+              "id": "storm_clean",
+              "label": "A. Run active dust-clearing cycle",
+              "summary": "Fights heavy dust buildup during the storm, costing energy and mechanical strain.",
+              "tradeoff": "+10 Energy · -4 Safety (equipment strain)",
+              "delta": {
+                "energy": 10,
+                "safety": -4,
+                "science": 4
+              },
+              "animation": "clean",
+              "outcome": "Active clearing kept the panels from choking completely, preserving science uptime at the expense of higher actuator strain.",
+              "strength": "Keeps science running through low light, though repeated storm cycles stress hardware."
+            },
+            {
+              "id": "storm_standby",
+              "label": "B. Switch to low-power standby",
+              "summary": "Protects habitat and batteries by suspending active scientific sampling.",
+              "tradeoff": "+14 Energy preserved · +4 Safety · -8 Science",
+              "delta": {
+                "energy": 14,
+                "safety": 4,
+                "science": -8
+              },
+              "animation": "conserve",
+              "outcome": "The outpost rode out peak dust opacity on low-power standby. Batteries stayed healthy, while science logging paused until skies cleared.",
+              "strength": "Prioritizes crew & grid survival during severe sunlight drops."
+            },
+            {
+              "id": "storm_battery",
+              "label": "C. Draw from stored battery reserves",
+              "summary": "Maintains full habitat and science operations using stored reserves.",
+              "tradeoff": "-6 Energy reserve · +8 Science continuity",
+              "delta": {
+                "energy": -6,
+                "safety": 2,
+                "science": 8
+              },
+              "animation": "boost",
+              "outcome": "Battery banks bridged the storm gap so instruments kept recording dust-storm meteorology, leaving thinner energy margins for later cold.",
+              "strength": "Maximizes storm science data, provided enough energy was saved earlier."
+            }
+          ]
+        },
+        "event_2": {
+          "id": "event_2",
+          "phaseLabel": "EVENT 2 OF 3 · EXTREME TEMPERATURE",
+          "title": "Severe Martian Cold Snap",
+          "targetModule": "habitat",
+          "disclaimer": "Simplified thermal engineering simulation for a future crewed habitat.",
+          "alertText": "Nighttime temperatures plunged sharply. Habitat hull heat loss is accelerating.",
+          "prompt": "Protect habitat safety without exhausting outpost electrical reserves:",
+          "initialDrop": {
+            "energy": -6,
+            "safety": -18,
+            "science": -2
+          },
+          "options": [
+            {
+              "id": "temp_heat",
+              "label": "A. Increase active heating power",
+              "summary": "Rapidly warms interior systems, drawing heavily on outpost electricity.",
+              "tradeoff": "+18 Habitat Safety · -14 Energy",
+              "delta": {
+                "energy": -14,
+                "safety": 18,
+                "science": 2
+              },
+              "animation": "heat",
+              "outcome": "Auxiliary thermal loops stabilized cabin warmth quickly, pulling deeply from the solar battery bank.",
+              "strength": "Fastest protection for habitat safety when energy reserves are healthy."
+            },
+            {
+              "id": "temp_insulate",
+              "label": "B. Deploy thermal insulation baffles",
+              "summary": "Reduces heat loss passively with low power draw and balanced protection.",
+              "tradeoff": "+14 Habitat Safety · -4 Energy",
+              "delta": {
+                "energy": -4,
+                "safety": 14,
+                "science": 0
+              },
+              "animation": "insulate",
+              "outcome": "Deployable aerogel shields sealed thermal bridges around the airlock, cutting heat loss with minimal electrical penalty.",
+              "strength": "Passive insulation reduces reliance on constant electrical heating."
+            },
+            {
+              "id": "temp_redirect",
+              "label": "C. Reduce nonessential science & redirect heat",
+              "summary": "Reclaims waste heat and power for the habitat while pausing external experiments.",
+              "tradeoff": "+12 Habitat Safety · +4 Energy · -8 Science",
+              "delta": {
+                "energy": 4,
+                "safety": 12,
+                "science": -8
+              },
+              "animation": "conserve",
+              "outcome": "Science racks went into sleep mode and waste heat was routed into habitat walls, keeping both energy and safety steady.",
+              "strength": "Smart load-shedding when energy is already tight."
+            }
+          ]
+        },
+        "event_3": {
+          "id": "event_3",
+          "phaseLabel": "EVENT 3 OF 3 · MARSQUAKE",
+          "title": "Local Seismic Tremor Detected",
+          "targetModule": "science",
+          "disclaimer": "Hypothetical engineering test scenario — real marsquakes vary in strength and do not typically damage surface structures.",
+          "alertText": "Scientific Station recorded ground vibrations near the outpost foundation.",
+          "prompt": "Respond to protect calibration and outpost stability:",
+          "initialDrop": {
+            "energy": -4,
+            "safety": -8,
+            "science": -14
+          },
+          "options": [
+            {
+              "id": "quake_secure",
+              "label": "A. Secure sensitive instruments",
+              "summary": "Clamps delicate optics and levels sensors using slight stabilizer power.",
+              "tradeoff": "+16 Science reliability · -6 Energy · +4 Safety",
+              "delta": {
+                "energy": -6,
+                "safety": 4,
+                "science": 16
+              },
+              "animation": "secure",
+              "outcome": "Gimbal locks and leveling actuators protected the seismometer core, capturing clean aftershock data once tremors settled.",
+              "strength": "Preserves high-value seismic science without shutting down the whole lab."
+            },
+            {
+              "id": "quake_reinforce",
+              "label": "B. Reinforce vulnerable structures",
+              "summary": "Engages outrigger anchors across the outpost to harden structural stability.",
+              "tradeoff": "+14 Habitat Safety · -8 Energy · +6 Science",
+              "delta": {
+                "energy": -8,
+                "safety": 14,
+                "science": 6
+              },
+              "animation": "reinforce",
+              "outcome": "Foundation struts locked against the Martian regolith, boosting structural safety margins across the entire outpost.",
+              "strength": "Strong structural resilience — especially valuable when combined with InSight soil lessons."
+            },
+            {
+              "id": "quake_pause",
+              "label": "C. Temporarily pause scientific operations",
+              "summary": "Parks instruments safely with minimal energy draw until ground motion stops.",
+              "tradeoff": "+4 Energy saved · +6 Safety · -4 Science",
+              "delta": {
+                "energy": 4,
+                "safety": 6,
+                "science": -4
+              },
+              "animation": "conserve",
+              "outcome": "Sensors safely retracted into park mode with near-zero power cost, avoiding drift at the cost of missing peak tremor readings.",
+              "strength": "Conservative fail-safe that preserves electrical reserves."
+            }
+          ]
+        }
+      },
+      "earthTransferConnections": [
+        {
+          "id": "earth_solar",
+          "title": "Dust Management for Terrestrial Solar",
+          "detail": "Self-cleaning coatings, electrostatic shields, and tilt schedules tested for Mars help desert solar farms maintain high output."
+        },
+        {
+          "id": "earth_microgrid",
+          "title": "Energy Efficiency in Isolated Communities",
+          "detail": "Smart load-shedding and battery buffering mirror remote microgrids where every watt-hour matters."
+        },
+        {
+          "id": "earth_resilient",
+          "title": "Resilient Structures in Extreme Climates",
+          "detail": "Passive thermal baffles and anchored foundations inform polar, alpine, and disaster-relief habitats on Earth."
+        },
+        {
+          "id": "earth_sensors",
+          "title": "Reliable Scientific Instruments",
+          "detail": "Vibration isolation and wind shielding pioneered for SEIS inspire ultra-quiet Earth seismic and climate monitors."
+        }
+      ],
+      "placementMessages": {
+        "outsidePerimeter": "Outside the designated outpost perimeter.",
+        "occupiedPrefix": "Occupied by ",
+        "occupiedFallback": "another module",
+        "installedSuffix": "installed.",
+        "operationalPrefix": "Operational on ",
+        "operationalFallback": "Martian regolith",
+        "solarRidge": "High-Sunlight Ridge: +10 Energy exposure.",
+        "solarBasin": "Crater Lee shade: -4 Energy compared to open ridge.",
+        "solarPlain": "Open regolith: +4 baseline Energy.",
+        "habitatBasin": "Sheltered Crater Lee: +10 Habitat thermal protection.",
+        "habitatRidge": "Exposed ridge winds: -4 thermal shelter.",
+        "habitatPlain": "Level ground: +4 baseline Habitat stability.",
+        "scienceBedrock": "Quiet Bedrock Flat: +10 Seismic clarity.",
+        "sciencePlain": "Standard regolith: +4 baseline Science.",
+        "scienceNearHabitat": "Adjacent to Habitat machinery: -6 vibration interference.",
+        "scienceIsolated": "Isolated from Habitat pumps: +4 low-noise signal."
+      },
+      "analysisMessages": {
+        "workedSolarRidge": "Placing the Solar Power Unit on the High-Sunlight Ridge maximized baseline electrical generation.",
+        "improveSolarRidge": "Moving the Solar Power Unit onto the High-Sunlight Ridge would increase daily energy margin before dust storms.",
+        "workedHabitatBasin": "Siting the Research Habitat in the Sheltered Crater Lee reduced exposure to Martian wind chill.",
+        "improveHabitatBasin": "Siting the Research Habitat inside the Sheltered Crater Lee lowers thermal heat loss during cold snaps.",
+        "workedScienceBedrock": "Isolating the Scientific Station on Quiet Bedrock kept vibration interference minimal.",
+        "improveScienceBedrock": "Placing the Scientific Station on Quiet Bedrock away from Habitat pumps improves seismic signal clarity.",
+        "workedLessonsTemplate": "Applied {count}/3 InSight Legacy Analysis lessons to strengthen future outpost operations.",
+        "improveLessons": "Running the full InSight Legacy Analysis reveals extra dust, soil, and sensor-shielding insights.",
+        "improveEnergy": "Final energy reserves finished tight — balancing conservation or passive insulation preserves margin.",
+        "workedEnergy": "Maintained reliable electrical energy reserves across dust accumulation and severe cold.",
+        "workedSafety": "Strong habitat protection kept the outpost ready through extreme cold and seismic tremors.",
+        "improveSafety": "Habitat protection dipped under stress — thermal baffles or structural anchoring improve resilience.",
+        "workedScience": "Scientific operations stayed productive while managing environmental trade-offs.",
+        "improveScience": "Science output paused often to save power — pairing ridge solar placement with sensor locking preserves uptime."
+      }
+    },
+    "panels": {
+      "insightModal": {
+        "modalLabel": "InSight Legacy Analysis",
+        "badge": "INSIGHT LEGACY ANALYSIS",
+        "subBadge": "REAL MISSION HISTORY · ELYSIUM PLANITIA",
+        "title": "NASA InSight Lander (2018–2022)",
+        "closeAriaLabel": "Close InSight Legacy Analysis",
+        "historyTab": "Historical Record & Power Data",
+        "diagnosticsTabPrefix": "Legacy Diagnostics",
+        "arrivalTitle": "2018 Arrival",
+        "arrivalText": "InSight landed on Mars in November 2018 to study the planet's interior crust, mantle, and core.",
+        "endTitle": "2022 Mission End",
+        "endText": "Dust accumulated on its two 2.2 m circular solar panels until NASA ended the mission in December 2022.",
+        "powerTitle": "Authentic NASA Solar Power Comparison",
+        "panelsHighlighted": "Panels Highlighted",
+        "inspectPanels": "Inspect Solar Panels",
+        "panelInspectionLabel": "Visual Panel Inspection:",
+        "panelInspectionText": "Fine reddish Martian dust coats the 2.2 m circular arrays. InSight cannot be restarted — but studying its decline helps your future outpost plan dust management and energy margins.",
+        "diagnosticsIntro": "Conduct hypothetical diagnostics on InSight's subsystems to apply its engineering lessons directly to your future outpost:",
+        "appliedSuffix": "Applied",
+        "runDiagnosticLabel": "Run Diagnostic",
+        "footerPrompt": "“Its mission ended. What would you build differently?”",
+        "analyzeLessonsLabel": "Analyze Legacy Lessons",
+        "buildOutpostLabel": "Build Outpost",
+        "resumeMissionLabel": "Resume Mission",
+        "imageSrc": "/insight-lander-photo.jpg",
+        "imageAlt": "Artist concept of NASA's InSight lander on Mars",
+        "imageCaption": "NASA INSIGHT · ELYSIUM PLANITIA · NOV 2018 – DEC 2022",
+        "powerUnitSuffix": "Wh/sol"
+      },
+      "decisionPanel": {
+        "closeAriaLabel": "Close engineering panel",
+        "actionExecutedPrefix": "Action Executed:",
+        "lessonBonusLabel": "InSight Lesson Bonus (+3)",
+        "insightPrefix": "Engineering Insight:",
+        "continueLabel": "Continue Mission"
+      },
+      "summaryModal": {
+        "modalLabel": "Mission Analysis Complete",
+        "eyebrow": "ENGINEERING LEGACY · OUTPOST DEBRIEF",
+        "title": "MISSION ANALYSIS COMPLETE",
+        "outpostSummaryTab": "Outpost Summary",
+        "earthSolutionsTab": "Earth Solutions",
+        "energyLabel": "Energy Management",
+        "safetyLabel": "Habitat Protection",
+        "scienceLabel": "Scientific Operations",
+        "workedWellHeading": "What Worked Well",
+        "couldImproveHeading": "What Could Be Improved",
+        "decisionsHeading": "Your Engineering Decisions",
+        "seeEarthLegacyLabel": "See Earth Engineering Legacy",
+        "closingTitle": "The mission ended. The knowledge remains.",
+        "closingSubtitle": "Your next challenge is waiting.",
+        "footerDisclaimer": "Simulated educational scenario inspired by NASA's InSight mission (2018–2022).",
+        "retryLabel": "RETRY MISSION",
+        "returnLabel": "RETURN TO NEXUS"
+      },
+      "earthTransfer": {
+        "illustrationAriaLabel": "Illustration of a terrestrial solar array and microgrid station on Earth",
+        "badge": "EARTH APPLICATION TRANSFER",
+        "title": "The challenges of Mars can inspire engineering solutions on Earth.",
+        "description": "Every constraint you managed on Elysium Planitia—dusty panels, scarce storage, extreme cold, and delicate ground sensors—mirrors real sustainability and resilience engineering back home.",
+        "imageSrc": "/legacy-earth-solar.jpg",
+        "imageAlt": "Terrestrial solar-energy microgrid and environmental monitoring station on Earth"
+      }
+    },
+    "canvasLabels": {
+      "insightInspect": "NASA INSIGHT (2018–2022) · CLICK TO INSPECT",
+      "moduleInspectSuffix": "· CLICK TO INSPECT"
+    }
+  },
+  "equipmentModal": {
+    "modalLabel": "Equipment details",
+    "subtitle": "NASA Surface Equipment & Heritage Artifacts",
+    "closeAriaLabel": "Close dialog",
+    "documentedPrefix": "Documented Equipment",
+    "environmentHeading": "Planetary Environment",
+    "distanceLabel": "Distance:",
+    "gravityLabel": "Surface Gravity:",
+    "atmosphereLabel": "Atmosphere:",
+    "landingLocationLabel": "Landing Location",
+    "deploymentDateLabel": "Deployment Date",
+    "programPrefix": "Program:",
+    "profileHeading": "Equipment Mission Profile",
+    "milestonesHeading": "Key Historical & Scientific Milestones",
+    "footerLeft": "NASA Planetary Data System (PDS)",
+    "closeLabel": "Close Explorer"
+  },
+  "worldsEquipment": {
+    "moon": {
+      "id": "moon",
+      "name": "The Moon",
+      "badge": "Earth's Natural Satellite",
+      "distance": "384,400 km from Earth",
+      "gravity": "1.62 m/s² (0.166 g)",
+      "atmosphere": "Extremely thin exosphere",
+      "image": "/moon.png",
+      "countText": "3+ equipment",
+      "accentColor": "#38bdf8",
+      "description": "Humanity's primary stepping stone into the cosmos. NASA's Apollo missions left behind landing stages, rovers, and scientific packages that continue yielding discoveries.",
+      "equipment": [
+        {
+          "id": "apollo11-descent",
+          "name": "Apollo 11 Lunar Module Descent Stage (\"Eagle\")",
+          "category": "Lunar Lander Descent Stage",
+          "mission": "Apollo 11",
+          "landingDate": "July 20, 1969",
+          "site": "Mare Tranquillitatis (Sea of Tranquility)",
+          "coordinates": "0.67408° N, 23.47297° E",
+          "status": "Preserved in-situ",
+          "icon": "Rocket",
+          "summary": "The lower half and landing gear of the Eagle Lunar Module, used by Neil Armstrong and Buzz Aldrin. Serves as the landing base and holds the commemorative stainless-steel plaque.",
+          "keyFacts": [
+            "First crewed spacecraft landing base on another celestial body",
+            "Carries the commemorative plaque: \"Here men from the planet Earth first set foot upon the Moon. We came in peace for all mankind.\"",
+            "Equipped with Apollo Lunar Surface Experiments Package (ALSEP) sub-assemblies"
+          ]
+        },
+        {
+          "id": "laser-retroreflector",
+          "name": "Lunar Laser Ranging Retroreflector (LRRR)",
+          "category": "Optical Scientific Sensor",
+          "mission": "Apollo 11, 14, 15",
+          "landingDate": "July 1969 – July 1971",
+          "site": "Tranquility Base & Fra Mauro & Hadley Rille",
+          "coordinates": "Multiple Apollo Sites",
+          "status": "Actively Operational (50+ years)",
+          "icon": "Radio",
+          "summary": "Precision corner-cube prism arrays that bounce Earth-fired laser pulses back to terrestrial telescopes with picosecond time-of-flight resolution.",
+          "keyFacts": [
+            "The only Apollo experiment that continues to collect scientific telemetry today",
+            "Measures the Earth-Moon distance down to a few millimeters",
+            "Proven that the Moon is slowly spiraling away from Earth at 3.8 cm per year"
+          ]
+        },
+        {
+          "id": "lunar-rover-buggy",
+          "name": "Lunar Roving Vehicle (LRV - \"Moon Buggy\")",
+          "category": "Crewed Surface Exploration Vehicle",
+          "mission": "Apollo 15, 16, 17",
+          "landingDate": "July 31, 1971",
+          "site": "Hadley-Apennine (26.1322° N, 3.6339° E)",
+          "coordinates": "Hadley Plain, Taurus-Littrow, Descartes Highlands",
+          "status": "Parked in-situ",
+          "icon": "Car",
+          "summary": "Electric four-wheel rover engineered by Boeing and Delco. Allowed astronauts to venture up to 35 kilometers away from the lunar module, carrying geologic drill cores and rock samples.",
+          "keyFacts": [
+            "Capable of 13 km/h speed across jagged regolith slopes",
+            "Left permanently parked with high-gain directional antenna aimed at Earth",
+            "Apollo 17 rover drove a total record distance of 35.9 km across lunar valleys"
+          ]
+        },
+        {
+          "id": "passive-seismic",
+          "name": "Passive Seismic Experiment Package (PSEP)",
+          "category": "Geophysical Seismometer Array",
+          "mission": "Apollo 12, 14, 15, 16",
+          "landingDate": "November 1969 – April 1972",
+          "site": "Ocean of Storms & Fra Mauro",
+          "coordinates": "Multiple Equatorial Lunar Basins",
+          "status": "Mission Completed (1969–1977)",
+          "icon": "Activity",
+          "summary": "High-sensitivity long-period seismometers powered by radioisotope thermoelectric generators (RTGs) to map the Moon's deep crustal stratification and core.",
+          "keyFacts": [
+            "Detected over 12,000 seismic events, including deep tidal moonquakes and meteor impacts",
+            "Revealed that the Moon has a crust ~60 km thick and a small metallic core"
+          ]
+        }
+      ]
+    },
+    "mars": {
+      "id": "mars",
+      "name": "The Mars",
+      "badge": "The Red Planet",
+      "distance": "225,000,000 km avg from Earth",
+      "gravity": "3.72 m/s² (0.379 g)",
+      "atmosphere": "95% Carbon Dioxide (CO₂)",
+      "image": "/mars.png",
+      "countText": "4+ equipment",
+      "accentColor": "#f97316",
+      "description": "A rust-colored desert world shaped by ancient rivers, towering volcanoes, and violent dust storms. NASA robotic scouts have traversed hundreds of kilometers across Martian sands.",
+      "equipment": [
+        {
+          "id": "perseverance-rover",
+          "name": "Perseverance Mars Rover",
+          "category": "Nuclear-Powered Heavy Surface Rover",
+          "mission": "Mars 2020",
+          "landingDate": "February 18, 2021",
+          "site": "Jezero Crater (Octavia E. Butler Landing)",
+          "coordinates": "18.4447° N, 77.4508° E",
+          "status": "Active & Traversing",
+          "icon": "Compass",
+          "summary": "NASA’s most sophisticated planetary explorer, seeking biosignatures of ancient microbial life in a dried river delta lakebed and caching core samples for future retrieval to Earth.",
+          "keyFacts": [
+            "Carries MOXIE: First technology demonstration converting Martian CO₂ into breathable oxygen",
+            "Equipped with 23 advanced cameras, SuperCam Raman laser, and PIXL x-ray fluorescence",
+            "Cached over 25 pristine hermetic geological core samples for Mars Sample Return"
+          ]
+        },
+        {
+          "id": "ingenuity-helicopter",
+          "name": "Ingenuity Mars Helicopter (\"Ginny\")",
+          "category": "Autonomous Aerial Rotorcraft",
+          "mission": "Mars 2020 / Ingenuity Tech Demo",
+          "landingDate": "February 18, 2021",
+          "site": "Airfield Valinor / Jezero Crater Delta",
+          "coordinates": "18.45° N, 77.44° E",
+          "status": "Mission Complete (72 Historic Flights)",
+          "icon": "Plane",
+          "summary": "The historic first rotorcraft in human civilization to achieve controlled, powered flight on another planet, overcoming Mars’s ultra-thin atmosphere (less than 1% of Earth’s density).",
+          "keyFacts": [
+            "Designed for 5 test flights; completed 72 flights spanning 17 kilometers",
+            "Dual counter-rotating carbon-fiber blades spinning at 2,400+ RPM",
+            "Served as an aerial scout finding traversable pathways for the Perseverance rover"
+          ]
+        },
+        {
+          "id": "curiosity-rover",
+          "name": "Curiosity Rover (Mars Science Laboratory)",
+          "category": "Nuclear-Powered Analytical Laboratory",
+          "mission": "MSL / Curiosity",
+          "landingDate": "August 6, 2012",
+          "site": "Mount Sharp / Gale Crater",
+          "coordinates": "4.5895° S, 137.4417° E",
+          "status": "Active & Climbing (4,000+ Sols)",
+          "icon": "Crosshair",
+          "summary": "The 1-ton rover that determined ancient Mars had freshwater lakes, neutral pH, and all chemical ingredients required to sustain microbial life billions of years ago.",
+          "keyFacts": [
+            "Climbing Mount Sharp (Aeolis Mons), inspecting millions of years of layered Martian strata",
+            "Onboard Sample Analysis at Mars (SAM) laboratory detects organic carbon molecules",
+            "Has driven over 31 kilometers and beamed back hundreds of thousands of raw images"
+          ]
+        },
+        {
+          "id": "insight-lander",
+          "name": "InSight Lander",
+          "category": "Geophysical Interior Observatory",
+          "mission": "InSight",
+          "landingDate": "November 26, 2018",
+          "site": "Elysium Planitia",
+          "coordinates": "4.502° N, 135.623° E",
+          "status": "Mission Concluded (December 2022)",
+          "icon": "Radio",
+          "summary": "NASA's planetary crust observatory that listened to the heartbeat of Mars, placing the ultra-sensitive SEIS seismometer under a vacuum wind-shield dome.",
+          "keyFacts": [
+            "Recorded over 1,319 marsquakes, revealing an active, tremor-filled interior",
+            "Measured Mars's liquid iron-nickel core with a radius of approximately 1,830 kilometers"
+          ]
+        },
+        {
+          "id": "viking-landers",
+          "name": "Viking 1 & 2 Descent Landers",
+          "category": "Historic Pioneer Planetary Landers",
+          "mission": "Viking Program",
+          "landingDate": "July 20, 1976 (V1) & Sept 3, 1976 (V2)",
+          "site": "Chryse Planitia & Utopia Planitia",
+          "coordinates": "22.697° N, 48.222° W (V1)",
+          "status": "Historic Monument in-situ",
+          "icon": "Award",
+          "summary": "Humanity's first successful long-duration surface stations on Mars, transmitting the first high-resolution color surface panoramas and atmospheric weather reports.",
+          "keyFacts": [
+            "Operated for over 6 years on the Martian surface (Viking 1 ceased 1982)",
+            "Performed biological pyrolytic release and gas exchange soil experiments"
+          ]
+        }
+      ]
+    }
+  }
+}

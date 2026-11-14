@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { shouldIgnoreSceneShortcut } from '../utils/keyboard';
+import siteContent from '../data/siteContent.json';
+
+const { previousLabel, nextLabel } = siteContent.missionSeriesUi;
 
 function RichText({ segments }) {
   return segments.map((segment, index) =>
@@ -229,7 +232,7 @@ export default function MissionSeriesPage({
                 title={`Previous ${sectionLabel} page`}
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Previous</span>
+                <span>{previousLabel}</span>
               </button>
             )}
 
@@ -252,7 +255,7 @@ export default function MissionSeriesPage({
                 className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F7961D]/90 hover:bg-[#F7961D] text-[#1a0f00] text-xs sm:text-sm font-exo2 font-semibold transition-all shadow-xl cursor-pointer active:scale-95"
                 title={`Next: ${sectionLabel} page ${pageNumber + 1}`}
               >
-                <span>Next</span>
+                <span>{nextLabel}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             ) : (

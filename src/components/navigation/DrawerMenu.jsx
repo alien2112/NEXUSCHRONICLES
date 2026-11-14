@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { X, ChevronDown, ExternalLink, Radio, Orbit } from 'lucide-react';
 import NasaLogo from '../NasaLogo';
 import { nasaNavData } from '../../data/nasaNavData';
+import siteContent from '../../data/siteContent.json';
+
+const drawerCopy = siteContent.navigation.drawer;
 
 export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }) {
   const [expandedSection, setExpandedSection] = useState('missions');
@@ -15,7 +18,7 @@ export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }
   };
 
   return (
-    <Modal label="Navigation menu" onClose={onClose} className="fixed inset-0 z-50 flex justify-end   duration-300">
+    <Modal label={drawerCopy.modalLabel} onClose={onClose} className="fixed inset-0 z-50 flex justify-end   duration-300">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
@@ -30,19 +33,19 @@ export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }
           <div 
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => handleSelectPage('home')}
-            title="Return to NASA Home"
+            title={drawerCopy.brandTitleTooltip}
           >
             <NasaLogo className="w-9 h-8" />
             <div>
-              <div className="text-sm font-bold text-white tracking-wide">NASA</div>
-              <div className="text-[11px] text-gray-400">National Aeronautics and Space Administration</div>
+              <div className="text-sm font-bold text-white tracking-wide">{drawerCopy.brandTitle}</div>
+              <div className="text-[11px] text-gray-400">{drawerCopy.brandSubtitle}</div>
             </div>
           </div>
 
           <button
             onClick={onClose}
             className="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors cursor-pointer"
-            aria-label="Close navigation drawer"
+            aria-label={drawerCopy.closeAriaLabel}
           >
             <X className="w-5 h-5" />
           </button>
@@ -59,8 +62,8 @@ export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }
             }}
             className="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-between text-left text-sm text-gray-400 hover:text-white transition-colors cursor-pointer"
           >
-            <span>Search NASA archives & missions...</span>
-            <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-gray-300">Ctrl+K</span>
+            <span>{drawerCopy.searchPrompt}</span>
+            <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-gray-300">{drawerCopy.searchShortcut}</span>
           </button>
 
           {/* Featured Choose a World Card */}
@@ -71,24 +74,24 @@ export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-center gap-1.5 text-[11px] uppercase text-cyan-400 font-bold tracking-wider">
                 <Orbit className="w-3.5 h-3.5 " />
-                Featured Experience
+                {drawerCopy.featuredCard.badge}
               </div>
               <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-500/30 text-white font-semibold">
-                Explore Worlds
+                {drawerCopy.featuredCard.ctaBadge}
               </span>
             </div>
             <h3 className="text-base font-bold text-white group-hover:text-blue-200 transition-colors">
-              Choose a World: Moon & Mars
+              {drawerCopy.featuredCard.title}
             </h3>
             <p className="text-xs text-gray-300 mt-1 leading-relaxed">
-              Discover the historic equipment and rovers left behind by NASA missions on the lunar regolith and Martian surface.
+              {drawerCopy.featuredCard.description}
             </p>
           </div>
 
           {/* Collapsible Accordions for Explore, Missions, Discover, About */}
           <div className="space-y-2">
             <div className="text-xs uppercase tracking-wider text-gray-400 font-semibold px-2">
-              Navigation
+              {drawerCopy.navigationHeading}
             </div>
 
             {nasaNavData.map((section) => {
@@ -113,7 +116,7 @@ export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }
                     <button
                       onClick={() => setExpandedSection(isExpanded ? null : section.key)}
                       className="p-3 text-gray-400 hover:text-white cursor-pointer"
-                      title="Toggle subcategories"
+                      title={drawerCopy.toggleSubcategoriesTitle}
                     >
                       <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-blue-400' : ''}`} />
                     </button>
@@ -155,42 +158,36 @@ export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }
           {/* Live Feeds and Portals */}
           <div className="space-y-2 pt-2 border-t border-white/10">
             <div className="text-xs uppercase tracking-wider text-gray-400 font-semibold px-2">
-              Official Live Services
+              {drawerCopy.liveServicesHeading}
             </div>
             
-            <a
-              href="https://plus.nasa.gov"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                <span className="text-sm font-medium text-white">NASA+ Streaming</span>
-              </div>
-              <ExternalLink className="w-3.5 h-3.5 text-gray-400" />
-            </a>
-
-            <a
-              href="https://www.nasa.gov/live"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
-            >
-              <div className="flex items-center gap-2.5">
-                <Radio className="w-4 h-4 text-blue-400" />
-                <span className="text-sm font-medium text-white">NASA TV & Coverage</span>
-              </div>
-              <ExternalLink className="w-3.5 h-3.5 text-gray-400" />
-            </a>
+            {drawerCopy.liveServices.map((service) => (
+              <a
+                key={service.id}
+                href={service.href}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+              >
+                <div className="flex items-center gap-2.5">
+                  {service.id === 'nasa-plus' ? (
+                    <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                  ) : (
+                    <Radio className="w-4 h-4 text-blue-400" />
+                  )}
+                  <span className="text-sm font-medium text-white">{service.label}</span>
+                </div>
+                <ExternalLink className="w-3.5 h-3.5 text-gray-400" />
+              </a>
+            ))}
           </div>
 
         </div>
 
         {/* Drawer Footer */}
         <div className="p-4 border-t border-white/10 bg-white/[0.02] text-xs text-gray-400 flex items-center justify-between">
-          <span>nasa.gov</span>
-          <span>Official US Government Space Agency</span>
+          <span>{drawerCopy.footerLeft}</span>
+          <span>{drawerCopy.footerRight}</span>
         </div>
 
       </div>

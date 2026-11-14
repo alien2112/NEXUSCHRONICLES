@@ -21,6 +21,10 @@ import {
   VERDICT_SLOTS,
   VERDICT_PARTS,
 } from './investigationData';
+import siteContent from '../../data/siteContent.json';
+
+const invCopy = siteContent.investigation;
+const cbCopy = invCopy.caseBoard;
 
 /**
  * Compact 4-slot chamfered Case Board stamp strip shown beneath Tests 01–04 as stamps are earned.
@@ -28,7 +32,7 @@ import {
 export function CaseBoardStrip({
   earnedStampIds,
   onOpenCaseBoard,
-  actionLabel = 'Open Final Board →',
+  actionLabel = cbCopy.stripDefaultAction,
   className = 'mt-3',
 }) {
   return (
@@ -50,9 +54,9 @@ export function CaseBoardStrip({
 
       <div className="relative z-10 flex items-start justify-between mb-2">
         <span className="font-exo2 font-semibold text-xs sm:text-[14px] text-[#F7961D] tracking-wide pt-0.5">
-          Case Board
+          {cbCopy.stripTitle}
         </span>
-        {onOpenCaseBoard && (earnedStampIds.length >= 4 || actionLabel !== 'Open Final Board →') && (
+        {onOpenCaseBoard && (earnedStampIds.length >= 4 || actionLabel !== cbCopy.stripDefaultAction) && (
           <button
             type="button"
             onClick={onOpenCaseBoard}
@@ -111,13 +115,23 @@ export default function CaseBoardView({
   onPlacedPartsChange,
   onGoDeeper,
   onGoTechnical,
+  onEngineeringLegacy,
   onRestart,
   onExit,
 }) {
-  const displayName = codename.trim() || 'Investigator';
+  const displayName = codename.trim() || cbCopy.defaultCodename;
 
   // Confidence slider state (0..1 between C0 and C1)
-  const [confidenceValue, setConfidenceValue] = useState(() => ({ 'Not yet': 0.08, 'A little': 0.25, 'Somewhat': 0.5, 'Mostly': 0.75, 'Totally': 0.95 })[confidenceChoice] ?? 0.08);
+  const [confidenceValue, setConfidenceValue] = useState(
+    () =>
+      ({
+        [TRUST_OPTIONS[0].label]: 0.08,
+        [TRUST_OPTIONS[1].label]: 0.25,
+        [TRUST_OPTIONS[2].label]: 0.5,
+        [TRUST_OPTIONS[3].label]: 0.75,
+        [TRUST_OPTIONS[4].label]: 0.95,
+      })[confidenceChoice] ?? 0.08
+  );
   const [confidencePhase, setConfidencePhase] = useState('initial'); // 'initial' | 'dragging' | 'settled'
   const settleTimerRef = useRef(null);
 
@@ -178,7 +192,7 @@ export default function CaseBoardView({
     if (part.targetSlot !== slotId) {
       setSlotFeedback({
         type: 'error',
-        message: `Not quite "${slot.label.replace(':', '')}" — ${slot.hint}`,
+        message: `${cbCopy.verdictBuilder.errorPrefix} "${slot.label.replace(':', '')}" — ${slot.hint}`,
       });
       setSelectedPartId(null);
       return;
@@ -193,7 +207,7 @@ export default function CaseBoardView({
     setSelectedPartId(null);
     setSlotFeedback({
       type: 'success',
-      message: `${slot.label.replace(':', '')} locked in.`,
+      message: `${slot.label.replace(':', '')} ${cbCopy.verdictBuilder.lockedInSuffix}`,
     });
 
     const allCorrect = VERDICT_SLOTS.every(
@@ -233,19 +247,19 @@ export default function CaseBoardView({
 
   // Determine NEXUS dialogue and robot image based on state
   const isHighConfidence = confidenceValue >= 0.65;
-  let nexusMessage = 'Honest question again. How sure are you a space rock did this?';
-  let robotImage = '/robot-investigate-page.png';
+  let nexusMessage = cbCopy.nexusMessages.initial;
+  let robotImage = invCopy.robotImages.investigate;
 
   if (isVerdictComplete) {
-    nexusMessage = `Verdict built, ${displayName}. Careful science holds up — ready for Case 1222?`;
-    robotImage = '/robot-front.png';
+    nexusMessage = cbCopy.nexusMessages.verdictComplete.replace('{name}', displayName);
+    robotImage = invCopy.robotImages.front;
   } else if (confidencePhase === 'settled') {
     if (isHighConfidence) {
-      nexusMessage = "That's what evidence does.";
-      robotImage = '/robot-front.png';
+      nexusMessage = cbCopy.nexusMessages.highConfidence;
+      robotImage = invCopy.robotImages.front;
     } else {
-      nexusMessage = "Good. Skeptics make good scientists. Tell me what's bugging you?";
-      robotImage = '/robot-amazed.png';
+      nexusMessage = cbCopy.nexusMessages.lowConfidence;
+      robotImage = invCopy.robotImages.amazed;
     }
   }
 
@@ -278,7 +292,7 @@ export default function CaseBoardView({
 
             <div className="relative z-10 flex items-center justify-between gap-2 mb-4">
               <h3 className="font-exo2 font-semibold text-base sm:text-lg text-white tracking-wide">
-                Suspect strip
+                {cbCopy.suspectStripTitle}
               </h3>
               <button
                 type="button"
@@ -286,7 +300,7 @@ export default function CaseBoardView({
                 className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F7961D]/12 border border-[#F7961D]/50 text-[#F7961D] text-[11px] font-exo2 font-medium hover:bg-[#F7961D]/20 transition-colors cursor-pointer"
               >
                 <Award className="w-3 h-3" />
-                <span>{earnedStampIds.length}/4 Stamps</span>
+                <span>{earnedStampIds.length}{cbCopy.stampsSuffix}</span>
               </button>
             </div>
 
@@ -333,7 +347,7 @@ export default function CaseBoardView({
               <div className="relative z-10 mt-3 rounded-xl border border-white/15 bg-[#070e24]/90 px-3.5 py-2 text-left text-xs font-exo2 text-white/85 flex items-center justify-between gap-2 inv-fade-up">
                 <div>
                   <span className="text-[#F7961D] font-semibold">
-                    Suspect {activeSuspectInfo.id} ({activeSuspectInfo.name}):
+                    {cbCopy.suspectPrefix} {activeSuspectInfo.id} ({activeSuspectInfo.name}):
                   </span>{' '}
                   {activeSuspectInfo.summary}
                 </div>
@@ -341,7 +355,7 @@ export default function CaseBoardView({
                   type="button"
                   onClick={() => setInspectedSuspect(null)}
                   className="text-white/50 hover:text-white shrink-0 cursor-pointer"
-                  aria-label="Close suspect note"
+                  aria-label={cbCopy.closeSuspectNoteAriaLabel}
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -354,10 +368,10 @@ export default function CaseBoardView({
             <div className="flex items-start justify-between gap-3 mb-3.5">
               <div>
                 <h3 className="font-exo2 font-bold text-base sm:text-lg text-[#F7961D] leading-tight">
-                  Verdict Builder
+                  {cbCopy.verdictBuilder.title}
                 </h3>
                 <p className="text-xs sm:text-[13px] font-exo2 text-white/85 mt-0.5">
-                  Drag the correct parts to build the verdict
+                  {cbCopy.verdictBuilder.subtitle}
                 </p>
               </div>
 
@@ -372,7 +386,7 @@ export default function CaseBoardView({
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-white/20 hover:border-white/50 text-[11px] font-exo2 text-white/75 hover:text-white transition-colors cursor-pointer"
                   >
                     <RotateCcw className="w-3 h-3" />
-                    <span>Reset</span>
+                    <span>{cbCopy.verdictBuilder.resetLabel}</span>
                   </button>
                 )}
               </div>
@@ -395,7 +409,7 @@ export default function CaseBoardView({
                     <div
                       role="button"
                       tabIndex={0}
-                      aria-label={`${slot.label} ${placedPart ? `Remove ${placedPart.text}` : 'Place selected evidence'}`}
+                      aria-label={`${slot.label} ${placedPart ? `${cbCopy.verdictBuilder.removeAriaPrefix} ${placedPart.text}` : cbCopy.verdictBuilder.placeAriaLabel}`}
                       onKeyDown={e => activateOnKeyboard(e, () => {
                         if (placedPart) handleRemoveFromSlot(slot.id);
                         else if (selectedPartId) assignPartToSlot(selectedPartId, slot.id);
@@ -443,7 +457,7 @@ export default function CaseBoardView({
                         </>
                       ) : (
                         <span className="font-exo2 text-xs sm:text-[13px]">
-                          {isClickableTarget ? 'Click to place selected part...' : 'Drag here...'}
+                          {isClickableTarget ? cbCopy.verdictBuilder.placeSelectedPrompt : cbCopy.verdictBuilder.dragHerePrompt}
                         </span>
                       )}
                     </div>
@@ -501,7 +515,7 @@ export default function CaseBoardView({
                             ? 'border-[#F7961D] bg-[#F7961D]/15 text-white shadow-[0_0_12px_rgba(247,150,29,0.28)]'
                             : 'border-white/25 bg-[#070d20]/90 hover:border-[#F7961D]/70 text-white/90'
                         }`}
-                        title="Drag into a slot above (or click to select, then click a slot)"
+                        title={cbCopy.verdictBuilder.partTitle}
                       >
                         <GripVertical className="w-3 h-3 text-white/35 shrink-0 hidden sm:block" />
                         <span className="font-exo2 text-[11.5px] sm:text-xs leading-snug">
@@ -517,7 +531,7 @@ export default function CaseBoardView({
                 <div className="flex items-center gap-2 text-xs sm:text-sm font-exo2 text-white">
                   <Sparkles className="w-4 h-4 text-[#F7961D] shrink-0" />
                   <span>
-                    <strong className="text-[#F7961D]">Case 1094 Verdict Built!</strong> Observation, evidence, interpretation, and conclusion aligned.
+                    <strong className="text-[#F7961D]">{cbCopy.verdictBuilder.completeStrong}</strong> {cbCopy.verdictBuilder.completeBody}
                   </span>
                 </div>
               </div>
@@ -563,7 +577,7 @@ export default function CaseBoardView({
               <div className="relative z-10 flex items-center gap-1.5 text-[#F7961D] mb-2">
                 <UserRound className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F7961D] shrink-0" strokeWidth={2} />
                 <span className="font-exo2 font-semibold text-xs sm:text-sm md:text-[15px] tracking-wider uppercase">
-                  NEXUS
+                  {invCopy.nexusSpeakerLabel}
                 </span>
               </div>
 
@@ -588,7 +602,7 @@ export default function CaseBoardView({
               >
                 <img
                   src={robotImage}
-                  alt="NEXUS Companion Robot"
+                  alt={invCopy.robotAlt}
                   className="w-full h-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.75)]"
                   draggable={false}
                 />
@@ -599,18 +613,18 @@ export default function CaseBoardView({
             <div className="relative z-10 mt-3 rounded-2xl border border-white/25 bg-[#050b1f]/88 backdrop-blur-md px-4 py-3.5 sm:px-5 sm:py-4 text-left">
               <div className="flex items-center justify-between mb-3">
                 <span className="font-exo2 font-medium text-sm sm:text-[15px] text-white tracking-wide">
-                  Your Confidence
+                  {cbCopy.confidence.title}
                 </span>
                 <span className="text-[11px] font-mono text-white/55">
                   {confidencePhase === 'initial'
-                    ? 'Slide C0 → C1'
+                    ? cbCopy.confidence.initialHint
                     : `${sliderPct}% (${mapConfidenceToTrustOption(confidenceValue)})`}
                 </span>
               </div>
 
               <div className="flex items-center gap-3">
                 <span className="font-exo2 text-xs sm:text-[13px] text-white/85 shrink-0">
-                  C0
+                  {cbCopy.confidence.minLabel}
                 </span>
 
                 <div className="relative flex-1 h-6 flex items-center">
@@ -635,13 +649,13 @@ export default function CaseBoardView({
                     onMouseUp={handleSliderRelease}
                     onTouchEnd={handleSliderRelease}
                     onKeyUp={handleSliderRelease}
-                    aria-label="Your Confidence from C0 to C1"
+                    aria-label={cbCopy.confidence.sliderAriaLabel}
                     className="absolute inset-0 w-full opacity-0 cursor-pointer"
                   />
                 </div>
 
                 <span className="font-exo2 text-xs sm:text-[13px] text-white/85 shrink-0">
-                  C1
+                  {cbCopy.confidence.maxLabel}
                 </span>
               </div>
             </div>
@@ -651,20 +665,20 @@ export default function CaseBoardView({
           <div className="rounded-[18px] border border-[#F7961D]/80 bg-[#060c1f]/90 backdrop-blur-md p-4 sm:p-5 text-left shadow-[0_14px_34px_rgba(0,0,0,0.45)] flex flex-col justify-between gap-3">
             <div className="flex items-center justify-between gap-2">
               <span className="font-exo2 font-semibold text-base sm:text-lg text-[#F7961D]">
-                Next case
+                {cbCopy.nextCase.title}
               </span>
               <span className="text-[11px] font-mono text-white/55">
-                SOL 1222 · S1222A
+                {cbCopy.nextCase.badge}
               </span>
             </div>
 
             <p className="text-xs sm:text-[13px] font-exo2 text-white/80 leading-relaxed">
-              InSight&apos;s strongest recorded marsquake (M4.7). Was it another space rock — or Mars itself?
+              {cbCopy.nextCase.description}
             </p>
 
             <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
               <div className="text-[11px] font-exo2 text-white/60">
-                Initial: <span className="text-white/90">{initialConfidence || 'Not set'}</span>
+                {cbCopy.nextCase.initialLabel} <span className="text-white/90">{initialConfidence || cbCopy.nextCase.notSetLabel}</span>
               </div>
 
               <button
@@ -672,25 +686,25 @@ export default function CaseBoardView({
                 onClick={() => setShowCase1222Modal(true)}
                 className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs sm:text-sm transition-all shadow-[0_0_18px_rgba(247,150,29,0.35)] cursor-pointer active:scale-95"
               >
-                <span>Open Case 1222</span>
+                <span>{cbCopy.nextCase.ctaLabel}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
-          {/* Post-Investigation Exploration Options: Go deeper & Go technical */}
-          {(onGoDeeper || onGoTechnical) && (
+          {/* Post-Investigation Exploration Options: Go deeper, Go technical & Engineering Legacy */}
+          {(onGoDeeper || onGoTechnical || onEngineeringLegacy) && (
             <div className="rounded-[18px] border border-white/25 bg-[#050b1f]/90 backdrop-blur-md p-4 text-left shadow-[0_14px_34px_rgba(0,0,0,0.45)] flex flex-col gap-2.5">
               <div className="flex items-center justify-between gap-2">
                 <span className="font-exo2 font-semibold text-sm sm:text-base text-white">
-                  After the Investigation
+                  {cbCopy.exploreFurther.title}
                 </span>
                 <span className="text-[11px] font-mono text-white/50">
-                  EXPLORE FURTHER
+                  {cbCopy.exploreFurther.badge}
                 </span>
               </div>
               <p className="text-xs font-exo2 text-white/75 leading-relaxed">
-                Dive into the seismic science behind the quakes or inspect how InSight was engineered.
+                {cbCopy.exploreFurther.description}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
                 {onGoDeeper && (
@@ -698,9 +712,9 @@ export default function CaseBoardView({
                     type="button"
                     onClick={onGoDeeper}
                     className="flex items-center justify-between gap-2 px-4 py-2 rounded-full border border-[#F7961D]/80 bg-[#070e24]/90 hover:bg-[#F7961D]/15 text-[#F7961D] hover:text-[#ffb454] text-xs sm:text-[13px] font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
-                    title="Go deeper: Science Behind It"
+                    title={cbCopy.exploreFurther.goDeeperTitle}
                   >
-                    <span>Go deeper</span>
+                    <span>{cbCopy.exploreFurther.goDeeperLabel}</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </button>
                 )}
@@ -709,13 +723,42 @@ export default function CaseBoardView({
                     type="button"
                     onClick={onGoTechnical}
                     className="flex items-center justify-between gap-2 px-4 py-2 rounded-full border border-[#F7961D]/80 bg-[#070e24]/90 hover:bg-[#F7961D]/15 text-[#F7961D] hover:text-[#ffb454] text-xs sm:text-[13px] font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
-                    title="Go technical: Engineering the Mission"
+                    title={cbCopy.exploreFurther.goTechnicalTitle}
                   >
-                    <span>Go technical</span>
+                    <span>{cbCopy.exploreFurther.goTechnicalLabel}</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </button>
                 )}
               </div>
+
+              {onEngineeringLegacy && (
+                <div className="mt-1 pt-3 border-t border-white/10 flex flex-col gap-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-exo2 font-semibold text-xs sm:text-[13px] text-[#38DDF5]">
+                      {cbCopy.exploreFurther.engineeringLegacyTitle}
+                    </span>
+                    <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#38DDF5]/10 border border-[#38DDF5]/35 text-[#38DDF5]">
+                      {earnedStampIds.length === 4 && isVerdictComplete
+                        ? cbCopy.exploreFurther.unlockedBadge
+                        : cbCopy.exploreFurther.optionalBadge}
+                    </span>
+                  </div>
+                  <p className="text-[11px] font-exo2 text-white/70 leading-relaxed">
+                    {earnedStampIds.length === 4 && isVerdictComplete
+                      ? cbCopy.exploreFurther.unlockedDescription
+                      : cbCopy.exploreFurther.lockedDescription}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={onEngineeringLegacy}
+                    className="flex items-center justify-between gap-2 px-4 py-2 rounded-full border border-[#38DDF5]/75 bg-[#081532]/90 hover:bg-[#38DDF5]/15 text-[#38DDF5] text-xs sm:text-[13px] font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
+                    title={cbCopy.exploreFurther.engineeringLegacyTitleAttr}
+                  >
+                    <span>{cbCopy.exploreFurther.engineeringLegacyLabel}</span>
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
@@ -727,7 +770,7 @@ export default function CaseBoardView({
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/25 hover:border-white/60 bg-[#050b1f]/80 text-xs font-exo2 text-white/85 hover:text-white transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>Replay Case</span>
+              <span>{cbCopy.actions.replayLabel}</span>
             </button>
             {onExit && (
               <button
@@ -735,7 +778,7 @@ export default function CaseBoardView({
                 onClick={onExit}
                 className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-[#F7961D]/55 hover:border-[#F7961D] bg-[#050b1f]/80 text-xs font-exo2 font-medium text-[#F7961D] transition-colors cursor-pointer"
               >
-                <span>Return Home</span>
+                <span>{cbCopy.actions.exitLabel}</span>
               </button>
             )}
           </div>
@@ -744,29 +787,29 @@ export default function CaseBoardView({
 
       {/* 4 Evidence Stamps Inspection Modal */}
       {showStampsModal && (
-        <Modal label="Case 1094 evidence stamps" onClose={() => setShowStampsModal(false)} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md inv-fade-up">
+        <Modal label={cbCopy.stampsModal.modalLabel} onClose={() => setShowStampsModal(false)} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md inv-fade-up">
           <div className="w-full max-w-xl rounded-2xl bg-[#070b18]/95 border border-[#F7961D]/60 p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.95)] text-left">
             <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
               <div>
                 <h4 className="text-base font-orbitron font-bold text-white flex items-center gap-2">
                   <Award className="w-4 h-4 text-[#F7961D]" />
-                  <span>Case 1094 Evidence Stamps</span>
+                  <span>{cbCopy.stampsModal.title}</span>
                 </h4>
                 <p className="text-xs font-exo2 text-white/60 mt-0.5">
-                  Collected across Tests 01–04
+                  {cbCopy.stampsModal.subtitle}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowStampsModal(false)}
                 className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white/80 hover:text-white cursor-pointer"
-                aria-label="Close"
+                aria-label={cbCopy.stampsModal.closeAriaLabel}
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {earnedStampIds.length === 0 && <p role="status">No evidence stamps collected yet.</p>}
+            {earnedStampIds.length === 0 && <p role="status">{cbCopy.stampsModal.emptyMessage}</p>}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {CASE_STAMPS.filter(stamp => earnedStampIds.includes(stamp.id)).map((stamp) => (
                 <div
@@ -778,7 +821,7 @@ export default function CaseBoardView({
                       {stamp.label}
                     </span>
                     <span className="text-[10px] font-mono text-white/45">
-                      TEST 0{stamp.id}
+                      {cbCopy.stampsModal.testPrefix}{stamp.id}
                     </span>
                   </div>
                   <p className="text-xs font-exo2 text-white/85 leading-relaxed">
@@ -793,22 +836,22 @@ export default function CaseBoardView({
 
       {/* Case 1222 Dossier Preview Modal */}
       {showCase1222Modal && (
-        <Modal label="Next investigation dossier" onClose={() => setShowCase1222Modal(false)} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md inv-fade-up">
+        <Modal label={cbCopy.case1222Modal.modalLabel} onClose={() => setShowCase1222Modal(false)} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md inv-fade-up">
           <div className="w-full max-w-lg rounded-2xl bg-[#070b18]/95 border border-[#F7961D]/75 p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.95)] text-left">
             <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
               <div>
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[#F7961D]">
-                  NEXT INVESTIGATION DOSSIER
+                  {cbCopy.case1222Modal.eyebrow}
                 </span>
                 <h4 className="text-lg sm:text-xl font-orbitron font-bold text-white mt-0.5">
-                  Prove It: Case 1222 (S1222a)
+                  {cbCopy.case1222Modal.title}
                 </h4>
               </div>
               <button
                 type="button"
                 onClick={() => setShowCase1222Modal(false)}
                 className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white/80 hover:text-white cursor-pointer"
-                aria-label="Close"
+                aria-label={cbCopy.case1222Modal.closeAriaLabel}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -816,17 +859,17 @@ export default function CaseBoardView({
 
             <div className="space-y-3 font-exo2 text-sm text-white/85 leading-relaxed">
               <p>
-                On <strong className="text-white">May 4, 2022 (Sol 1222)</strong>, NASA&apos;s InSight lander recorded a <strong className="text-[#F7961D]">magnitude 4.7</strong> marsquake — the strongest ever detected on Mars, shaking the planet for over 6 hours.
+                {cbCopy.case1222Modal.leadBeforeDate}<strong className="text-white">{cbCopy.case1222Modal.dateBold}</strong>{cbCopy.case1222Modal.leadBetween}<strong className="text-[#F7961D]">{cbCopy.case1222Modal.magHighlight}</strong>{cbCopy.case1222Modal.leadAfterMag}
               </p>
               <div className="rounded-xl border border-white/15 bg-[#050b1d] p-3.5 text-xs space-y-1.5">
                 <div className="text-[#F7961D] font-semibold uppercase tracking-wider">
-                  Briefing Preview for {displayName}
+                  {cbCopy.case1222Modal.previewHeadingPrefix}{displayName}
                 </div>
                 <p className="text-white/80">
-                  • Orbital teams searched Mars for a fresh crater huge enough to match a M4.7 quake — and found <strong>none</strong>.
+                  {cbCopy.case1222Modal.bullet1BeforeNone}<strong>{cbCopy.case1222Modal.bullet1NoneBold}</strong>{cbCopy.case1222Modal.bullet1AfterNone}
                 </p>
                 <p className="text-white/80">
-                  • Ruling out an impact revealed that Mars&apos;s crust still releases tectonic stress today.
+                  {cbCopy.case1222Modal.bullet2}
                 </p>
               </div>
             </div>
@@ -840,7 +883,7 @@ export default function CaseBoardView({
                 }}
                 className="px-4 py-2 rounded-full border border-white/25 hover:border-white text-xs font-exo2 text-white transition-colors cursor-pointer"
               >
-                Replay Case 1094
+                {cbCopy.case1222Modal.replayLabel}
               </button>
               {onExit ? (
                 <button
@@ -851,7 +894,7 @@ export default function CaseBoardView({
                   }}
                   className="px-4 py-2 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs transition-colors cursor-pointer"
                 >
-                  Return Home
+                  {cbCopy.case1222Modal.returnHomeLabel}
                 </button>
               ) : (
                 <button
@@ -859,7 +902,7 @@ export default function CaseBoardView({
                   onClick={() => setShowCase1222Modal(false)}
                   className="px-4 py-2 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs transition-colors cursor-pointer"
                 >
-                  Close
+                  {cbCopy.case1222Modal.closeLabel}
                 </button>
               )}
             </div>

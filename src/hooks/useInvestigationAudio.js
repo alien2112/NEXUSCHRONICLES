@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import siteContent from '../data/siteContent.json';
 
 export default function useInvestigationAudio() {
   const [playingTrack, setPlayingTrack] = useState(null);
@@ -113,7 +114,7 @@ export default function useInvestigationAudio() {
     } catch {
       if (mountedRef.current && request === requestRef.current) {
         stopAudio();
-        setAudioError('Audio is unavailable. You can continue using the waveform images.');
+        setAudioError(siteContent.app.audioUnavailableError);
       }
     }
   };

@@ -3,6 +3,9 @@ import { useState, useRef, useEffect } from 'react';
 import { Search, Menu, ChevronDown, ExternalLink, Sparkles, Orbit } from 'lucide-react';
 import NasaLogo from '../NasaLogo';
 import { nasaNavData } from '../../data/nasaNavData';
+import siteContent from '../../data/siteContent.json';
+
+const navCopy = siteContent.navigation.navbar;
 
 export default function Navbar({ 
   currentPage = 'home',
@@ -68,10 +71,10 @@ export default function Navbar({
               <button
                 onClick={() => onNavigate && onNavigate(currentPage === 'mars' ? 'missions' : 'home')}
                 className="hidden md:inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white transition-colors cursor-pointer"
-                title={currentPage === 'mars' ? 'Back to Choose a World' : 'Return to Home Screen'}
+                title={currentPage === 'mars' ? navCopy.backToWorldsTitle : navCopy.backToHomeTitle}
               >
                 <span className="text-white/40">‹</span>
-                <span>{currentPage === 'mars' ? 'Worlds' : 'Home'}</span>
+                <span>{currentPage === 'mars' ? navCopy.backToWorlds : navCopy.backToHome}</span>
               </button>
             )}
 
@@ -86,9 +89,9 @@ export default function Navbar({
                   ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
                   : 'text-white/95 hover:text-white'
               }`}
-              title="Open Investigation: Case 1094"
+              title={navCopy.investigationTitle}
             >
-              Investigation
+              {navCopy.investigationLabel}
             </button>
           </div>
 
@@ -181,17 +184,17 @@ export default function Navbar({
                               </div>
                               <div>
                                 <div className="text-sm font-bold text-white flex items-center gap-2">
-                                  <span>Choose a World: Moon & Mars Explorer</span>
-                                  <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-blue-500/30 text-blue-200">Interactive</span>
+                                  <span>{navCopy.missionsBanner.title}</span>
+                                  <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-blue-500/30 text-blue-200">{navCopy.missionsBanner.badge}</span>
                                 </div>
                                 <div className="text-xs text-slate-300">
-                                  Explore artifacts, rovers, and descent modules left by NASA missions
+                                  {navCopy.missionsBanner.description}
                                 </div>
                               </div>
                             </div>
 
                             <button className="px-3 py-1.5 rounded-lg bg-blue-500 hover:bg-blue-400 text-white text-xs font-semibold shadow-lg transition-colors">
-                              Open Page →
+                              {navCopy.missionsBanner.cta}
                             </button>
                           </div>
                         )}
@@ -244,7 +247,7 @@ export default function Navbar({
                               rel="noreferrer"
                               className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 font-medium shrink-0 ml-4"
                             >
-                              <span>Explore</span>
+                              <span>{navCopy.featuredExploreLabel}</span>
                               <ExternalLink className="w-3 h-3" />
                             </a>
                           </div>
@@ -270,9 +273,9 @@ export default function Navbar({
                     ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
                     : 'text-white/95 hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]'
                 }`}
-                title="Open Investigation: Case 1094"
+                title={navCopy.investigationTitle}
               >
-                <span>Investigation</span>
+                <span>{navCopy.investigationLabel}</span>
               </button>
               {(currentPage === 'investigation' || currentPage === 'case-board') && (
                 <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent shadow-[0_0_8px_#38bdf8]" />
@@ -288,7 +291,7 @@ export default function Navbar({
               type="button"
               className="p-2 text-white/90 rounded-full transition-all duration-150 cursor-default focus:outline-none"
               disabled
-              aria-label="Search"
+              aria-label={navCopy.searchAriaLabel}
             >
               <Search className="w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={2} />
             </button>
@@ -298,7 +301,7 @@ export default function Navbar({
               type="button"
               className="p-2 text-white/90 rounded-lg transition-all duration-150 cursor-default focus:outline-none"
               disabled
-              aria-label="Menu"
+              aria-label={navCopy.menuAriaLabel}
             >
               <Menu className="w-5 h-5" strokeWidth={2} />
             </button>
@@ -309,9 +312,9 @@ export default function Navbar({
             {/* Official NASA Meatball Logo - Navigates Home */}
             <button
               type="button"
-              aria-label="Return Home"
+              aria-label={navCopy.returnHomeAriaLabel}
               className="flex items-center pl-1 cursor-pointer transition-transform hover:scale-105"
-              title="National Aeronautics and Space Administration (Return Home)"
+              title={navCopy.returnHomeTitle}
               onClick={() => {
                 setActiveDropdown(null);
                 if (onNavigate) onNavigate('home');

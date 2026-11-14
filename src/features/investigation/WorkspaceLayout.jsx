@@ -1,11 +1,13 @@
 import { Lightbulb } from 'lucide-react';
 import TrustMeter from './TrustMeter';
+import siteContent from '../../data/siteContent.json';
+
+const invCopy = siteContent.investigation;
 
 /**
- * Shared Left Chamfered HUD Frame used by TEST 01 through TEST 04.
+ * Shared Left Chamfered HUD Frame used by the investigation workspaces.
  */
 export function TestHudFrame({
-  testLabel,
   title,
   headerRight,
   titleClassName = 'text-lg sm:text-xl md:text-[22px] lg:text-[24px] font-bold font-orbitron text-white tracking-wide leading-tight',
@@ -14,7 +16,7 @@ export function TestHudFrame({
 }) {
   return (
     <div className="lg:col-span-7 xl:col-span-7 relative w-full lg:w-[103%] z-10">
-      <div className="relative w-full pt-3 pb-5 px-4 sm:px-6">
+      <div className="relative w-full pt-4 pb-5 px-4 sm:px-6">
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none"
           viewBox="0 0 600 300"
@@ -22,7 +24,7 @@ export function TestHudFrame({
         >
           {hudVariant === 'test1' ? (
             <path
-              d="M 14 2 L 92 2 L 114 22 L 584 22 Q 598 22 598 36 L 598 284 Q 598 298 584 298 L 238 298 L 216 280 L 18 280 Q 6 280 6 268 L 6 70 L 2 64 L 2 14 Q 2 2 14 2 Z"
+              d="M 14 2 L 584 2 Q 598 2 598 16 L 598 284 Q 598 298 584 298 L 238 298 L 216 280 L 18 280 Q 6 280 6 268 L 6 70 L 2 64 L 2 14 Q 2 2 14 2 Z"
               fill="rgba(5, 9, 22, 0.78)"
               stroke="#F7961D"
               strokeOpacity="0.8"
@@ -30,7 +32,7 @@ export function TestHudFrame({
             />
           ) : (
             <path
-              d="M 14 2 L 96 2 Q 103 2 108 7 L 116 16 Q 120 20 127 20 L 584 20 Q 598 20 598 34 L 598 284 Q 598 298 584 298 L 245 298 Q 238 298 233 293 L 225 285 Q 220 280 214 280 L 14 280 Q 2 280 2 268 L 2 14 Q 2 2 14 2 Z"
+              d="M 14 2 L 584 2 Q 598 2 598 16 L 598 284 Q 598 298 584 298 L 245 298 Q 238 298 233 293 L 225 285 Q 220 280 214 280 L 14 280 Q 2 280 2 268 L 2 14 Q 2 2 14 2 Z"
               fill="rgba(5, 9, 22, 0.78)"
               stroke="#F7961D"
               strokeOpacity="0.78"
@@ -39,12 +41,9 @@ export function TestHudFrame({
           )}
         </svg>
 
-        <div className="relative z-10 flex items-center justify-between gap-2 mb-2 sm:mb-2.5">
+        <div className="relative z-10 flex items-center justify-between gap-2 mb-2.5 sm:mb-3">
           <div className="flex flex-col items-start text-left">
-            <span className="text-[11px] sm:text-xs md:text-[13px] font-exo2 font-medium uppercase tracking-wider text-[#F7961D]">
-              {testLabel}
-            </span>
-            <h3 className={`mt-0.5 ${titleClassName}`}>
+            <h3 className={titleClassName}>
               {title}
             </h3>
           </div>
@@ -69,7 +68,7 @@ export function NexusSidePanel({
   showTrustMeter = false,
   confidenceChoice,
   onChangeConfidence,
-  robotImage = '/robot-investigate-page.png',
+  robotImage = invCopy.robotImages.investigate,
   onClickDialogue,
   actionPill = null,
   hints = [],
@@ -131,15 +130,15 @@ export function NexusSidePanel({
               <path d="M5 12c.4-1.6 1.6-2.4 3-2.4s2.6.8 3 2.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
             </svg>
             <span className="font-exo2 font-semibold text-xs sm:text-sm md:text-[15px] tracking-wider uppercase">
-              NEXUS
+              {invCopy.nexusSpeakerLabel}
             </span>
           </div>
 
           <div
             className="relative z-10 text-left font-exo2 text-white text-sm sm:text-[15px] md:text-[16px] leading-[1.35] pr-28 sm:pr-32">
             {onClickDialogue && (
-              <button type="button" className="sr-only dialogue-advance" aria-label="Continue NEXUS dialogue" onClick={event => { event.stopPropagation(); onClickDialogue(); }}>
-                Continue NEXUS dialogue
+              <button type="button" className="sr-only dialogue-advance" aria-label={invCopy.continueDialogueSrLabel} onClick={event => { event.stopPropagation(); onClickDialogue(); }}>
+                {invCopy.continueDialogueSrLabel}
               </button>
             )}
             {children}
@@ -163,7 +162,7 @@ export function NexusSidePanel({
           >
             <img
               src={robotImage}
-              alt="NEXUS Companion Robot"
+              alt={invCopy.robotAlt}
               className="w-full h-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.75)]"
               draggable={false}
             />
@@ -176,7 +175,7 @@ export function NexusSidePanel({
             <div className="flex items-center gap-2 pb-2 mb-2 border-b border-white/15">
               <Lightbulb className="w-4 h-4 text-[#FACC15] fill-[#F7961D]/45 drop-shadow-[0_0_6px_rgba(250,204,21,0.65)] shrink-0" />
               <span className="font-exo2 font-semibold text-xs sm:text-sm text-white tracking-wide">
-                Hints
+                {invCopy.hintsTitle}
               </span>
             </div>
 

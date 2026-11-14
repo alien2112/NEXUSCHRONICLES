@@ -4,12 +4,12 @@ import { Play, Pause } from 'lucide-react';
 import TrustMeter from './TrustMeter';
 import { CaseBoardStrip } from './CaseBoardPanel';
 import { TestHudFrame, NexusSidePanel } from './WorkspaceLayout';
+import { SeismogramGraphic } from './InvestigationGraphics';
+import siteContent from '../../data/siteContent.json';
 
-const TEST1_HINTS = [
-  'calm line, then a jump',
-  'bigger wiggles mean more shaking.',
-  'a glow marks the area.',
-];
+const invCopy = siteContent.investigation;
+const test1Copy = invCopy.test01;
+const TEST1_HINTS = test1Copy.hints;
 
 /**
  * TEST 01: Real quake or just noise?
@@ -65,7 +65,7 @@ export function Test01Workspace({
     // Beat 4: "tap where the shaking starts."
     if (beat === 4) {
       if (track === 'y') {
-        setTapHintMsg('That is Recording Y (windy noise). Tap the sharp jump on Recording X!');
+        setTapHintMsg(test1Copy.tapHints.wrongTrackY);
         return;
       }
       const rect = e.currentTarget.getBoundingClientRect();
@@ -76,7 +76,7 @@ export function Test01Workspace({
         onUnlockStamp1?.();
         setBeat(5);
       } else {
-        setTapHintMsg('Look further right on Recording X where the calm line suddenly jumps!');
+        setTapHintMsg(test1Copy.tapHints.wrongRegionX);
       }
       return;
     }
@@ -111,10 +111,10 @@ export function Test01Workspace({
 
   const robotImg =
     hintCount > 0
-      ? '/robot-amazed.png'
+      ? invCopy.robotImages.amazed
       : beat === 2 || beat >= 5
-      ? '/robot-front.png'
-      : '/robot-investigate-page.png';
+      ? invCopy.robotImages.front
+      : invCopy.robotImages.investigate;
 
   const actionPill =
     beat === 1 ? (
@@ -127,18 +127,18 @@ export function Test01Workspace({
           handleDropQuake('x');
         }}
         className="px-5 py-1 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-white font-exo2 font-bold text-xs tracking-wider uppercase shadow-[0_0_16px_rgba(247,150,29,0.55)] cursor-grab active:cursor-grabbing transition-transform active:scale-95"
-        title="Drag QUAKE onto Recording X or Y (or click to test)"
+        title={test1Copy.quakeButtonTitle}
       >
-        QUAKE
+        {test1Copy.quakeButtonLabel}
       </button>
     ) : beat >= 2 && beat <= 7 ? (
       <button
         type="button"
         onClick={handleRevealHint}
         className="px-5 py-0.5 rounded-full border border-white/60 hover:border-[#F7961D] bg-[#060b1d]/90 hover:bg-[#F7961D]/20 text-white font-exo2 text-xs transition-all cursor-pointer"
-        title="Reveal next hint"
+        title={test1Copy.hintButtonTitle}
       >
-        Hint
+        {test1Copy.hintButtonLabel}
       </button>
     ) : null;
 
@@ -147,8 +147,7 @@ export function Test01Workspace({
       {audioError && <p role="status" className="text-sm text-white mb-2">{audioError}</p>}
       <div className="relative w-full grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-4 items-start">
         <TestHudFrame
-          testLabel="TEST 01"
-          title="Real quake or just noise?"
+          title={test1Copy.title}
           hudVariant="test1"
           titleClassName="text-lg sm:text-xl md:text-[22px] lg:text-[23px] font-bold font-exo2 text-white tracking-normal leading-tight"
         >
@@ -164,7 +163,7 @@ export function Test01Workspace({
                       ? 'border-[#F7961D] bg-[#F7961D]/20 text-[#F7961D]'
                       : 'border-white/75 hover:border-white hover:bg-white/10 text-white'
                   }`}
-                  title="Play Recording X (sped up 100x)"
+                  title={test1Copy.recordingX.playTitle}
                 >
                   {playingTrack === 'x' ? (
                     <Pause className="w-3.5 h-3.5 fill-current" />
@@ -173,7 +172,7 @@ export function Test01Workspace({
                   )}
                 </button>
                 <span className="text-[11px] sm:text-[11.5px] font-exo2 text-white/90 text-left leading-tight">
-                  Sped up 100 times so human ears can hear it.
+                  {test1Copy.audioCaption}
                 </span>
               </div>
 
@@ -189,7 +188,7 @@ export function Test01Workspace({
                 onKeyDown={(e) => {
                   activateOnKeyboard(e, () => handleSeismogramClick(e, 'x', true));
                 }}
-                className={`group relative w-full rounded-[14px] overflow-hidden bg-white transition-all duration-200 cursor-pointer ${
+                className={`group relative w-full rounded-[14px] overflow-hidden bg-[#050a1c] border border-white/25 transition-all duration-200 cursor-pointer ${
                   quakeLabelOn === 'x' && beat <= 2
                     ? 'ring-2 ring-[#F7961D] shadow-[0_0_20px_rgba(247,150,29,0.45)]'
                     : tapMarker && beat === 5
@@ -197,17 +196,16 @@ export function Test01Workspace({
                     : 'hover:ring-2 hover:ring-white/65'
                 }`}
               >
-                <img
-                  src="/seismogram-x.png"
-                  alt="Recording X is the sol 1094 seismogram from NASA's video"
-                  className="w-full h-[126px] sm:h-[138px] md:h-[146px] object-fill scale-[1.03] block pointer-events-none"
-                  draggable={false}
+                <SeismogramGraphic
+                  variant="x"
+                  isPlaying={playingTrack === 'x'}
+                  ariaLabel={test1Copy.recordingX.imageAlt}
                 />
 
                 {/* QUAKE dropped badge on Recording X */}
                 {quakeLabelOn === 'x' && beat <= 2 && (
                   <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-1.5 rounded-full bg-[#F7961D] text-white font-exo2 font-bold text-xs tracking-wider uppercase shadow-[0_4px_16px_rgba(0,0,0,0.65)] pointer-events-none inv-fade-up">
-                    QUAKE
+                    {test1Copy.quakeButtonLabel}
                   </span>
                 )}
 
@@ -215,16 +213,19 @@ export function Test01Workspace({
                 {((beat === 4 && hintCount >= 3) || (tapMarker && beat <= 5)) && (
                   <div
                     className="absolute top-[10%] bottom-[10%] left-[62%] w-[16%] rounded-xl border-2 border-[#38bdf8] bg-[#38bdf8]/15 shadow-[0_0_22px_rgba(56,189,248,0.75)] pointer-events-none animate-pulse"
-                    title="Seismic surface wave onset"
+                    title={test1Copy.recordingX.onsetTitle}
                   />
                 )}
               </div>
 
               {beat === 0 && (
                 <p className="mt-2.5 text-center font-exo2 text-xs sm:text-[13px] md:text-[13.5px] text-white/95 leading-[1.3]">
-                  Recording X is the sol 1094
-                  <br />
-                  seismogram from NASA&apos;s video
+                  {test1Copy.recordingX.captionLines.map((line, idx) => (
+                    <span key={idx}>
+                      {idx > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
                 </p>
               )}
             </div>
@@ -240,7 +241,7 @@ export function Test01Workspace({
                       ? 'border-[#F7961D] bg-[#F7961D]/20 text-[#F7961D]'
                       : 'border-white/75 hover:border-white hover:bg-white/10 text-white'
                   }`}
-                  title="Play Recording Y (sped up 100x)"
+                  title={test1Copy.recordingY.playTitle}
                 >
                   {playingTrack === 'y' ? (
                     <Pause className="w-3.5 h-3.5 fill-current" />
@@ -249,7 +250,7 @@ export function Test01Workspace({
                   )}
                 </button>
                 <span className="text-[11px] sm:text-[11.5px] font-exo2 text-white/90 text-left leading-tight">
-                  Sped up 100 times so human ears can hear it.
+                  {test1Copy.audioCaption}
                 </span>
               </div>
 
@@ -265,31 +266,33 @@ export function Test01Workspace({
                 onKeyDown={(e) => {
                   activateOnKeyboard(e, () => handleSeismogramClick(e, 'y', true));
                 }}
-                className={`group relative w-full rounded-[14px] overflow-hidden bg-white transition-all duration-200 cursor-pointer ${
+                className={`group relative w-full rounded-[14px] overflow-hidden bg-[#050a1c] border border-white/25 transition-all duration-200 cursor-pointer ${
                   beat === 6
                     ? 'ring-[2.5px] ring-[#38bdf8] shadow-[0_0_22px_rgba(56,189,248,0.85)]'
                     : 'hover:ring-2 hover:ring-white/65'
                 }`}
               >
-                <img
-                  src="/seismogram-y.png"
-                  alt="Recording Y is a windy-day noise sample"
-                  className="w-full h-[126px] sm:h-[138px] md:h-[146px] object-fill scale-[1.03] block pointer-events-none"
-                  draggable={false}
+                <SeismogramGraphic
+                  variant="y"
+                  isPlaying={playingTrack === 'y'}
+                  ariaLabel={test1Copy.recordingY.imageAlt}
                 />
 
                 {quakeLabelOn === 'y' && beat <= 2 && (
                   <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-1.5 rounded-full bg-[#F7961D] text-white font-exo2 font-bold text-xs tracking-wider uppercase shadow-[0_4px_16px_rgba(0,0,0,0.65)] pointer-events-none inv-fade-up">
-                    QUAKE
+                    {test1Copy.quakeButtonLabel}
                   </span>
                 )}
               </div>
 
               {beat === 0 && (
                 <p className="mt-2.5 text-center font-exo2 text-xs sm:text-[13px] md:text-[13.5px] text-white/95 leading-[1.3]">
-                  Recording Y is a windy-day
-                  <br />
-                  noise sample.
+                  {test1Copy.recordingY.captionLines.map((line, idx) => (
+                    <span key={idx}>
+                      {idx > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
                 </p>
               )}
             </div>
@@ -312,67 +315,9 @@ export function Test01Workspace({
           topOffsetClassName="lg:mt-7"
           outerMinHeightClassName="min-h-[305px] sm:min-h-[322px]"
         >
-          {beat === 0 && (
-            <>
-              <p>Mars has wind. Wind shakes</p>
-              <p>sensors too.</p>
-              <p>Which recording is a quake?</p>
-            </>
-          )}
-
-          {beat === 1 && (
-            <>
-              <p>drag the label QUAKE</p>
-              <p>onto X or Y.</p>
-            </>
-          )}
-
-          {beat === 2 && (
-            <>
-              <p>Interesting pick. Look</p>
-              <p>at how the wiggles</p>
-              <p>start.</p>
-            </>
-          )}
-
-          {beat === 3 && (
-            <>
-              <p>InSight carried a weather</p>
-              <p>station for this. It tells</p>
-              <p>quakes from wind.</p>
-            </>
-          )}
-
-          {beat === 4 && (
-            <>
-              <p>tap where the shaking</p>
-              <p>starts.</p>
-            </>
-          )}
-
-          {beat === 5 && (
-            <>
-              <p>A magnitude 4 quake,</p>
-              <p>about 3,500 km away.</p>
-            </>
-          )}
-
-          {beat === 6 && (
-            <>
-              <p>NASA says it was the</p>
-              <p>first quake seen with</p>
-              <p>surface waves. They</p>
-              <p>ripple along the ground.</p>
-            </>
-          )}
-
-          {beat === 7 && (
-            <>
-              <p>A seismometer tells us</p>
-              <p>when and how hard.</p>
-              <p>Not why.</p>
-            </>
-          )}
+          {(test1Copy.beats[String(beat)] || []).map((line, idx) => (
+            <p key={idx}>{line}</p>
+          ))}
         </NexusSidePanel>
       </div>
 
@@ -383,7 +328,7 @@ export function Test01Workspace({
             <CaseBoardStrip
               earnedStampIds={earnedStampIds}
               onOpenCaseBoard={onContinue}
-              actionLabel="Continue to Step 2 →"
+              actionLabel={test1Copy.continueLabel}
               className="mt-0"
             />
           </div>

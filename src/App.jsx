@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import useHashNavigation from './hooks/useHashNavigation';
 import HomePage from './pages/HomePage';
+import siteContent from './data/siteContent.json';
 import Navbar from './components/navigation/Navbar';
 import SearchModal from './components/navigation/SearchModal';
 import DrawerMenu from './components/navigation/DrawerMenu';
@@ -15,6 +16,7 @@ import GoTechnicalPage from './pages/GoTechnicalPage';
 import PageBoundary from './components/PageBoundary';
 
 const InvestigationPage = lazy(() => import('./pages/InvestigationPage'));
+const EngineeringLegacyPage = lazy(() => import('./pages/EngineeringLegacyPage'));
 
 function RouteFocus({ currentPage }) {
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function App() {
       />
 
       <PageBoundary key={currentPage}>
-      <Suspense fallback={<main className="relative z-10 min-h-screen pt-28 px-6 text-white" role="status">Loading investigation...</main>}>
+      <Suspense fallback={<main className="relative z-10 min-h-screen pt-28 px-6 text-white" role="status">{siteContent.app.loadingLabel}</main>}>
       <RouteFocus currentPage={currentPage} />
       {currentPage === 'investigation' || currentPage === 'case-board' ? (
         <InvestigationPage
@@ -60,7 +62,12 @@ export default function App() {
           onSaveProgress={setCase1094Progress}
           onGoDeeper={() => navigate('go-deeper-1')}
           onGoTechnical={() => navigate('go-technical-1')}
+          onEngineeringLegacy={() => navigate('engineering-legacy')}
           onBack={() => navigate('home')}
+        />
+      ) : currentPage === 'engineering-legacy' ? (
+        <EngineeringLegacyPage
+          onReturnToNexus={() => navigate('case-board')}
         />
       ) : goDeeperNumber !== null ? (
         <GoDeeperPage

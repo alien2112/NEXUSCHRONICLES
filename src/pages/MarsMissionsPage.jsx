@@ -1,6 +1,9 @@
 import { activateOnKeyboard } from '../utils/keyboard';
 
 import { MARS_PINS } from '../data/marsMissionPins';
+import siteContent from '../data/siteContent.json';
+
+const missionsCopy = siteContent.marsMissionsPage;
 
 export default function MarsMissionsPage({ 
   onBack, 
@@ -22,7 +25,7 @@ export default function MarsMissionsPage({
       <div 
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none select-none"
         style={{ 
-          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp')}')`,
+          backgroundImage: `url('${encodeURI(missionsCopy.backgroundImage)}')`,
         }}
       />
 
@@ -41,8 +44,8 @@ export default function MarsMissionsPage({
           <button
             onClick={onBack}
             className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/80 hover:border-white hover:bg-white/10 flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95 shadow-sm"
-            aria-label="Back to The Mars Overview"
-            title="Back to The Mars Overview"
+            aria-label={missionsCopy.backAriaLabel}
+            title={missionsCopy.backTitle}
           >
             <svg 
               className="w-4 h-4 text-white transform group-hover:-translate-x-0.5 transition-transform duration-200" 
@@ -60,7 +63,7 @@ export default function MarsMissionsPage({
 
           {/* "The Mars" Heading in Orbitron */}
           <h1 className="text-2xl sm:text-3xl md:text-[36px] font-bold font-orbitron tracking-wider text-white select-none leading-none drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
-            The Mars
+            {missionsCopy.title}
           </h1>
         </div>
       </div>
@@ -78,8 +81,8 @@ export default function MarsMissionsPage({
 
           {/* Mars Horizon Image (public/mars-page4.webp) */}
           <img
-            src="/mars-page4.webp"
-            alt="Mars Horizon Surface"
+            src={missionsCopy.horizonImage}
+            alt={missionsCopy.horizonAlt}
             className="w-full h-full object-cover object-top select-none pointer-events-none drop-shadow-[0_-8px_25px_rgba(247,150,29,0.55)]"
           />
 

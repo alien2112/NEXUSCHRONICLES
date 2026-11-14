@@ -1,5 +1,8 @@
 import MissionSeriesPage from '../components/MissionSeriesPage';
 import { GO_DEEPER_PAGES } from '../data/goDeeperPages';
+import siteContent from '../data/siteContent.json';
+
+const goDeeperCopy = siteContent.goDeeper;
 
 export default function GoDeeperPage({
   pageNumber = 1,
@@ -13,21 +16,21 @@ export default function GoDeeperPage({
 
   const secondaryAction = isLastPage
     ? onGoTechnical && {
-        label: 'Go technical',
-        title: 'Explore Go technical: Engineering the Mission',
+        label: goDeeperCopy.secondaryActions.lastPage.label,
+        title: goDeeperCopy.secondaryActions.lastPage.title,
         onClick: onGoTechnical,
       }
     : pageNumber === 4 && onBackToCaseBoard
     ? {
-        label: 'Review Case 1094',
-        title: 'Return to Case 1094 Case Board',
+        label: goDeeperCopy.secondaryActions.page4.label,
+        title: goDeeperCopy.secondaryActions.page4.title,
         onClick: onBackToCaseBoard,
       }
     : null;
 
   const finalAction = onBackToCaseBoard && {
-    label: 'Back to Case Board',
-    title: 'Return to Investigation Case Board',
+    label: goDeeperCopy.finalAction.label,
+    title: goDeeperCopy.finalAction.title,
     onClick: onBackToCaseBoard,
   };
 
@@ -35,8 +38,8 @@ export default function GoDeeperPage({
     <MissionSeriesPage
       pages={GO_DEEPER_PAGES}
       pageNumber={pageNumber}
-      sectionLabel="SCIENCE BEHIND IT"
-      backRootLabel="Case Board"
+      sectionLabel={goDeeperCopy.sectionLabel}
+      backRootLabel={goDeeperCopy.backRootLabel}
       onBack={onBack}
       onNext={onNext}
       onSelectPage={onSelectPage}

@@ -1,5 +1,8 @@
 import MissionSeriesPage from '../components/MissionSeriesPage';
 import { GO_TECHNICAL_PAGES } from '../data/goTechnicalPages';
+import siteContent from '../data/siteContent.json';
+
+const goTechnicalCopy = siteContent.goTechnical;
 
 export default function GoTechnicalPage({
   pageNumber = 1,
@@ -14,15 +17,15 @@ export default function GoTechnicalPage({
   const secondaryAction =
     isLastPage && onGoDeeper
       ? {
-          label: 'Go deeper',
-          title: 'Explore Go deeper: Science Behind It',
+          label: goTechnicalCopy.secondaryActions.lastPage.label,
+          title: goTechnicalCopy.secondaryActions.lastPage.title,
           onClick: onGoDeeper,
         }
       : null;
 
   const finalAction = onBackToCaseBoard && {
-    label: 'Back to Case Board',
-    title: 'Return to Investigation Case Board',
+    label: goTechnicalCopy.finalAction.label,
+    title: goTechnicalCopy.finalAction.title,
     onClick: onBackToCaseBoard,
   };
 
@@ -30,8 +33,8 @@ export default function GoTechnicalPage({
     <MissionSeriesPage
       pages={GO_TECHNICAL_PAGES}
       pageNumber={pageNumber}
-      sectionLabel="ENGINEERING THE MISSION"
-      backRootLabel="Case Board"
+      sectionLabel={goTechnicalCopy.sectionLabel}
+      backRootLabel={goTechnicalCopy.backRootLabel}
       onBack={onBack}
       onNext={onNext}
       onSelectPage={onSelectPage}

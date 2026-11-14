@@ -1,4 +1,7 @@
 import { ArrowLeft, ArrowRight, Play } from 'lucide-react';
+import siteContent from '../data/siteContent.json';
+
+const trailerCopy = siteContent.insightMissionPage;
 
 export default function InsightMissionPage({ onBack, onWatchStory }) {
   return (
@@ -20,14 +23,14 @@ export default function InsightMissionPage({ onBack, onWatchStory }) {
           <button
             onClick={onBack}
             className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/70 hover:border-white hover:bg-white/10 flex items-center justify-center transition-colors duration-200 cursor-pointer active:scale-95"
-            aria-label="Back"
-            title="Back"
+            aria-label={trailerCopy.backAriaLabel}
+            title={trailerCopy.backTitle}
           >
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
 
           <h1 className="text-2xl sm:text-3xl md:text-[38px] font-bold font-orbitron tracking-wider text-white">
-            Insight
+            {trailerCopy.title}
           </h1>
         </div>
       </div>
@@ -42,16 +45,22 @@ export default function InsightMissionPage({ onBack, onWatchStory }) {
           
           {/* Heading in Orbitron */}
           <h2 className="text-2xl sm:text-3xl md:text-[38px] lg:text-[42px] font-bold font-orbitron text-white leading-[1.22] tracking-wide drop-shadow-[0_2px_16px_rgba(0,0,0,0.75)]">
-            A Tiny Listener
-            <br />
-            on a Big Planet
+            {trailerCopy.headlineLines.map((line, idx) => (
+              <span key={idx}>
+                {idx > 0 && <br />}
+                {line}
+              </span>
+            ))}
           </h2>
 
           {/* Subtitle in Exo 2 */}
           <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-[18px] text-white/95 font-exo2 font-normal leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)]">
-            Insight landed on Mars to listen
-            <br />
-            to the planet&apos;s natural quakes
+            {trailerCopy.subtitleLines.map((line, idx) => (
+              <span key={idx}>
+                {idx > 0 && <br />}
+                {line}
+              </span>
+            ))}
           </p>
 
           {/* Pointed Hexagonal Button: "Watch the story ->" */}
@@ -59,7 +68,7 @@ export default function InsightMissionPage({ onBack, onWatchStory }) {
             <button
               onClick={onWatchStory}
               className="relative group inline-flex items-center justify-between gap-3.5 px-6 sm:px-7 py-3 min-w-[235px] sm:min-w-[255px] h-[50px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
-              title="Watch the story"
+              title={trailerCopy.ctaTitle}
             >
               {/* Pointed Hexagon Border SVG */}
               <svg
@@ -83,7 +92,7 @@ export default function InsightMissionPage({ onBack, onWatchStory }) {
 
               {/* Center Button Label */}
               <span className="relative z-10 text-white font-exo2 text-[15px] sm:text-[16px] font-medium tracking-wide">
-                Watch the story
+                {trailerCopy.ctaLabel}
               </span>
 
               {/* Right Arrow Icon */}

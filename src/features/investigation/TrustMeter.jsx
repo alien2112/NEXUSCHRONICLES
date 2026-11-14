@@ -1,5 +1,8 @@
 import { Check } from 'lucide-react';
 import { TRUST_OPTIONS } from './investigationData';
+import siteContent from '../../data/siteContent.json';
+
+const { trustMeterTitle } = siteContent.investigation;
 
 /**
  * Interactive 5-point Trust Meter displayed beneath the NEXUS dialogue card in Tests 02-04 and Case Board.
@@ -25,7 +28,7 @@ export default function TrustMeter({
           <Check className="w-2.5 h-2.5 stroke-[3]" />
         </span>
         <span className="font-exo2 font-semibold text-xs sm:text-[14px] text-[#F7961D] tracking-wide">
-          Trust Meter
+          {trustMeterTitle}
         </span>
       </div>
 

@@ -2,6 +2,9 @@ import Modal from '../../components/Modal';
 import { useState, useEffect, useRef } from 'react';
 import { Search, X, Sparkles, ArrowRight, ExternalLink, Rocket } from 'lucide-react';
 import { popularSearchSuggestions, nasaNavData } from '../../data/nasaNavData';
+import siteContent from '../../data/siteContent.json';
+
+const searchCopy = siteContent.navigation.searchModal;
 
 export default function SearchModal({ isOpen, onClose, onNavigate }) {
   const [query, setQuery] = useState('');
@@ -48,7 +51,7 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
       );
 
   return (
-    <Modal label="Search" onClose={onClose} className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 sm:px-6   duration-200">
+    <Modal label={searchCopy.modalLabel} onClose={onClose} className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 sm:px-6   duration-200">
       {/* Dark Blur Backdrop */}
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity"
@@ -62,10 +65,10 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
         <div className="flex items-center px-4 py-3.5 border-b border-white/10 bg-white/[0.03]">
           <Search className="w-5 h-5 text-gray-400 mr-3 shrink-0" />
           <input
-            aria-label="Search missions and science"
+            aria-label={searchCopy.inputAriaLabel}
             ref={inputRef}
             type="text"
-            placeholder="Search NASA missions, science, news, and multimedia..."
+            placeholder={searchCopy.inputPlaceholder}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full bg-transparent text-white placeholder-gray-400 focus:outline-none text-[15px]"
@@ -74,13 +77,13 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
             <button
               onClick={() => setQuery('')}
               className="p-1 rounded-full text-gray-400 hover:text-white mr-2 transition-colors cursor-pointer"
-              title="Clear query"
+              title={searchCopy.clearTitle}
             >
               <X className="w-4 h-4" />
             </button>
           )}
           <span className="text-[11px] font-mono text-gray-400 bg-white/10 px-2 py-0.5 rounded border border-white/10 select-none">
-            ESC
+            {searchCopy.escBadge}
           </span>
         </div>
 
@@ -91,7 +94,7 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
           {query.trim() !== '' && (
             <div className="space-y-1">
               <div className="text-xs uppercase tracking-wider text-gray-400 font-semibold px-2 pb-1">
-                {filteredItems.length > 0 ? `Results for "${query}"` : 'No direct matches found'}
+                {filteredItems.length > 0 ? `${searchCopy.resultsPrefix} "${query}"` : searchCopy.noMatches}
               </div>
 
               {filteredItems.slice(0, 8).map((item, idx) => (
@@ -132,7 +135,7 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
           <div>
             <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-gray-400 font-semibold px-2 mb-2">
               <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-              Popular Topics
+              {searchCopy.popularTopicsHeading}
             </div>
             <div className="flex flex-wrap gap-2 px-1">
               {popularSearchSuggestions.map((item, idx) => (
@@ -150,34 +153,24 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
           {/* Quick links to explore */}
           <div className="pt-2 border-t border-white/5">
             <div className="text-xs uppercase tracking-wider text-gray-400 font-semibold px-2 mb-2">
-              Official Portals
+              {searchCopy.officialPortalsHeading}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <a
-                href="https://plus.nasa.gov"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/10 border border-white/5 transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <div className="text-xs font-semibold text-white">NASA+ Streaming</div>
-                  <div className="text-[11px] text-gray-400">Ad-free live events and shows</div>
-                </div>
-                <ExternalLink className="w-3.5 h-3.5 text-gray-500" />
-              </a>
-
-              <a
-                href="https://earth.gov"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/10 border border-white/5 transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <div className="text-xs font-semibold text-white">Earth Information Center</div>
-                  <div className="text-[11px] text-gray-400">Climate data & satellite views</div>
-                </div>
-                <ExternalLink className="w-3.5 h-3.5 text-gray-500" />
-              </a>
+              {searchCopy.officialPortals.map((portal, idx) => (
+                <a
+                  key={idx}
+                  href={portal.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/10 border border-white/5 transition-colors flex items-center justify-between"
+                >
+                  <div>
+                    <div className="text-xs font-semibold text-white">{portal.title}</div>
+                    <div className="text-[11px] text-gray-400">{portal.description}</div>
+                  </div>
+                  <ExternalLink className="w-3.5 h-3.5 text-gray-500" />
+                </a>
+              ))}
             </div>
           </div>
 

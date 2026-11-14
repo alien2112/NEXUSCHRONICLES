@@ -2,6 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { CaseBoardStrip } from './CaseBoardPanel';
 import { NexusSidePanel } from './WorkspaceLayout';
+import siteContent from '../../data/siteContent.json';
+
+const invCopy = siteContent.investigation;
+const test4Copy = invCopy.test04;
 
 /**
  * Procedural HiRISE-style Mars Crater Canvas for Test 04:
@@ -187,58 +191,21 @@ function WaterIceCraterCanvas({
       ctx.fillRect(width - 96, height - 22, 68, 2);
       ctx.font = '500 10px "Exo 2", sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('100 m', width - 62, height - 28);
+      ctx.fillText(test4Copy.scaleLabel, width - 62, height - 28);
     }
 
     ctx.restore();
   }, [falseColor, monthProgress, compact, showTarget]);
 
-  return <canvas role="img" aria-label={`Crater in ${falseColor ? 'colour' : 'black and white'}; time-lapse progress ${Math.round(monthProgress)} percent`} ref={canvasRef} className="w-full h-full block object-cover" />;
+  const craterAriaLabel = test4Copy.craterAriaTemplate
+    .replace('{mode}', falseColor ? test4Copy.colourModeName : test4Copy.bwModeName)
+    .replace('{progress}', String(Math.round(monthProgress)));
+
+  return <canvas role="img" aria-label={craterAriaLabel} ref={canvasRef} className="w-full h-full block object-cover" />;
 }
 
-const TEST4_MONTH_LABELS = [
-  'Feb 2022',
-  'Mar 2022',
-  'Apr 2022',
-  'May 2022',
-  'Jun 2022',
-  'Jul 2022',
-  'Aug 2022',
-  'Sep 2022',
-  'Oct 2022',
-  'Nov 2022',
-  'Dec 2022',
-];
-
-const FINGERPRINT_CANDIDATES = [
-  {
-    id: 'rock',
-    label: 'Bright Rock',
-    sublabel: 'Silica / Dust',
-    // High, relatively flat reflectance without water-ice dips at 1.5 & 2.0 um
-    points: '8,26 42,24 72,22 98,25 130,24 162,26 196,25 232,27',
-    isMatch: false,
-    feedback: 'Mismatch — bright rock lacks the deep 1.5 μm & 2.0 μm dips.',
-  },
-  {
-    id: 'water-ice',
-    label: 'Water Ice (H₂O)',
-    sublabel: '1.5 & 2.0 μm dips',
-    // Matches the crater's measured water-ice absorption bands
-    points: '8,22 36,24 58,28 76,68 95,30 124,26 146,74 168,36 198,32 232,38',
-    isMatch: true,
-    feedback: 'Match confirmed — 1.5 μm & 2.0 μm dips fit water ice.',
-  },
-  {
-    id: 'co2-ice',
-    label: 'Dry Ice (CO₂)',
-    sublabel: '1.43 & 2.01 μm',
-    // Narrow 1.43 um & shifted 2.01 um features — visibly misses the crater curve
-    points: '8,20 34,20 56,56 70,22 104,20 132,22 154,60 172,24 202,24 232,26',
-    isMatch: false,
-    feedback: 'Mismatch — CO₂ dry ice bands are narrower and shifted.',
-  },
-];
+const TEST4_MONTH_LABELS = test4Copy.monthLabels;
+const FINGERPRINT_CANDIDATES = test4Copy.fingerprintMatcher.candidates;
 
 const CRATER_MEASURED_SPECTRUM =
   '8,23 36,25 58,29 76,68 95,31 124,27 146,74 168,37 198,33 232,39';
@@ -247,13 +214,14 @@ const CRATER_MEASURED_SPECTRUM =
  * Interactive IR Spectrometer ("Light Fingerprint") Matcher for Test 04 (Beats 2–4).
  */
 function LightFingerprintMatcher({ selectedId, onSelect }) {
+  const fpCopy = test4Copy.fingerprintMatcher;
   const active = FINGERPRINT_CANDIDATES.find((c) => c.id === selectedId) || null;
 
   return (
     <div className="flex flex-col justify-between h-full p-3 bg-[#050b1d]/95">
       <div className="flex items-center justify-between gap-2 mb-1.5">
         <span className="text-[10px] font-orbitron uppercase tracking-wider text-cyan-300">
-          Light Fingerprint (1.0 – 2.5 μm)
+          {fpCopy.heading}
         </span>
         {active && (
           <span
@@ -263,7 +231,7 @@ function LightFingerprintMatcher({ selectedId, onSelect }) {
                 : 'border-amber-400/60 bg-amber-500/15 text-amber-200'
             }`}
           >
-            {active.isMatch ? 'Match!' : 'No Match'}
+            {active.isMatch ? fpCopy.matchBadge : fpCopy.noMatchBadge}
           </span>
         )}
       </div>
@@ -277,13 +245,13 @@ function LightFingerprintMatcher({ selectedId, onSelect }) {
           <line x1="8" y1="78" x2="234" y2="78" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
 
           <text x="76" y="86" fill="rgba(186,230,253,0.7)" fontSize="7" textAnchor="middle">
-            1.5 μm
+            {fpCopy.axis15Label}
           </text>
           <text x="146" y="86" fill="rgba(186,230,253,0.7)" fontSize="7" textAnchor="middle">
-            2.0 μm
+            {fpCopy.axis20Label}
           </text>
           <text x="12" y="12" fill="rgba(255,255,255,0.45)" fontSize="6.5">
-            Crater patch
+            {fpCopy.craterPatchLabel}
           </text>
 
           {/* Measured crater light fingerprint */}
@@ -343,7 +311,7 @@ function LightFingerprintMatcher({ selectedId, onSelect }) {
       <div className="mt-1.5 text-[10px] font-exo2 text-white/75 truncate">
         {active
           ? active.feedback
-          : 'Pick a mineral spectrum to match the crater dips.'}
+          : fpCopy.defaultPrompt}
       </div>
     </div>
   );
@@ -426,8 +394,8 @@ export function Test04Workspace({
 
   const bottomPrompt =
     beat <= 1
-      ? 'switch from black and white to colour'
-      : "Light fingerprint: Match the crater's fingerprint.";
+      ? test4Copy.prompts.bw
+      : test4Copy.prompts.fingerprint;
 
   return (
     <div className="w-full flex flex-col">
@@ -435,14 +403,14 @@ export function Test04Workspace({
         {/* Left Column: TEST 04 HUD Frame + Timeline Slider Card */}
         <div className="lg:col-span-7 xl:col-span-7 flex flex-col">
           <div className="relative w-full lg:w-[103%] z-10">
-            <div className="relative w-full pt-3.5 pb-5 px-4 sm:px-6">
+            <div className="relative w-full pt-4 pb-5 px-4 sm:px-6">
               <svg
                 className="absolute inset-0 w-full h-full pointer-events-none"
                 viewBox="0 0 600 300"
                 preserveAspectRatio="none"
               >
                 <path
-                  d="M 14 2 L 88 2 Q 94 2 98 7 L 106 16 Q 110 20 116 20 L 584 20 Q 598 20 598 34 L 598 282 Q 598 296 584 296 L 42 296 Q 35 296 30 290 L 24 282 Q 20 278 14 278 L 10 278 Q 2 278 2 268 L 2 14 Q 2 2 14 2 Z"
+                  d="M 14 2 L 584 2 Q 598 2 598 16 L 598 282 Q 598 296 584 296 L 42 296 Q 35 296 30 290 L 24 282 Q 20 278 14 278 L 10 278 Q 2 278 2 268 L 2 14 Q 2 2 14 2 Z"
                   fill="rgba(5, 9, 22, 0.78)"
                   stroke="#F7961D"
                   strokeOpacity="0.78"
@@ -452,11 +420,8 @@ export function Test04Workspace({
 
               <div className="relative z-10 flex items-center justify-between gap-2 mb-2.5 sm:mb-3">
                 <div className="flex flex-col items-start text-left">
-                  <span className="text-[11px] sm:text-xs md:text-[13px] font-exo2 font-medium uppercase tracking-wider text-[#F7961D]">
-                    TEST 04
-                  </span>
-                  <h3 className="mt-0.5 text-lg sm:text-xl md:text-[23px] lg:text-[25px] font-bold font-orbitron text-white tracking-wide leading-tight">
-                    Is it really ice?
+                  <h3 className="text-lg sm:text-xl md:text-[23px] lg:text-[25px] font-bold font-orbitron text-white tracking-wide leading-tight">
+                    {test4Copy.title}
                   </h3>
                 </div>
               </div>
@@ -470,7 +435,7 @@ export function Test04Workspace({
                   >
                     <WaterIceCraterCanvas falseColor={falseColor} monthProgress={0} />
                     <div className="absolute top-2.5 left-3 px-2.5 py-0.5 rounded-full bg-black/65 border border-white/25 text-[10px] font-exo2 tracking-wide text-white/90 pointer-events-none">
-                      {falseColor ? 'HiRISE · Colour Mode' : 'HiRISE · Black & White'}
+                      {falseColor ? test4Copy.modeBadges.colour : test4Copy.modeBadges.bw}
                     </div>
                   </div>
                 ) : (
@@ -521,7 +486,7 @@ export function Test04Workspace({
                             : 'border-white/35 text-white/80 hover:border-[#F7961D] hover:text-white'
                         }`}
                       >
-                        {falseColor ? 'Colour ON' : 'Black & White'}
+                        {falseColor ? test4Copy.toggleButtons.colourOn : test4Copy.toggleButtons.bw}
                       </button>
                       {beat === 1 && (
                         <button
@@ -529,14 +494,14 @@ export function Test04Workspace({
                           onClick={handleAdvanceBeat}
                           className="px-2.5 py-0.5 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-[10px] transition-colors cursor-pointer"
                         >
-                          Next →
+                          {test4Copy.toggleButtons.next}
                         </button>
                       )}
                     </div>
                   ) : (
                     selectedFingerprint === 'water-ice' && (
                       <span className="px-2.5 py-0.5 rounded-full border border-emerald-400/60 bg-emerald-500/15 text-emerald-200 text-[10px] font-exo2 shrink-0">
-                        H₂O Matched
+                        {test4Copy.matchedBadge}
                       </span>
                     )
                   )}
@@ -550,7 +515,7 @@ export function Test04Workspace({
             <div className="mt-2.5 w-full sm:w-[76%] md:w-[66%] rounded-xl border border-white/25 bg-[#464e62]/90 backdrop-blur-md px-4 py-2.5 shadow-xl inv-fade-up">
               <div className="flex items-center justify-between gap-2 mb-2">
                 <div className="font-exo2 text-xs sm:text-[13px] text-white">
-                  If this is ice, what happens over months?
+                  {test4Copy.timeline.question}
                 </div>
                 <span className="text-[10px] font-mono text-cyan-200/90 shrink-0">
                   {currentMonthLabel}
@@ -561,7 +526,7 @@ export function Test04Workspace({
                   <div className="w-9 h-9 rounded-md overflow-hidden border border-white/60 bg-[#120e22]">
                     <WaterIceCraterCanvas falseColor monthProgress={0} compact />
                   </div>
-                  <span className="text-[10px] font-exo2 text-white/90 mt-1">Feb 2022</span>
+                  <span className="text-[10px] font-exo2 text-white/90 mt-1">{test4Copy.timeline.startLabel}</span>
                 </div>
 
                 <div className="relative flex-1 h-5 flex items-center">
@@ -582,7 +547,7 @@ export function Test04Workspace({
                     value={monthIdx}
                     onChange={handleMonthSlider}
                     className="absolute inset-0 w-full opacity-0 cursor-pointer"
-                    aria-label="Time-lapse ice sublimation slider from Feb 2022 to Dec 2022"
+                    aria-label={test4Copy.timeline.sliderAriaLabel}
                   />
                 </div>
 
@@ -590,7 +555,7 @@ export function Test04Workspace({
                   <div className="w-9 h-9 rounded-md overflow-hidden border border-white/40 bg-[#120e22]">
                     <WaterIceCraterCanvas falseColor monthProgress={100} compact />
                   </div>
-                  <span className="text-[10px] font-exo2 text-white/90 mt-1">Dec 2022</span>
+                  <span className="text-[10px] font-exo2 text-white/90 mt-1">{test4Copy.timeline.endLabel}</span>
                 </div>
               </div>
             </div>
@@ -601,10 +566,10 @@ export function Test04Workspace({
         <NexusSidePanel
           robotImage={
             beat === 0
-              ? '/robot-amazed.png'
+              ? invCopy.robotImages.amazed
               : beat >= 3
-              ? '/robot-front.png'
-              : '/robot-investigate-page.png'
+              ? invCopy.robotImages.front
+              : invCopy.robotImages.investigate
           }
           showTrustMeter
           confidenceChoice={confidenceChoice}
@@ -613,8 +578,9 @@ export function Test04Workspace({
         >
           {beat === 0 && (
             <div className="space-y-1.5">
-              <p>Could be bright rock.</p>
-              <p>How would we tell?</p>
+              {test4Copy.dialogues.beat0Lines.map((line, idx) => (
+                <p key={idx}>{line}</p>
+              ))}
               <button
                 type="button"
                 onClick={(e) => {
@@ -623,15 +589,16 @@ export function Test04Workspace({
                 }}
                 className="mt-1 inline-flex items-center gap-1 text-xs text-[#F7961D] hover:underline cursor-pointer"
               >
-                <span>Switch to Colour →</span>
+                <span>{test4Copy.dialogues.beat0Cta}</span>
               </button>
             </div>
           )}
 
           {beat === 1 && (
             <div className="space-y-1.5">
-              <p>In this colour mode, ice looks</p>
-              <p>blue-white.</p>
+              {test4Copy.dialogues.beat1Lines.map((line, idx) => (
+                <p key={idx}>{line}</p>
+              ))}
               <button
                 type="button"
                 onClick={(e) => {
@@ -640,17 +607,16 @@ export function Test04Workspace({
                 }}
                 className="mt-1 inline-flex items-center gap-1 text-xs text-[#F7961D] hover:underline cursor-pointer"
               >
-                <span>Check light fingerprint →</span>
+                <span>{test4Copy.dialogues.beat1Cta}</span>
               </button>
             </div>
           )}
 
           {beat === 2 && (
             <div className="space-y-1">
-              <p>Nobody touched it.</p>
-              <p>Scientists say the evidence</p>
-              <p>is consistent with water ice.</p>
-              <p>That&apos;s careful wording</p>
+              {test4Copy.dialogues.beat2Lines.map((line, idx) => (
+                <p key={idx}>{line}</p>
+              ))}
               <button
                 type="button"
                 onClick={(e) => {
@@ -659,7 +625,7 @@ export function Test04Workspace({
                 }}
                 className="mt-1.5 inline-flex items-center gap-1 text-xs text-[#F7961D] hover:underline cursor-pointer"
               >
-                <span>Verify &amp; continue →</span>
+                <span>{test4Copy.dialogues.beat2Cta}</span>
               </button>
             </div>
           )}
@@ -667,7 +633,7 @@ export function Test04Workspace({
           {(beat === 3 || beat === 4) && (
             <div className="space-y-2">
               <p>
-                It&apos;s the lowest-latitude ice exposed by an impact seen on Mars.
+                {test4Copy.dialogues.beat34Text}
               </p>
               {beat === 3 ? (
                 <button
@@ -678,7 +644,7 @@ export function Test04Workspace({
                   }}
                   className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs transition-colors cursor-pointer"
                 >
-                  <span>Stamp Case Board</span>
+                  <span>{test4Copy.dialogues.beat3Cta}</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               ) : (
@@ -690,7 +656,7 @@ export function Test04Workspace({
                   }}
                   className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs transition-colors cursor-pointer"
                 >
-                  <span>Open Case Board</span>
+                  <span>{test4Copy.dialogues.beat4Cta}</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               )}

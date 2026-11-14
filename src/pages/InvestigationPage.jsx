@@ -14,14 +14,10 @@ import { Test01Workspace } from '../features/investigation/Test01Workspace';
 import { Test02Workspace } from '../features/investigation/Test02Workspace';
 import { Test03Workspace } from '../features/investigation/Test03Workspace';
 import { Test04Workspace } from '../features/investigation/Test04Workspace';
+import siteContent from '../data/siteContent.json';
 
-const STEPS = [
-  { number: 1, lines: ['The Ground shook'], leftPct: '21.6%' },
-  { number: 2, lines: ['Something', 'new formed'], leftPct: '37.2%' },
-  { number: 3, lines: ['Can a small', 'Rock do this?'], leftPct: '52.8%' },
-  { number: 4, lines: ['Is it really ice?'], leftPct: '68.2%' },
-  { number: 5, lines: ['Case Board'], leftPct: '83.8%' },
-];
+const invCopy = siteContent.investigation;
+const STEPS = invCopy.steps;
 
 // Scene ordering for sequential navigation & Back button
 const SCENE_ORDER = [
@@ -44,17 +40,7 @@ const SCENE_ORDER = [
   'case-board',
 ];
 
-const CHAPTER_TOASTS = {
-  intro1: { code: 'BRIEFING', title: 'Meet NEXUS · Case 1094' },
-  'test-1': { code: 'TEST 01', title: 'Real quake or just noise?' },
-  intro2: { code: 'WITNESS 02', title: 'A second witness in orbit' },
-  'test-2': { code: 'TEST 02', title: 'Something new, right place & time?' },
-  intro3: { code: 'DOUBT CHECK', title: 'Can a small rock do this?' },
-  'test-3': { code: 'TEST 03', title: 'Crater scale & impact energy' },
-  intro4: { code: 'FINAL CLUE', title: 'White patches around the crater' },
-  'test-4': { code: 'TEST 04', title: 'Is it really water ice?' },
-  'case-board': { code: 'CASE BOARD', title: 'Final evidence synthesis' },
-};
+const CHAPTER_TOASTS = invCopy.chapterToasts;
 
 const getChapterGroup = (sceneId) => {
   if (sceneId.startsWith('intro1-')) return 'intro1';
@@ -69,6 +55,7 @@ export default function InvestigationPage({
   onSaveProgress,
   onGoDeeper,
   onGoTechnical,
+  onEngineeringLegacy,
 }) {
   const [scene, setScene] = useState(initialScene);
   const [transitionDir, setTransitionDir] = useState('next'); // 'next' | 'prev'
@@ -90,7 +77,7 @@ export default function InvestigationPage({
     scene === 'intro3' ||
     scene === 'intro4';
 
-  const displayCodename = codename.trim() ? codename.trim() : '{name}';
+  const displayCodename = codename.trim() ? codename.trim() : invCopy.introScenes['intro1-4'].defaultCodename;
 
   const activeStepNumber = (() => {
     if (scene === 'test-1' || scene.startsWith('intro1-')) return 1;
@@ -208,7 +195,7 @@ export default function InvestigationPage({
       {/* Full-Screen Investigation Background */}
       <div
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none select-none"
-        style={{ backgroundImage: `url('/investigationpage-bg.webp')` }}
+        style={{ backgroundImage: `url('${invCopy.backgroundImage}')` }}
       />
 
       {/* Subtle atmospheric gradient */}
@@ -228,23 +215,23 @@ export default function InvestigationPage({
             <button
               onClick={handleBackClick}
               className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-[1.5px] border-white/95 hover:border-white hover:bg-white/10 flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95 shrink-0"
-              aria-label="Back"
-              title="Back"
+              aria-label={invCopy.header.backAriaLabel}
+              title={invCopy.header.backTitle}
             >
               <ArrowLeft className="w-4 h-4 text-white" strokeWidth={2} />
             </button>
 
             <h1 className="text-xl sm:text-2xl md:text-[25px] lg:text-[27px] font-bold font-orbitron tracking-wider text-white leading-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]">
-              Investigation
+              {invCopy.header.title}
             </h1>
           </div>
 
           <div className="pl-9 sm:pl-11 mt-1.5 sm:mt-2">
             <h2 className="text-2xl sm:text-[30px] md:text-[32px] lg:text-[34px] font-bold font-orbitron text-[#F7961D] tracking-wide leading-[1.12] drop-shadow-[0_2px_14px_rgba(0,0,0,0.9)]">
-              Prove It: Case 1094
+              {invCopy.header.caseTitle}
             </h2>
             <p className="mt-0.5 sm:mt-1 text-sm sm:text-[15px] md:text-[16px] lg:text-[17px] font-exo2 font-normal text-white/95 tracking-[0.01em] drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-              Don&apos;t just trust the mission. Check the evidence
+              {invCopy.header.subtitle}
             </p>
           </div>
         </div>
@@ -302,7 +289,7 @@ export default function InvestigationPage({
                 <div className="relative z-10 flex items-center gap-2 text-[#F7961D] mb-7 sm:mb-9 md:mb-11">
                   <UserRound className="w-4 h-4 sm:w-5 sm:h-5 text-[#F7961D] shrink-0" strokeWidth={2} />
                   <span className="font-exo2 font-medium text-base sm:text-lg md:text-[21px] tracking-wide uppercase">
-                    NEXUS
+                    {invCopy.nexusSpeakerLabel}
                   </span>
                 </div>
 
@@ -313,21 +300,23 @@ export default function InvestigationPage({
                 >
                   {scene === 'intro1-1' && (
                     <div>
-                      <p>Hey. I&apos;m NEXUS.</p>
-                      <p>I live in the mission archive.</p>
+                      {invCopy.introScenes['intro1-1'].lines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
                     </div>
                   )}
 
                   {scene === 'intro1-2' && (
                     <div>
-                      <p>I&apos;ve read every log. I&apos;ve never</p>
-                      <p>seen Mars. I need your eyes.</p>
+                      {invCopy.introScenes['intro1-2'].lines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
                     </div>
                   )}
 
                   {scene === 'intro1-3' && (
                     <div>
-                      <p>Pick a codename.</p>
+                      <p>{invCopy.introScenes['intro1-3'].prompt}</p>
                       <form
                         onSubmit={handleCodenameSubmit}
                         onClick={(e) => e.stopPropagation()}
@@ -337,8 +326,8 @@ export default function InvestigationPage({
                           type="text"
                           value={codenameInput}
                           onChange={(e) => setCodenameInput(e.target.value)}
-                          aria-label="Codename"
-                          placeholder="Enter codename..."
+                          aria-label={invCopy.introScenes['intro1-3'].inputAriaLabel}
+                          placeholder={invCopy.introScenes['intro1-3'].inputPlaceholder}
                           autoFocus
                           className="w-full px-4 py-2 rounded-full bg-[#091330]/90 border border-[#F7961D]/60 focus:border-[#F7961D] text-white text-sm sm:text-base font-exo2 outline-none placeholder:text-white/40 shadow-inner"
                         />
@@ -346,7 +335,7 @@ export default function InvestigationPage({
                           type="submit"
                           className="px-4 py-2 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs sm:text-sm tracking-wide transition-colors cursor-pointer shrink-0"
                         >
-                          Continue
+                          {invCopy.introScenes['intro1-3'].submitLabel}
                         </button>
                       </form>
                     </div>
@@ -354,69 +343,72 @@ export default function InvestigationPage({
 
                   {scene === 'intro1-4' && (
                     <div>
-                      <p>Okay, {displayCodename}. The story says a</p>
-                      <p>space rock hit Mars on</p>
-                      <p>Christmas Eve 2021.</p>
+                      {invCopy.introScenes['intro1-4'].lines.map((line, idx) => (
+                        <p key={idx}>{line.replace('{codename}', displayCodename)}</p>
+                      ))}
                     </div>
                   )}
 
                   {scene === 'intro1-5' && (
                     <div>
-                      <p>Big claim.</p>
-                      <p>We check big claims.</p>
+                      {invCopy.introScenes['intro1-5'].lines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
                     </div>
                   )}
 
                   {scene === 'intro1-6' && (
                     <div className="space-y-0.5 text-lg sm:text-2xl md:text-[28px] lg:text-[31px] leading-[1.28]">
-                      <p>The Suspects</p>
-                      <p>A: a space rock.</p>
-                      <p>B: Mars cracked by itself.</p>
-                      <p>C: just noise.</p>
+                      {invCopy.introScenes['intro1-6'].lines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
                     </div>
                   )}
 
                   {(scene === 'intro1-7' || scene === 'intro1-8') && (
                     <div>
-                      <p>Three suspects.</p>
-                      <p>Let&apos;s see who survives.</p>
+                      {invCopy.introScenes['intro1-7'].lines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
                     </div>
                   )}
 
                   {scene === 'intro2-1' && (
                     <div>
-                      <p>Suspect B says Mars just</p>
-                      <p>cracked. No rock needed.</p>
-                      <p>Prove B wrong.</p>
+                      {invCopy.introScenes['intro2-1'].lines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
                     </div>
                   )}
 
                   {scene === 'intro2-2' && (
                     <div>
-                      <p>We need a second witness.</p>
-                      <p>One that can see.</p>
+                      {invCopy.introScenes['intro2-2'].lines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
                     </div>
                   )}
 
                   {scene === 'intro3' && (
                     <div>
-                      <p>Claim three: a rock made this.</p>
-                      <p>I&apos;m doubtful. Look at the size</p>
+                      {invCopy.introScenes.intro3.lines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
                     </div>
                   )}
 
                   {scene === 'intro4' && (
                     <div>
-                      <p>My favorite. White patches</p>
-                      <p>around the crater. NASA says</p>
-                      <p>water ice.</p>
+                      {invCopy.introScenes.intro4.lines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
                     </div>
                   )}
                 </div>
 
                 {scene !== 'intro1-8' && (
                   <div className="absolute bottom-3.5 right-8 z-10 flex items-center gap-1 text-xs font-exo2 text-white/55 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                    <span>Click to continue</span>
+                    <span>{invCopy.continuePrompt}</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </div>
                 )}
@@ -442,7 +434,7 @@ export default function InvestigationPage({
 
                     <div className="relative z-10 flex flex-col items-center text-center">
                       <p className="font-exo2 text-white text-sm sm:text-base md:text-[19px] font-normal tracking-wide mb-2.5 sm:mb-3">
-                        How sure are you a space rock did this?
+                        {invCopy.introScenes['intro1-8'].confidencePrompt}
                       </p>
 
                       <div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 sm:gap-2.5 w-full">
@@ -475,8 +467,8 @@ export default function InvestigationPage({
                 `}
               >
                 <img
-                  src="/robot-intro-scences.png"
-                  alt="NEXUS Companion Robot"
+                  src={invCopy.robotImages.intro}
+                  alt={invCopy.robotAlt}
                   className="w-full h-auto object-contain drop-shadow-[0_18px_35px_rgba(0,0,0,0.85)]"
                   draggable={false}
                 />
@@ -515,7 +507,7 @@ export default function InvestigationPage({
                 return (
                   <button
                     type="button"
-                    aria-label={`Go to ${step.number === 5 ? 'Case Board' : `Test ${step.number}`}`}
+                    aria-label={`Go to ${step.number === 5 ? 'Case Board' : `Step ${step.number}`}`}
                     aria-current={isActive ? 'step' : undefined}
                     key={step.number}
                     onClick={() => {
@@ -653,6 +645,20 @@ export default function InvestigationPage({
                             placedParts,
                           });
                           onGoTechnical();
+                        }
+                      : undefined
+                  }
+                  onEngineeringLegacy={
+                    onEngineeringLegacy
+                      ? () => {
+                          onSaveProgress?.({
+                            codename,
+                            initialConfidence,
+                            confidenceChoice,
+                            earnedStampIds,
+                            placedParts,
+                          });
+                          onEngineeringLegacy();
                         }
                       : undefined
                   }

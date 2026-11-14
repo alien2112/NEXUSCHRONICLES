@@ -3,6 +3,46 @@ import {
   ChevronRight, 
   Target, 
 } from 'lucide-react';
+import siteContent from '../data/siteContent.json';
+
+const marsCopy = siteContent.marsPage;
+
+function FeatureCardIcon({ id }) {
+  if (id === 'missions') {
+    return <Target className="w-7 h-7 text-white" strokeWidth={1.8} />;
+  }
+  if (id === 'feature') {
+    return (
+      <svg 
+        className="w-7 h-7 text-white" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="1.8"
+      >
+        <circle cx="12" cy="12" r="9" strokeDasharray="3 2" />
+        <path d="M12 7v5l3 2" strokeLinecap="round" />
+        <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+      </svg>
+    );
+  }
+  return (
+    <svg 
+      className="w-7 h-7 text-white" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="1.8"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="2.2" fill="currentColor" />
+      <circle cx="12" cy="5.5" r="1.3" fill="currentColor" />
+      <circle cx="12" cy="18.5" r="1.3" fill="currentColor" />
+      <circle cx="5.5" cy="12" r="1.3" fill="currentColor" />
+      <circle cx="18.5" cy="12" r="1.3" fill="currentColor" />
+    </svg>
+  );
+}
 
 export default function MarsPage({ onBack, onExploreMissions }) {
   return (
@@ -15,7 +55,7 @@ export default function MarsPage({ onBack, onExploreMissions }) {
       <div 
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none"
         style={{ 
-          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp')}')`,
+          backgroundImage: `url('${encodeURI(marsCopy.backgroundImage)}')`,
         }}
       />
 
@@ -31,15 +71,15 @@ export default function MarsPage({ onBack, onExploreMissions }) {
           <button
             onClick={onBack}
             className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/70 hover:border-white hover:bg-white/10 flex items-center justify-center transition-colors duration-200 cursor-pointer active:scale-95"
-            aria-label="Back to Choose a World"
-            title="Back to Choose a World"
+            aria-label={marsCopy.backAriaLabel}
+            title={marsCopy.backTitle}
           >
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
 
           {/* Title in Orbitron without glow */}
           <h1 className="text-2xl sm:text-3xl md:text-[38px] font-bold font-orbitron tracking-wider text-white">
-            The Mars
+            {marsCopy.title}
           </h1>
         </div>
 
@@ -57,8 +97,8 @@ export default function MarsPage({ onBack, onExploreMissions }) {
           <div className="lg:col-span-4 flex items-center justify-center lg:justify-start">
             <div className="w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] md:w-[330px] md:h-[330px] flex items-center justify-center">
               <img
-                src="/mars-page-planet3rd.png"
-                alt="The Mars"
+                src={marsCopy.planetImage}
+                alt={marsCopy.planetAlt}
                 className="w-full h-full object-contain select-none pointer-events-none"
               />
             </div>
@@ -68,80 +108,27 @@ export default function MarsPage({ onBack, onExploreMissions }) {
           {/* COLUMN 2: Three Stacked Feature Badges (#F7961D stroke)  */}
           {/* ======================================================== */}
           <div className="lg:col-span-4 flex flex-col justify-center gap-5 w-full max-w-[360px] mx-auto">
-            
-            {/* Card 1: Distance from Earth */}
-            <div className="relative rounded-2xl border border-[#F7961D] bg-[#050816]/75 backdrop-blur-sm px-5 py-4 flex items-center gap-4 transition-colors duration-200">
-              <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                <svg 
-                  className="w-7 h-7 text-white" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="1.8"
-                >
-                  <circle cx="12" cy="12" r="9" />
-                  <circle cx="12" cy="12" r="2.2" fill="currentColor" />
-                  <circle cx="12" cy="5.5" r="1.3" fill="currentColor" />
-                  <circle cx="12" cy="18.5" r="1.3" fill="currentColor" />
-                  <circle cx="5.5" cy="12" r="1.3" fill="currentColor" />
-                  <circle cx="18.5" cy="12" r="1.3" fill="currentColor" />
-                </svg>
-              </div>
-
-              <div className="text-left">
-                <div className="text-white font-exo2 font-semibold text-sm sm:text-[15px] tracking-wide">
-                  Distance from Earth
+            {marsCopy.featureCards.map((card) => (
+              <div key={card.id} className="relative rounded-2xl border border-[#F7961D] bg-[#050816]/75 backdrop-blur-sm px-5 py-4 flex items-center gap-4 transition-colors duration-200">
+                <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                  <FeatureCardIcon id={card.id} />
                 </div>
-                <div className="text-slate-300 font-public text-xs sm:text-[13px] tracking-wide mt-0.5">
-                  54.6 – 401.4 Million km
+
+                <div className="text-left">
+                  <div className="text-white font-exo2 font-semibold text-sm sm:text-[15px] tracking-wide">
+                    {card.label}
+                  </div>
+                  <div className={`text-slate-300 font-public text-xs sm:text-[13px] tracking-wide mt-0.5${card.valueLines.length > 1 ? ' leading-snug' : ''}`}>
+                    {card.valueLines.map((line, idx) => (
+                      <span key={idx}>
+                        {idx > 0 && <br />}
+                        {line}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* Card 2: NASA Missions */}
-            <div className="relative rounded-2xl border border-[#F7961D] bg-[#050816]/75 backdrop-blur-sm px-5 py-4 flex items-center gap-4 transition-colors duration-200">
-              <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                <Target className="w-7 h-7 text-white" strokeWidth={1.8} />
-              </div>
-
-              <div className="text-left">
-                <div className="text-white font-exo2 font-semibold text-sm sm:text-[15px] tracking-wide">
-                  NASA Missions
-                </div>
-                <div className="text-slate-300 font-public text-xs sm:text-[13px] tracking-wide mt-0.5">
-                  +25 Missions
-                </div>
-              </div>
-            </div>
-
-            {/* Card 3: Key Feature */}
-            <div className="relative rounded-2xl border border-[#F7961D] bg-[#050816]/75 backdrop-blur-sm px-5 py-4 flex items-center gap-4 transition-colors duration-200">
-              <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                <svg 
-                  className="w-7 h-7 text-white" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="1.8"
-                >
-                  <circle cx="12" cy="12" r="9" strokeDasharray="3 2" />
-                  <path d="M12 7v5l3 2" strokeLinecap="round" />
-                  <circle cx="12" cy="12" r="1.6" fill="currentColor" />
-                </svg>
-              </div>
-
-              <div className="text-left">
-                <div className="text-white font-exo2 font-semibold text-sm sm:text-[15px] tracking-wide">
-                  Key Feature
-                </div>
-                <div className="text-slate-300 font-public text-xs sm:text-[13px] tracking-wide mt-0.5 leading-snug">
-                  Largest volcano in the
-                  <br />
-                  Solar System
-                </div>
-              </div>
-            </div>
-
+            ))}
           </div>
 
           {/* ======================================================== */}
@@ -162,12 +149,15 @@ export default function MarsPage({ onBack, onExploreMissions }) {
               {/* Top Extension for Text */}
               <div className="px-5 pt-5 pb-4 text-left bg-[#030617]">
                 <h2 className="text-white font-orbitron font-bold text-lg sm:text-[20px] tracking-wide leading-tight">
-                  About Mars
+                  {marsCopy.aboutCard.title}
                 </h2>
                 <p className="text-slate-200 font-exo2 text-xs sm:text-[13px] mt-1.5 leading-snug tracking-wide">
-                  A cold , dusty world with
-                  <br />
-                  incredible stories to tell
+                  {marsCopy.aboutCard.subtitleLines.map((line, idx) => (
+                    <span key={idx}>
+                      {idx > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
                 </p>
               </div>
 
@@ -178,8 +168,8 @@ export default function MarsPage({ onBack, onExploreMissions }) {
                 - Framed directly by the outer #F7961D card border
               */}
               <img
-                src="/rectangle-page3.png"
-                alt="Mars Surface Landscape"
+                src={marsCopy.aboutCard.image}
+                alt={marsCopy.aboutCard.imageAlt}
                 className="w-full h-auto block select-none pointer-events-none rounded-none"
               />
 
@@ -194,7 +184,7 @@ export default function MarsPage({ onBack, onExploreMissions }) {
             <button
               onClick={onExploreMissions}
               className="relative group inline-flex items-center justify-between px-8 py-2.5 w-[260px] sm:w-[275px] h-[48px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
-              title="Explore NASA Mars Missions"
+              title={marsCopy.ctaButton.title}
             >
               {/* Pointed hexagon border with #F7961D stroke */}
               <svg 
@@ -213,7 +203,7 @@ export default function MarsPage({ onBack, onExploreMissions }) {
 
               {/* Button Label & Chevron */}
               <span className="relative z-10 text-white font-exo2 text-[15px] sm:text-[16px] font-semibold tracking-wide mx-auto pl-2">
-                Explore Missions
+                {marsCopy.ctaButton.label}
               </span>
               <ChevronRight className="relative z-10 w-4 h-4 text-white group-hover:translate-x-1 transition-transform duration-300 shrink-0" />
             </button>

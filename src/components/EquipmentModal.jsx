@@ -1,5 +1,6 @@
 import Modal from './Modal';
 import { useState } from 'react';
+import siteContent from '../data/siteContent.json';
 import { 
   X, 
   MapPin, 
@@ -14,6 +15,8 @@ import {
   Info,
   CheckCircle2
 } from 'lucide-react';
+
+const { equipmentModal: eqUi } = siteContent;
 
 const iconMap = {
   Rocket,
@@ -33,7 +36,7 @@ export default function EquipmentModal({ world, onClose }) {
   const selectedEquipment = world.equipment.find(item => item.id === selectedId) || world.equipment[0];
 
   return (
-    <Modal label="Equipment details" onClose={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8   duration-200">
+    <Modal label={eqUi.modalLabel} onClose={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8   duration-200">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/85 backdrop-blur-md transition-opacity"
@@ -61,7 +64,7 @@ export default function EquipmentModal({ world, onClose }) {
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                NASA Surface Equipment & Heritage Artifacts
+                {eqUi.subtitle}
               </p>
             </div>
           </div>
@@ -69,7 +72,7 @@ export default function EquipmentModal({ world, onClose }) {
           <button
             onClick={onClose}
             className="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors cursor-pointer"
-            aria-label="Close dialog"
+            aria-label={eqUi.closeAriaLabel}
           >
             <X className="w-5 h-5" />
           </button>
@@ -81,7 +84,7 @@ export default function EquipmentModal({ world, onClose }) {
           {/* Equipment Selector List (Left Column) */}
           <div className="md:col-span-5 p-4 sm:p-5 space-y-2.5 bg-black/20">
             <div className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2 px-1">
-              Documented Equipment ({world.equipment.length})
+              {eqUi.documentedPrefix} ({world.equipment.length})
             </div>
 
             <div className="space-y-2">
@@ -126,18 +129,18 @@ export default function EquipmentModal({ world, onClose }) {
             {/* World Environmental Telemetry Specs */}
             <div className="mt-6 p-4 rounded-2xl bg-white/[0.02] border border-white/5 text-xs space-y-2">
               <div className="font-semibold text-slate-300 text-[11px] uppercase tracking-wider">
-                Planetary Environment
+                {eqUi.environmentHeading}
               </div>
               <div className="flex justify-between text-slate-400">
-                <span>Distance:</span>
+                <span>{eqUi.distanceLabel}</span>
                 <span className="text-white font-mono">{world.distance}</span>
               </div>
               <div className="flex justify-between text-slate-400">
-                <span>Surface Gravity:</span>
+                <span>{eqUi.gravityLabel}</span>
                 <span className="text-white font-mono">{world.gravity}</span>
               </div>
               <div className="flex justify-between text-slate-400">
-                <span>Atmosphere:</span>
+                <span>{eqUi.atmosphereLabel}</span>
                 <span className="text-white font-mono">{world.atmosphere}</span>
               </div>
             </div>
@@ -167,7 +170,7 @@ export default function EquipmentModal({ world, onClose }) {
                   <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex items-start gap-2.5">
                     <MapPin className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-slate-400 text-[11px] uppercase font-semibold">Landing Location</div>
+                      <div className="text-slate-400 text-[11px] uppercase font-semibold">{eqUi.landingLocationLabel}</div>
                       <div className="text-white font-medium mt-0.5">{selectedEquipment.site}</div>
                       <div className="text-slate-400 font-mono text-[10px] mt-0.5">{selectedEquipment.coordinates}</div>
                     </div>
@@ -176,9 +179,9 @@ export default function EquipmentModal({ world, onClose }) {
                   <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex items-start gap-2.5">
                     <Calendar className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-slate-400 text-[11px] uppercase font-semibold">Deployment Date</div>
+                      <div className="text-slate-400 text-[11px] uppercase font-semibold">{eqUi.deploymentDateLabel}</div>
                       <div className="text-white font-medium mt-0.5">{selectedEquipment.landingDate}</div>
-                      <div className="text-slate-400 font-mono text-[10px] mt-0.5">Program: {selectedEquipment.mission}</div>
+                      <div className="text-slate-400 font-mono text-[10px] mt-0.5">{eqUi.programPrefix} {selectedEquipment.mission}</div>
                     </div>
                   </div>
                 </div>
@@ -187,7 +190,7 @@ export default function EquipmentModal({ world, onClose }) {
                 <div className="space-y-2">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
                     <Info className="w-3.5 h-3.5 text-blue-400" />
-                    Equipment Mission Profile
+                    {eqUi.profileHeading}
                   </h4>
                   <p className="text-sm text-slate-200 leading-relaxed">
                     {selectedEquipment.summary}
@@ -197,7 +200,7 @@ export default function EquipmentModal({ world, onClose }) {
                 {/* Key Facts / Engineering Achievements */}
                 <div className="space-y-2">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Key Historical & Scientific Milestones
+                    {eqUi.milestonesHeading}
                   </h4>
                   <ul className="space-y-2">
                     {selectedEquipment.keyFacts.map((fact, idx) => (
@@ -215,14 +218,14 @@ export default function EquipmentModal({ world, onClose }) {
             {/* Footer action buttons */}
             <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
               <span className="text-slate-400">
-                NASA Planetary Data System (PDS)
+                {eqUi.footerLeft}
               </span>
 
               <button
                 onClick={onClose}
                 className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
               >
-                Close Explorer
+                {eqUi.closeLabel}
               </button>
             </div>
 

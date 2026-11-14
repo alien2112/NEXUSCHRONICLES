@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
+import siteContent from '../data/siteContent.json';
+
+const insightCopy = siteContent.marsInsightPage;
 
 export default function MarsInsightPage({ onBack, onExploreMissions }) {
   const [isZoomedIn, setIsZoomedIn] = useState(false);
@@ -21,7 +24,7 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
       <div 
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none select-none"
         style={{ 
-          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp')}')`,
+          backgroundImage: `url('${encodeURI(insightCopy.backgroundImage)}')`,
         }}
       />
 
@@ -37,8 +40,8 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
           <button
             onClick={onBack}
             className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/80 hover:border-white hover:bg-white/10 flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95 shadow-sm"
-            aria-label="Back to Mars Missions"
-            title="Back to Mars Missions"
+            aria-label={insightCopy.backAriaLabel}
+            title={insightCopy.backTitle}
           >
             <svg 
               className="w-4 h-4 text-white transform group-hover:-translate-x-0.5 transition-transform duration-200" 
@@ -55,7 +58,7 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
           </button>
 
           <h1 className="text-2xl sm:text-3xl md:text-[36px] font-bold font-orbitron tracking-wider text-white select-none leading-none drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
-            The Mars
+            {insightCopy.title}
           </h1>
         </div>
       </div>
@@ -77,8 +80,8 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
         >
           {/* Mars Horizon Image (public/mars-page4.webp) */}
           <img
-            src="/mars-page4.webp"
-            alt="Mars Horizon Zoomed on Left"
+            src={insightCopy.horizonImage}
+            alt={insightCopy.horizonAlt}
             className="w-full h-full object-fill select-none pointer-events-none drop-shadow-[0_-10px_28px_rgba(247,150,29,0.65)]"
           />
         </div>
@@ -120,10 +123,10 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
           {/* Framed Translucent Label Pill matching Reference */}
           <div className="rounded-[14px] bg-black/35 backdrop-blur-[2px] border border-[#F5E6CA]/75 px-5 sm:px-7 py-2 sm:py-3 text-center shadow-[0_6px_24px_rgba(0,0,0,0.55)]">
             <div className="font-orbitron font-semibold text-white text-base sm:text-[20px] tracking-wider leading-tight">
-              Insight
+              {insightCopy.pin.name}
             </div>
             <div className="font-exo2 text-white/90 text-xs sm:text-[13px] tracking-wide mt-1">
-              Full Mission
+              {insightCopy.pin.subtitle}
             </div>
           </div>
         </div>
@@ -141,8 +144,8 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
             {/* Top Lander Photo */}
             <div className="w-full h-[165px] sm:h-[185px] md:h-[195px] rounded-[14px] overflow-hidden mb-3.5 bg-black/60">
               <img
-                src="/insight-lander-photo.jpg"
-                alt="NASA InSight Lander on Mars"
+                src={insightCopy.card.image}
+                alt={insightCopy.card.imageAlt}
                 className="w-full h-full object-cover object-center select-none pointer-events-none"
               />
             </div>
@@ -150,22 +153,22 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
             {/* Title & Mission Years */}
             <div className="text-left">
               <h2 className="text-xl sm:text-[25px] font-bold font-orbitron text-white tracking-wide leading-tight">
-                Insight
+                {insightCopy.card.title}
               </h2>
               <div className="text-xs sm:text-[14px] text-white/90 font-orbitron tracking-wider mt-1">
-                Mars . 2018-2022
+                {insightCopy.card.meta}
               </div>
             </div>
 
             {/* Mission Description */}
             <p className="text-xs sm:text-[13px] text-white/85 font-exo2 leading-[1.45] mt-2.5 text-left">
-              NASA&apos;s Insight was a robotic lander that studied Mars&apos; interior, detecting marsquakes and measuring underground heat flow to understand the planet&apos;s structure.
+              {insightCopy.card.description}
             </p>
 
             {/* Mission Status */}
             <div className="text-sm sm:text-[15px] font-orbitron mt-3.5 text-left">
-              <span className="text-[#E5C185] font-medium">Status:</span>{' '}
-              <span className="text-white font-medium">Mission ended</span>
+              <span className="text-[#E5C185] font-medium">{insightCopy.card.statusLabel}</span>{' '}
+              <span className="text-white font-medium">{insightCopy.card.statusValue}</span>
             </div>
 
             {/* Explore Missions Hexagonal Button */}
@@ -173,7 +176,7 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
               <button
                 onClick={onExploreMissions}
                 className="relative group inline-flex items-center justify-between gap-3 px-6 sm:px-7 py-2.5 w-[215px] sm:w-[235px] h-[44px] sm:h-[46px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
-                title="Explore Missions"
+                title={insightCopy.card.ctaTitle}
               >
                 {/* Pointed Hexagon Border SVG */}
                 <svg 
@@ -192,7 +195,7 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
 
                 {/* Button Label & Chevron */}
                 <span className="relative z-10 text-white font-exo2 text-sm sm:text-[15px] font-semibold tracking-wide mx-auto pl-1">
-                  Explore Missions
+                  {insightCopy.card.ctaLabel}
                 </span>
                 <ChevronRight className="relative z-10 w-4 h-4 text-white group-hover:translate-x-1 transition-transform duration-300 shrink-0" />
               </button>

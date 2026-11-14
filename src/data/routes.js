@@ -25,6 +25,7 @@ export const routes = [
   { page: 'go-technical-8', hash: '#go-technical-8', aliases: ['#engineering-the-mission-8'] },
   { page: 'go-technical-9', hash: '#go-technical-9', aliases: ['#engineering-the-mission-9'] },
   { page: 'go-technical-10', hash: '#go-technical-10', aliases: ['#engineering-the-mission-10'] },
+  { page: 'engineering-legacy', hash: '#engineering-legacy', aliases: ['#legacy', '#mars-legacy-outpost', '#outpost'] },
 ];
 
 export function resolveHash(hash) {

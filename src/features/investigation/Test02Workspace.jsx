@@ -3,6 +3,10 @@ import { Crosshair } from 'lucide-react';
 import TrustMeter from './TrustMeter';
 import { CaseBoardStrip } from './CaseBoardPanel';
 import { TestHudFrame, NexusSidePanel } from './WorkspaceLayout';
+import siteContent from '../../data/siteContent.json';
+
+const invCopy = siteContent.investigation;
+const test2Copy = invCopy.test02;
 
 /**
  * Orbital Mars Context Camera (CTX) Canvas for Test 02:
@@ -129,32 +133,22 @@ function ContextCameraCanvas({ variant = 'before', craterCircled = false }) {
     ctx.restore();
   }, [variant, craterCircled]);
 
-  return <canvas role="img" aria-label={variant === 'after' ? `After image: a new dark-rayed crater${craterCircled ? ', circled' : ''}` : 'Before image: terrain without the new crater'} ref={canvasRef} className="w-full h-full block object-cover" />;
+  return (
+    <canvas
+      role="img"
+      aria-label={
+        variant === 'after'
+          ? `${test2Copy.afterAriaPrefix}${craterCircled ? test2Copy.afterCircledSuffix : ''}`
+          : test2Copy.beforeAriaLabel
+      }
+      ref={canvasRef}
+      className="w-full h-full block object-cover"
+    />
+  );
 }
 
-const TEST2_HINTS = [
-  'go slow, look for something on one side only.',
-  'one round shape is on the after side.',
-  'dark material spreads from it.',
-];
-
-const TEST2_CLUE_CARDS = [
-  {
-    id: 'place',
-    title: 'PLACE',
-    lines: ['the crater matches', 'where the quake', 'came from'],
-  },
-  {
-    id: 'time',
-    title: 'TIME',
-    lines: ['daily Mars weather', 'maps narrowed the', 'impact to 24 hours'],
-  },
-  {
-    id: 'looks',
-    title: 'LOOKS',
-    lines: ['the crater looks', 'fresh'],
-  },
-];
+const TEST2_HINTS = test2Copy.hints;
+const TEST2_CLUE_CARDS = test2Copy.clueCards;
 
 /**
  * TEST 02: Something new, at the right place and time?
@@ -201,7 +195,7 @@ export function Test02Workspace({
       setBeat((b) => (b < 5 ? 5 : b));
       onUnlockStamp2?.();
     } else if (next.includes('looks') && next.length >= 2) {
-      setClueFeedback('Appearance alone shows freshness, not when or where the quake happened.');
+      setClueFeedback(test2Copy.clueLooksFeedback);
     }
   };
 
@@ -244,8 +238,7 @@ export function Test02Workspace({
         {/* LEFT COLUMN: TEST 02 Chamfered HUD + Optional "What else would you check?" below */}
         <div className="lg:col-span-7 xl:col-span-7 flex flex-col">
           <TestHudFrame
-            testLabel="TEST 02"
-            title="Something new, at the right place and time?"
+            title={test2Copy.title}
           >
             {beat <= 3 ? (
               <div className="flex flex-col min-h-[205px] sm:min-h-[218px] justify-between">
@@ -266,7 +259,7 @@ export function Test02Workspace({
                       <ContextCameraCanvas variant="before" />
                     </div>
                     <div className="absolute top-3 left-3 z-10 inline-flex items-center px-3.5 py-0.5 rounded-full border border-white/45 bg-[#050a1c]/80 text-[10.5px] sm:text-[11px] font-exo2 text-white/95">
-                      Before 11 February 2022
+                      {test2Copy.beforeBadge}
                     </div>
                   </div>
 
@@ -279,12 +272,12 @@ export function Test02Workspace({
                         ? 'border-[#F7961D] shadow-[0_0_16px_rgba(247,150,29,0.3)]'
                         : 'border-white/30 hover:border-[#F7961D]/75'
                     }`}
-                    title="Click to circle the new impact crater"
+                    title={test2Copy.afterTitle}
                   >
                     <ContextCameraCanvas variant="after" craterCircled={craterCircled} />
 
                     <div className="absolute top-3 left-3 z-10 inline-flex items-center px-3.5 py-0.5 rounded-full border border-white/45 bg-[#050a1c]/80 text-[10.5px] sm:text-[11px] font-exo2 text-white/95">
-                      After 11 February 2022
+                      {test2Copy.afterBadge}
                     </div>
                   </button>
 
@@ -308,7 +301,7 @@ export function Test02Workspace({
                       <Crosshair className="w-2.5 h-2.5 text-[#F7961D]" strokeWidth={2.4} />
                     </span>
                     <span className="font-exo2 text-[11px] sm:text-xs text-white/90">
-                      Slide between before and after . Circle anything that&apos;s different
+                      {test2Copy.slideInstruction}
                     </span>
                   </button>
 
@@ -318,7 +311,7 @@ export function Test02Workspace({
                       onClick={handleRevealHint}
                       className="px-5 py-0.5 rounded-full border border-white/55 hover:border-[#F7961D] bg-[#070d22]/85 hover:bg-[#F7961D]/20 text-white font-exo2 text-xs transition-all cursor-pointer shrink-0"
                     >
-                      Hint
+                      {test2Copy.hintButtonLabel}
                     </button>
                   )}
                 </div>
@@ -327,7 +320,7 @@ export function Test02Workspace({
               /* CLUE MATCH VIEW (beat 4..7) */
               <div className="flex flex-col justify-center min-h-[205px] sm:min-h-[218px] py-1">
                 <h4 className="text-center font-exo2 font-medium text-white text-xs sm:text-sm md:text-[16px] tracking-wide mb-3.5 sm:mb-4">
-                  Clue match Pick the two that tie the crater to the quake
+                  {test2Copy.clueMatchHeading}
                 </h4>
 
                 <div className="w-full max-w-[540px] mx-auto grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-5">
@@ -390,7 +383,7 @@ export function Test02Workspace({
               className="mt-3 w-full max-w-[390px] rounded-2xl bg-[#3c4358]/68 backdrop-blur-md border border-white/40 px-5 py-3 shadow-xl inv-fade-up"
             >
               <label htmlFor="additional-evidence" className="block text-center font-exo2 text-xs sm:text-[14px] text-white mb-2">
-                What else would you check?
+                {test2Copy.whatElseLabel}
               </label>
               <div className="relative flex items-center">
                 <input
@@ -398,14 +391,14 @@ export function Test02Workspace({
                   type="text"
                   value={whatElseInput}
                   onChange={(e) => setWhatElseInput(e.target.value)}
-                  placeholder="I would check..."
+                  placeholder={test2Copy.whatElsePlaceholder}
                   className="w-full px-3.5 py-2 rounded-xl bg-[#161c32]/85 border border-white/35 focus:border-[#F7961D]/75 text-xs sm:text-[13px] text-white font-exo2 placeholder:text-white/55 outline-none pr-9"
                 />
                 {whatElseInput.trim().length > 0 && (
                   <button
                     type="submit"
                     className="absolute right-1.5 px-2 py-1 rounded-lg bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-[11px] transition-colors cursor-pointer"
-                    title="Submit check"
+                    title={test2Copy.whatElseSubmitTitle}
                   >
                     ↵
                   </button>
@@ -417,16 +410,16 @@ export function Test02Workspace({
 
         {/* RIGHT COLUMN: NEXUS Speech Box + Hint Button + Progressive Hints (Aligned & Sized like Images 3-13) */}
         <NexusSidePanel
-          robotImage="/robot-investigate-page.png"
+          robotImage={invCopy.robotImages.investigate}
           onClickDialogue={beat < 7 ? handleAdvanceBeat : undefined}
           actionPill={
             <button
               type="button"
               onClick={handleRevealHint}
               className="px-5 py-0.5 rounded-full border border-white/55 hover:border-[#F7961D] bg-[#081028]/90 hover:bg-[#F7961D]/20 text-white font-exo2 text-xs transition-all cursor-pointer"
-              title="Reveal next hint"
+              title={test2Copy.hintButtonTitle}
             >
-              Hint
+              {test2Copy.hintButtonLabel}
             </button>
           }
           hints={TEST2_HINTS}
@@ -435,43 +428,18 @@ export function Test02Workspace({
           topOffsetClassName="lg:mt-[50px]"
           outerMinHeightClassName="min-h-[272px] sm:min-h-[288px]"
         >
-          {beat <= 1 && (
-            <>
-              <p>slide between before and</p>
-              <p>after Context Camera images.</p>
-              <p>Circle what&apos;s different.</p>
-            </>
-          )}
-
-          {beat === 2 && (
-            <>
-              <p>Scientists first spotted it on</p>
-              <p>11 February 2022.</p>
-            </>
-          )}
-
-          {(beat === 3 || beat === 4) && (
-            <>
-              <p>A crater in a photo. Does it</p>
-              <p>belong to this quake?</p>
-            </>
-          )}
-
-          {beat === 5 && (
-            <>
-              <p>Yes. Same time, same place.</p>
-              <p>That&apos;s a link.</p>
-            </>
-          )}
-
-          {beat >= 6 && (
-            <>
-              <p>One seismometer gives</p>
-              <p>distance well. Direction</p>
-              <p>is fuzzy. The orbiter</p>
-              <p>pins the spot.</p>
-            </>
-          )}
+          {(beat <= 1
+            ? test2Copy.beats.intro
+            : beat === 2
+            ? test2Copy.beats.spotted
+            : beat === 3 || beat === 4
+            ? test2Copy.beats.question
+            : beat === 5
+            ? test2Copy.beats.linked
+            : test2Copy.beats.orbiter
+          ).map((line, idx) => (
+            <p key={idx}>{line}</p>
+          ))}
         </NexusSidePanel>
       </div>
 
@@ -482,7 +450,7 @@ export function Test02Workspace({
             <CaseBoardStrip
               earnedStampIds={earnedStampIds}
               onOpenCaseBoard={onComplete}
-              actionLabel="Continue to Step 3 →"
+              actionLabel={test2Copy.continueLabel}
               className="mt-0 h-full"
             />
           </div>
