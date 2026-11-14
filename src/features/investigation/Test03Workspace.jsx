@@ -111,7 +111,7 @@ export function Test03Workspace({
                 </div>
 
                 {/* Scale Objects Container (Bus on top, Pyramid on bottom) */}
-                <div className="sm:col-span-4 min-h-[170px] rounded-2xl border border-white/30 bg-[#030717]/90 p-2.5 flex sm:flex-col items-center justify-around gap-2.5">
+                <div className="sm:col-span-4 min-h-[108px] sm:min-h-[170px] rounded-2xl border border-white/30 bg-[#030717]/90 p-2.5 flex sm:flex-col items-center justify-around gap-2.5">
                   <button
                     type="button"
                     draggable={!busPlaced}

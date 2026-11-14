@@ -55,7 +55,7 @@ export default function InvestigationPage({
   onSaveProgress,
   onGoDeeper,
   onGoTechnical,
-  onEngineeringLegacy,
+  onSurvivalProtocol,
 }) {
   const [scene, setScene] = useState(initialScene);
   const [transitionDir, setTransitionDir] = useState('next'); // 'next' | 'prev'
@@ -208,7 +208,7 @@ export default function InvestigationPage({
       />
 
       {/* Main Content Container */}
-      <main className="relative z-10 flex-1 flex flex-col justify-start pt-[56px] sm:pt-[60px] lg:pt-[64px] pb-2.5 sm:pb-3 px-4 sm:px-7 md:px-10 lg:px-12 max-w-[1440px] mx-auto w-full">
+      <main className="relative z-10 flex-1 flex flex-col justify-start pt-[68px] sm:pt-[60px] lg:pt-[64px] pb-3 sm:pb-3 px-3.5 sm:px-7 md:px-10 lg:px-12 max-w-[1440px] mx-auto w-full">
         {/* 1. UPPER-LEFT HEADER BLOCK */}
         <div className="flex flex-col items-start text-left">
           <div className="flex items-center gap-3 sm:gap-3.5">
@@ -240,15 +240,15 @@ export default function InvestigationPage({
         {chapterToast && (
           <div
             key={`${chapterToast.code}-${chapterToast.title}`}
-            className="fixed top-[76px] sm:top-[84px] left-1/2 z-50 pointer-events-none inv-toast-in"
+            className="fixed bottom-4 lg:bottom-auto lg:top-[84px] left-1/2 max-w-[calc(100vw-2rem)] z-50 pointer-events-none inv-toast-in"
           >
-            <div className="flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#060b1c]/92 border border-[#F7961D]/70 backdrop-blur-md shadow-[0_8px_28px_rgba(0,0,0,0.75)]">
-              <span className="w-2 h-2 rounded-full bg-[#F7961D] animate-pulse" />
-              <span className="font-orbitron text-[10px] sm:text-[11px] font-bold tracking-widest text-[#F7961D] uppercase">
+            <div className="flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#060b1c]/92 border border-[#F7961D]/70 backdrop-blur-md shadow-[0_8px_28px_rgba(0,0,0,0.75)]">
+              <span className="w-2 h-2 rounded-full bg-[#F7961D] animate-pulse shrink-0" />
+              <span className="font-orbitron text-[10px] sm:text-[11px] font-bold tracking-widest text-[#F7961D] uppercase whitespace-nowrap">
                 {chapterToast.code}
               </span>
               <span className="text-white/35 text-xs">•</span>
-              <span className="font-exo2 text-xs sm:text-[13px] font-medium text-white">
+              <span className="font-exo2 text-xs sm:text-[13px] font-medium text-white truncate">
                 {chapterToast.title}
               </span>
             </div>
@@ -261,14 +261,14 @@ export default function InvestigationPage({
         {isIntroScene ? (
           <div
             key={`intro-stage-${getChapterGroup(scene)}`}
-            className={`relative flex-1 flex items-center justify-start w-full my-auto py-4 sm:py-6 ${
+            className={`relative flex-1 flex items-center justify-start w-full my-auto py-3 sm:py-6 ${
               transitionDir === 'prev' ? 'inv-stage-prev' : 'inv-stage-next'
             }`}
           >
-            <div className="relative w-full max-w-[1180px] ml-0 sm:ml-[5%] lg:ml-[7%] flex items-center">
+            <div className="relative w-full max-w-[1180px] ml-0 sm:ml-[5%] lg:ml-[7%] flex flex-col sm:flex-row items-center">
               <div
                 onClick={scene !== 'intro1-8' ? handleAdvanceIntro : undefined}
-                className={`group relative w-full max-w-[760px] min-h-[250px] sm:min-h-[290px] md:min-h-[325px] lg:min-h-[350px] pt-5 sm:pt-6 px-7 sm:px-10 md:px-14 pb-10 flex flex-col justify-start ${
+                className={`group relative w-full min-w-0 max-w-[760px] min-h-[210px] sm:min-h-[290px] md:min-h-[325px] lg:min-h-[350px] pt-5 sm:pt-6 px-5 sm:px-10 md:px-14 pb-8 sm:pb-10 flex flex-col justify-start ${
                   scene !== 'intro1-8' ? 'cursor-pointer' : ''
                 }`}
               >
@@ -286,9 +286,9 @@ export default function InvestigationPage({
                   />
                 </svg>
 
-                <div className="relative z-10 flex items-center gap-2 text-[#F7961D] mb-7 sm:mb-9 md:mb-11">
+                <div className="relative z-10 flex items-center gap-2 text-[#F7961D] mb-4 sm:mb-9 md:mb-11">
                   <UserRound className="w-4 h-4 sm:w-5 sm:h-5 text-[#F7961D] shrink-0" strokeWidth={2} />
-                  <span className="font-exo2 font-medium text-base sm:text-lg md:text-[21px] tracking-wide uppercase">
+                  <span className="font-exo2 font-medium text-sm sm:text-lg md:text-[21px] tracking-wide uppercase">
                     {invCopy.nexusSpeakerLabel}
                   </span>
                 </div>
@@ -296,7 +296,7 @@ export default function InvestigationPage({
                 {/* Dialogue Text */}
                 <div
                   key={`intro-text-${scene}`}
-                  className="relative z-10 text-left font-exo2 font-normal text-white text-xl sm:text-2xl md:text-[31px] lg:text-[34px] leading-[1.32] tracking-[0.01em] pr-16 sm:pr-28 md:pr-36 max-w-[650px] inv-dialogue-swap"
+                  className="relative z-10 text-left font-exo2 font-normal text-white text-lg sm:text-2xl md:text-[31px] lg:text-[34px] leading-[1.32] tracking-[0.01em] pr-2 sm:pr-28 md:pr-36 max-w-[650px] inv-dialogue-swap"
                 >
                   {scene === 'intro1-1' && (
                     <div>
@@ -417,7 +417,7 @@ export default function InvestigationPage({
                 {scene === 'intro1-8' && (
                   <div
                     onClick={(e) => e.stopPropagation()}
-                    className="absolute -bottom-8 sm:-bottom-10 left-1/2 -translate-x-1/2 w-[94%] sm:w-[90%] max-w-[680px] z-30 py-3.5 sm:py-4 px-4 sm:px-6 inv-fade-up"
+                    className="relative mt-5 sm:mt-0 sm:absolute sm:-bottom-10 left-0 sm:left-1/2 sm:-translate-x-1/2 w-full sm:w-[90%] max-w-[680px] z-30 py-3.5 sm:py-4 px-3.5 sm:px-6 inv-fade-up"
                   >
                     <svg
                       className="absolute inset-0 w-full h-full pointer-events-none"
@@ -459,9 +459,9 @@ export default function InvestigationPage({
                 onClick={scene !== 'intro1-8' ? handleAdvanceIntro : undefined}
                 className={`
                   relative 
-                  -ml-14 sm:-ml-22 md:-ml-24 lg:-ml-28 
-                  mt-4 sm:mt-8 
-                  w-[220px] sm:w-[300px] md:w-[375px] lg:w-[420px] 
+                  ml-0 sm:-ml-22 md:-ml-24 lg:-ml-28 
+                  mt-2 sm:mt-8 
+                  w-[165px] sm:w-[300px] md:w-[375px] lg:w-[420px] 
                   shrink-0 z-20 select-none
                   ${scene !== 'intro1-8' ? 'cursor-pointer' : 'pointer-events-none'}
                 `}
@@ -481,7 +481,7 @@ export default function InvestigationPage({
           /* ================================================================= */
           <>
             {/* 2. 5-STEP HORIZONTAL PROGRESS STEPPER */}
-            <div className="relative w-full my-1.5 sm:my-2 lg:my-2.5 h-[66px] sm:h-[70px]">
+            <div className="relative w-full my-1.5 sm:my-2 lg:my-2.5 grid grid-cols-5 gap-1 sm:block sm:h-[70px]">
               {/* Subtle Leading Dot + Line Left of Step 1 */}
               <div
                 className="hidden sm:flex items-center absolute top-[16px] sm:top-[18px] -translate-y-1/2 pointer-events-none"
@@ -492,13 +492,12 @@ export default function InvestigationPage({
               </div>
               {/* Base Connecting Line */}
               <div
-                className="absolute top-[16px] sm:top-[18px] -translate-y-1/2 h-[1px] bg-white/55 pointer-events-none"
-                style={{ left: '21.6%', width: '62.2%' }}
+                className="inv-step-track absolute top-[16px] sm:top-[18px] -translate-y-1/2 h-[1px] bg-white/55 pointer-events-none"
               />
               {/* Completed Orange Progress Segment */}
               <div
-                className="absolute top-[16px] sm:top-[18px] -translate-y-1/2 h-[1.5px] bg-[#F7961D] transition-all duration-300 pointer-events-none"
-                style={{ left: '21.6%', width: `${progressRatio * 62.2}%` }}
+                className="inv-step-progress absolute top-[16px] sm:top-[18px] -translate-y-1/2 h-[1.5px] bg-[#F7961D] transition-all duration-300 pointer-events-none"
+                style={{ '--step-progress': progressRatio }}
               />
 
               {STEPS.map((step) => {
@@ -517,11 +516,11 @@ export default function InvestigationPage({
                       else if (step.number === 4) navigateToScene('test-4');
                       else if (step.number === 5) navigateToScene('case-board');
                     }}
-                    className="absolute top-0 -translate-x-1/2 flex flex-col items-center text-center cursor-pointer group"
-                    style={{ left: step.leftPct }}
+                    className="inv-step-btn sm:top-0 sm:-translate-x-1/2 flex flex-col items-center text-center cursor-pointer group z-10 min-w-0"
+                    style={{ '--step-left': step.leftPct }}
                   >
                     <div
-                      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center font-exo2 text-sm sm:text-[15px] font-semibold transition-all duration-300 ${
+                      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center font-exo2 text-sm sm:text-[15px] font-semibold transition-all duration-300 shrink-0 ${
                         isCompleted
                           ? 'bg-[#F7961D] text-white shadow-[0_0_12px_rgba(247,150,29,0.45)]'
                           : isActive
@@ -537,7 +536,7 @@ export default function InvestigationPage({
                     </div>
 
                     <div
-                      className={`mt-1.5 font-exo2 text-[11px] sm:text-xs md:text-[12.5px] leading-[1.2] whitespace-nowrap transition-colors duration-200 ${
+                      className={`mt-1.5 font-exo2 text-[9.5px] sm:text-xs md:text-[12.5px] leading-[1.15] sm:leading-[1.2] whitespace-normal sm:whitespace-nowrap max-w-[60px] sm:max-w-none transition-colors duration-200 ${
                         isActive || isCompleted
                           ? 'text-[#F7961D] font-medium'
                           : 'text-white/90 font-normal'
@@ -648,8 +647,8 @@ export default function InvestigationPage({
                         }
                       : undefined
                   }
-                  onEngineeringLegacy={
-                    onEngineeringLegacy
+                  onSurvivalProtocol={
+                    onSurvivalProtocol
                       ? () => {
                           onSaveProgress?.({
                             codename,
@@ -658,7 +657,7 @@ export default function InvestigationPage({
                             earnedStampIds,
                             placedParts,
                           });
-                          onEngineeringLegacy();
+                          onSurvivalProtocol();
                         }
                       : undefined
                   }

@@ -22,8 +22,14 @@ test('aliases, unknown hashes, reload and browser history agree', async ({ page 
   await page.goto('/#page3');
   await expect(page.getByRole('heading', { name: 'The Mars', exact: true })).toBeVisible();
   await page.evaluate(() => { location.hash = '#unknown'; });
+  await expect(page.getByRole('img', { name: 'Nexus Chronicles' })).toBeVisible();
+  await expect(page.getByRole('img', { name: 'NEXUS', exact: true })).toBeVisible();
+  const returnHomeBox = await page.getByRole('button', { name: 'Return Home' }).boundingBox();
+  const viewport = page.viewportSize();
+  expect(returnHomeBox.x + returnHomeBox.width).toBeLessThanOrEqual(viewport.width);
   await expect(page.getByTitle('Begin Your Journey')).toBeVisible();
   await page.reload();
+  await expect(page.getByRole('img', { name: 'Nexus Chronicles' })).toBeVisible();
   await expect(page.getByTitle('Begin Your Journey')).toBeVisible();
   await page.getByTitle('Begin Your Journey').click();
   await expect(page).toHaveURL(/#missions$/);
@@ -161,6 +167,7 @@ test('audio context closes when leaving and rejected resume is reported', async 
 });
 
 test('all pages load without application errors or missing local assets', async ({ page }) => {
+  test.setTimeout(60_000);
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => {
@@ -174,6 +181,11 @@ test('all pages load without application errors or missing local assets', async 
     'mars-insight',
     'insight-mission',
     'story-1',
+    'story-2',
+    'story-3',
+    'story-4',
+    'story-5',
+    'story-6',
     'investigation',
     'case-board',
     'go-deeper',
@@ -192,7 +204,7 @@ test('all pages load without application errors or missing local assets', async 
     'go-technical-8',
     'go-technical-9',
     'go-technical-10',
-    'engineering-legacy',
+    'survival-protocol',
   ]) {
     await page.goto(`/#${hash}`);
     await expect(page.locator('main')).toBeVisible();
@@ -271,4 +283,45 @@ test('story 1 removes Go deeper and Investigation entries, and post-investigatio
   await expect(page).toHaveURL(/#go-technical$/);
   await page.getByRole('button', { name: 'Back to Case Board' }).click();
   await expect(page).toHaveURL(/#case-board$/);
+});
+
+test('mission chronicles stories 2 through 6 render from JSON with placeholder frames, audio controls, and next/back flow', async ({ page }) => {
+  await page.goto('/#story-1');
+  await page.getByRole('button', { name: 'Next story: The half of Mars nobody could see' }).click();
+  await expect(page).toHaveURL(/#story-2$/);
+  await expect(page.getByRole('heading', { name: /The half of Mars nobody could see/i })).toBeVisible();
+  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(1);
+  await expect(page.getByText('4.5 billion')).toBeVisible();
+
+  await page.getByRole('button', { name: 'Next story: Built to listen' }).click();
+  await expect(page).toHaveURL(/#story-3$/);
+  await expect(page.getByRole('heading', { name: 'Built to listen' })).toBeVisible();
+  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(3);
+  await expect(page.getByRole('button', { name: /Play or pause Martian wind audio/ })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Next story: When the plan met Mars' }).click();
+  await expect(page).toHaveURL(/#story-4$/);
+  await expect(page.getByRole('heading', { name: /When the plan met Mars/i })).toBeVisible();
+  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(2);
+
+  await page.getByRole('button', { name: 'Next story: What the planet said' }).click();
+  await expect(page).toHaveURL(/#story-5$/);
+  await expect(page.getByRole('heading', { name: 'What the planet said' })).toBeVisible();
+  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(2);
+  await expect(page.getByRole('button', { name: /first marsquake audio/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /impact audio/ })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Next story: The long goodbye' }).click();
+  await expect(page).toHaveURL(/#story-6$/);
+  await expect(page.getByRole('heading', { name: 'The long goodbye' })).toBeVisible();
+  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(3);
+  await expect(page.getByText('The mission ended. The evidence remains.')).toBeVisible();
+
+  await page.getByRole('button', { name: 'Back to Story 5' }).click();
+  await expect(page).toHaveURL(/#story-5$/);
+  await page.getByRole('button', { name: 'Next story: The long goodbye' }).click();
+  await expect(page).toHaveURL(/#story-6$/);
+
+  await page.getByRole('button', { name: 'Proceed to Investigation: Case 1094' }).click();
+  await expect(page).toHaveURL(/#investigation$/);
 });

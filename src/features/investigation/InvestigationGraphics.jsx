@@ -369,7 +369,7 @@ export function CraterScaleGraphic({ busPlaced = false, pyramidPlaced = false, a
       viewBox="0 0 560 220"
       role="img"
       aria-label={ariaLabel}
-      className="w-full h-[170px] sm:h-[188px] block select-none"
+      className="w-full h-auto aspect-[560/220] sm:aspect-auto sm:h-[188px] block select-none overflow-hidden"
       preserveAspectRatio="xMidYMid slice"
     >
       <defs>

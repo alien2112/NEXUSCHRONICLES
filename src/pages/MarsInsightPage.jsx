@@ -16,7 +16,7 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
   }, []);
 
   return (
-    <div className="relative h-screen w-full flex flex-col select-none overflow-hidden font-public text-white bg-[#02050e]">
+    <div className="relative min-h-screen lg:h-screen w-full flex flex-col select-none overflow-x-hidden overflow-y-auto lg:overflow-hidden font-public text-white bg-[#02050e]">
       
       {/* 
         Full-Screen Cosmic Space Nebula Background
@@ -35,7 +35,7 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
         Top Header Row: Circular Back Button & "The Mars" Title
         Matches Page 4 & Page 5 reference position on the upper-left
       */}
-      <div className="relative z-30 pt-20 sm:pt-24 md:pt-26 px-6 sm:px-10 md:px-14 lg:px-20 max-w-[1440px] w-full">
+      <div className="relative z-30 pt-20 sm:pt-24 md:pt-26 px-5 sm:px-10 md:px-14 lg:px-20 max-w-[1440px] w-full">
         <div className="inline-flex items-center gap-3.5 sm:gap-4 group">
           <button
             onClick={onBack}
@@ -64,11 +64,45 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
       </div>
 
       {/* 
-        LEFT / BOTTOM-LEFT: Zoomed Mars Horizon (0vw to 60vw, 42vh to 100vh)
+        MOBILE & TABLET (< lg): Non-overlapping Zoomed Mars Horizon & Pin Hero Strip
+      */}
+      <div className="lg:hidden relative z-10 w-full mt-4 h-[195px] sm:h-[235px] md:h-[270px] overflow-hidden pointer-events-none">
+        <div className="relative w-full h-full flex items-end justify-start">
+          <img
+            src={insightCopy.horizonImage}
+            alt={insightCopy.horizonAlt}
+            className="w-[128%] max-w-none shrink-0 -ml-[14%] h-[92%] object-cover object-top select-none pointer-events-none drop-shadow-[0_-10px_24px_rgba(247,150,29,0.55)]"
+          />
+          <div className="absolute left-[10%] sm:left-[18%] top-[24%] z-20 flex items-center gap-2.5 sm:gap-3.5">
+            <div className="w-10 h-13 sm:w-12 sm:h-16 shrink-0 drop-shadow-[0_6px_16px_rgba(0,0,0,0.95)]">
+              <svg viewBox="0 0 48 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <path
+                  d="M24 2.5C12.1 2.5 2.5 12.1 2.5 24C2.5 39.5 24 61.5 24 61.5C24 61.5 45.5 39.5 45.5 24C45.5 12.1 35.9 2.5 24 2.5Z"
+                  fill="#050811"
+                  stroke="#F5E6CA"
+                  strokeWidth="2.8"
+                />
+                <circle cx="24" cy="23" r="7.5" fill="#F5E6CA" />
+              </svg>
+            </div>
+            <div className="rounded-[14px] bg-black/45 backdrop-blur-[2px] border border-[#F5E6CA]/75 px-4 sm:px-6 py-2 sm:py-2.5 text-center shadow-[0_6px_24px_rgba(0,0,0,0.55)]">
+              <div className="font-orbitron font-semibold text-white text-base sm:text-[19px] tracking-wider leading-tight">
+                {insightCopy.pin.name}
+              </div>
+              <div className="font-exo2 text-white/90 text-xs sm:text-[13px] tracking-wide mt-0.5">
+                {insightCopy.pin.subtitle}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 
+        DESKTOP (>= lg): Zoomed Mars Horizon (0vw to 60vw, 42vh to 100vh)
         - Starts from Page 4 full-width horizon state and smoothly zooms into the bottom-left corner
         - Leaves the right 40% of the screen open starry nebula space for the Insight card
       */}
-      <div className="fixed inset-0 z-10 pointer-events-none overflow-hidden">
+      <div className="hidden lg:block fixed inset-0 z-10 pointer-events-none overflow-hidden">
         <div
           style={{
             left: isZoomedIn ? '-56vw' : '0vw',
@@ -133,12 +167,11 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
       </div>
 
       {/* 
-        RIGHT SIDE: InSight Mission Detail Card
-        Positioned on the right side of the screen (X ≈ 60% to 92%) over the cosmic nebula background
+        RIGHT SIDE (Desktop) / STACKED CARD (Mobile & Tablet): InSight Mission Detail Card
       */}
-      <main className="relative z-20 flex-1 max-w-[1440px] mx-auto w-full px-6 sm:px-10 md:px-14 lg:px-20 pb-6 flex items-center justify-end pointer-events-none">
+      <main className="relative z-20 flex-1 max-w-[1440px] mx-auto w-full px-4 sm:px-10 md:px-14 lg:px-20 pt-4 lg:pt-0 pb-10 lg:pb-6 flex items-start lg:items-center justify-center lg:justify-end pointer-events-none">
         
-        <div className="w-[310px] sm:w-[345px] md:w-[375px] lg:w-[395px] shrink-0 pointer-events-auto   -6 duration-500">
+        <div className="w-full max-w-[360px] sm:max-w-[380px] md:max-w-[420px] lg:w-[395px] lg:max-w-none shrink-0 pointer-events-auto   -6 duration-500">
           <div className="rounded-[22px] bg-[#040814]/92 backdrop-blur-xl border border-white/25 shadow-[0_24px_60px_rgba(0,0,0,0.9)] p-4 sm:p-5">
             
             {/* Top Lander Photo */}

@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { shouldIgnoreSceneShortcut } from '../utils/keyboard';
 import siteContent from '../data/siteContent.json';
 
-const { previousLabel, nextLabel } = siteContent.missionSeriesUi;
+const { previousLabel, nextLabel, optionalGame } = siteContent.missionSeriesUi;
 
 function RichText({ segments }) {
   return segments.map((segment, index) =>
@@ -31,6 +31,7 @@ export default function MissionSeriesPage({
   onSelectPage,
   secondaryAction,
   finalAction,
+  onOptionalGame,
 }) {
   const content = pages[pageNumber - 1] ?? pages[0];
   const isLastPage = pageNumber >= pages.length;
@@ -80,7 +81,7 @@ export default function MissionSeriesPage({
       </div>
 
       {/* Main Content Area */}
-      <main className="relative z-10 flex-1 flex flex-col justify-between pt-20 sm:pt-24 md:pt-26 pb-10 px-6 sm:px-10 md:px-14 lg:px-16 xl:px-20 max-w-[1440px] mx-auto w-full">
+      <main className="relative z-10 flex-1 flex flex-col justify-between pt-20 sm:pt-24 md:pt-26 pb-10 px-5 sm:px-10 md:px-14 lg:px-16 xl:px-20 max-w-[1440px] mx-auto w-full">
         <div>
           {/* Top Back Navigation Row */}
           <div className="flex items-center gap-3 sm:gap-3.5">
@@ -195,6 +196,35 @@ export default function MissionSeriesPage({
                 {content.closing}
               </p>
             )}
+
+            {isLastPage && onOptionalGame && optionalGame && (
+              <section
+                aria-label="Optional Game Pass"
+                className="mt-8 game-panel-sm border border-[#4DE2E8]/45 border-l-4 border-l-[#4DE2E8] p-4 sm:p-5 text-left"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] px-2 py-0.5 bg-[#39A9FF]/15 border border-[#4DE2E8]/45 text-[#4DE2E8]">
+                    {optionalGame.badge}
+                  </span>
+                </div>
+                <h2 className="mt-2.5 text-lg sm:text-xl font-orbitron font-bold text-white uppercase tracking-wide">
+                  {optionalGame.title}
+                </h2>
+                <p className="mt-1.5 text-xs sm:text-sm font-exo2 text-slate-300 leading-relaxed">
+                  {optionalGame.description}
+                </p>
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    onClick={onOptionalGame}
+                    className="game-cmd-btn inline-flex items-center gap-2 px-5 py-2.5 bg-[#39A9FF] hover:bg-[#4DE2E8] text-[#09111E] font-orbitron font-bold text-xs uppercase tracking-wider cursor-pointer shadow-[0_0_20px_rgba(77,226,232,0.3)]"
+                  >
+                    <span>{optionalGame.buttonLabel}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </section>
+            )}
           </div>
         </div>
 
@@ -223,12 +253,12 @@ export default function MissionSeriesPage({
             })}
           </nav>
 
-          <div className="flex flex-wrap items-center gap-2.5 ml-auto">
+          <div className="flex flex-wrap items-center justify-end gap-2.5 w-full sm:w-auto sm:ml-auto">
             {pageNumber > 1 && (
               <button
                 type="button"
                 onClick={onBack}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-white/30 hover:border-white/70 bg-[#060b1d]/75 text-white text-xs sm:text-sm font-exo2 font-medium transition-all cursor-pointer active:scale-95"
+                className="flex items-center gap-1.5 px-4 py-2 sm:py-1.5 rounded-full border border-white/30 hover:border-white/70 bg-[#060b1d]/75 text-white text-xs sm:text-sm font-exo2 font-medium transition-all cursor-pointer active:scale-95"
                 title={`Previous ${sectionLabel} page`}
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -240,7 +270,7 @@ export default function MissionSeriesPage({
               <button
                 type="button"
                 onClick={secondaryAction.onClick}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-[#F7961D]/70 hover:border-[#F7961D] bg-[#060b1d]/80 text-[#F7961D] hover:bg-[#F7961D]/15 text-xs sm:text-sm font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
+                className="flex items-center gap-1.5 px-4 py-2 sm:py-1.5 rounded-full border border-[#F7961D]/70 hover:border-[#F7961D] bg-[#060b1d]/80 text-[#F7961D] hover:bg-[#F7961D]/15 text-xs sm:text-sm font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
                 title={secondaryAction.title}
               >
                 <span>{secondaryAction.label}</span>
@@ -252,7 +282,7 @@ export default function MissionSeriesPage({
               <button
                 type="button"
                 onClick={onNext}
-                className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F7961D]/90 hover:bg-[#F7961D] text-[#1a0f00] text-xs sm:text-sm font-exo2 font-semibold transition-all shadow-xl cursor-pointer active:scale-95"
+                className="flex items-center gap-2 px-4 py-2 sm:py-1.5 rounded-full bg-[#F7961D]/90 hover:bg-[#F7961D] text-[#1a0f00] text-xs sm:text-sm font-exo2 font-semibold transition-all shadow-xl cursor-pointer active:scale-95"
                 title={`Next: ${sectionLabel} page ${pageNumber + 1}`}
               >
                 <span>{nextLabel}</span>
@@ -263,7 +293,7 @@ export default function MissionSeriesPage({
                 <button
                   type="button"
                   onClick={finalAction.onClick}
-                  className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F7961D]/90 hover:bg-[#F7961D] text-[#1a0f00] text-xs sm:text-sm font-exo2 font-semibold transition-all shadow-xl cursor-pointer active:scale-95"
+                  className="flex items-center gap-2 px-4 py-2 sm:py-1.5 rounded-full bg-[#F7961D]/90 hover:bg-[#F7961D] text-[#1a0f00] text-xs sm:text-sm font-exo2 font-semibold transition-all shadow-xl cursor-pointer active:scale-95"
                   title={finalAction.title}
                 >
                   <span>{finalAction.label}</span>

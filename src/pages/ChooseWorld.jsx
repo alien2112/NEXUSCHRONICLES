@@ -63,15 +63,11 @@ export default function ChooseWorld({ onSelectMars }) {
           - Without hover: clean card without purple outline
           - On hover: that purple outline illuminates alone as the hover effect
         */}
-        <div className="mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-7 sm:gap-9 md:gap-11 w-full max-w-4xl mx-auto">
+        <div className="mt-8 sm:mt-10 md:mt-12 flex flex-col min-[600px]:flex-row items-center justify-center gap-6 min-[600px]:gap-5 sm:gap-9 md:gap-11 w-full max-w-4xl mx-auto">
           
           {/* Card 1: The Moon (hover glow only, no click action) */}
           <div
-            style={{
-              width: '296px',
-              height: '328px',
-            }}
-            className="group relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-default select-none shrink-0"
+            className="group relative w-[min(296px,calc(100vw-2.5rem))] h-[300px] min-[600px]:w-[268px] min-[600px]:h-[304px] sm:w-[296px] sm:h-[328px] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-default select-none shrink-0"
           >
             {/* Background 1: Clean Card WITHOUT purple outline (default state) */}
             <div 
@@ -96,7 +92,7 @@ export default function ChooseWorld({ onSelectMars }) {
             />
 
             {/* Top Planet Image */}
-            <div className="relative z-10 w-[172px] h-[172px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5 pointer-events-none">
+            <div className="relative z-10 w-[154px] h-[154px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5 pointer-events-none">
               <img
                 src={cwCopy.cards.moon.image}
                 alt={cwCopy.cards.moon.imageAlt}
@@ -125,11 +121,7 @@ export default function ChooseWorld({ onSelectMars }) {
           {/* Card 2: The Mars */}
           <div
             onClick={handleMarsClick}
-            style={{
-              width: '296px',
-              height: '328px',
-            }}
-            className="group relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-pointer select-none shrink-0"
+            className="group relative w-[min(296px,calc(100vw-2.5rem))] h-[300px] min-[600px]:w-[268px] min-[600px]:h-[304px] sm:w-[296px] sm:h-[328px] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-pointer select-none shrink-0"
             role="button"
             tabIndex={0}
             aria-label={cwCopy.cards.mars.ariaLabel}
@@ -158,7 +150,7 @@ export default function ChooseWorld({ onSelectMars }) {
             />
 
             {/* Top Planet Image */}
-            <div className="relative z-10 w-[172px] h-[172px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5 pointer-events-none">
+            <div className="relative z-10 w-[154px] h-[154px] sm:w-[180px] sm:h-[180px] flex items-center justify-center shrink-0 mt-0.5 pointer-events-none">
               <img
                 src={cwCopy.cards.mars.image}
                 alt={cwCopy.cards.mars.imageAlt}

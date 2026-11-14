@@ -11,7 +11,7 @@ export default function HomePage({ onBeginJourney }) {
         Using user's provided file: public/homepagebg.webp
       */}
       <div 
-        className="fixed inset-0 z-0 bg-cover bg-top sm:bg-center bg-no-repeat pointer-events-none select-none"
+        className="fixed inset-0 z-0 bg-cover bg-[position:68%_top] sm:bg-center bg-no-repeat pointer-events-none select-none"
         style={{ 
           backgroundImage: `url('${homeCopy.backgroundImage}')`,
         }}
@@ -26,27 +26,21 @@ export default function HomePage({ onBeginJourney }) {
         - Text: "Every mission leaves a trace... / Are you ready to uncover it ?"
         - Button: "Begin Your Journey >"
       */}
-      <main className="relative z-10 flex-1 flex flex-col justify-start pt-24 sm:pt-28 md:pt-32 lg:pt-36 px-6 sm:px-12 md:px-16 lg:px-20 xl:px-24">
+      <main className="relative z-10 flex-1 flex flex-col justify-start pt-22 sm:pt-28 md:pt-32 lg:pt-36 px-5 sm:px-12 md:px-16 lg:px-20 xl:px-24 pb-10 sm:pb-0">
         
         <div className="w-full max-w-[340px] sm:max-w-[400px] flex flex-col items-start text-left space-y-4 sm:space-y-5">
           
           {/* 
-            Empty Logo Placeholder
-            Exact bounding box (~300px x 150px) where the NEXUS CHRONICLES logo goes.
-            Left as an empty placeholder as requested by the user.
+            NEXUS CHRONICLES Brand Logo
+            Rendered in the hero logo bounding box on the left
           */}
-          <div 
-            className="w-[280px] sm:w-[320px] md:w-[340px] h-[135px] sm:h-[150px] md:h-[155px] rounded-xl border border-dashed border-white/20 bg-white/[0.02] flex items-center justify-center transition-colors group relative overflow-hidden"
-            title={homeCopy.logoPlaceholder.title}
-          >
-            <div className="flex flex-col items-center gap-1 text-white/30 group-hover:text-white/50 transition-colors">
-              <span className="text-[11px] font-mono tracking-widest uppercase">
-                {homeCopy.logoPlaceholder.label}
-              </span>
-              <span className="text-[10px] text-white/20 font-mono">
-                {homeCopy.logoPlaceholder.dimensions}
-              </span>
-            </div>
+          <div className="w-full max-w-[280px] sm:w-[320px] sm:max-w-none md:w-[340px] h-[135px] sm:h-[150px] md:h-[155px] flex items-center justify-start">
+            <img
+              src={encodeURI(homeCopy.logo.src)}
+              alt={homeCopy.logo.alt}
+              className="w-full h-full object-contain object-left drop-shadow-[0_6px_24px_rgba(0,0,0,0.75)] select-none pointer-events-none"
+              draggable={false}
+            />
           </div>
 
           {/* 
@@ -67,10 +61,10 @@ export default function HomePage({ onBeginJourney }) {
             "Begin Your Journey >"
             Exact silhouette and solid gradient fill on hover matching user's reference PNG
           */}
-          <div className="pt-2">
+          <div className="pt-2 w-full sm:w-auto">
             <button
               onClick={onBeginJourney}
-              className="relative group inline-flex items-center justify-center gap-3.5 px-8 sm:px-9 py-3 min-w-[235px] sm:min-w-[255px] h-[52px] transition-transform duration-300 cursor-pointer select-none active:scale-[0.98]"
+              className="relative group inline-flex items-center justify-center gap-3.5 px-6 sm:px-9 py-3 w-full max-w-[280px] sm:max-w-none sm:w-auto sm:min-w-[255px] h-[52px] transition-transform duration-300 cursor-pointer select-none active:scale-[0.98]"
               title={homeCopy.ctaButton.title}
             >
               {/* Exact Pointed Pill SVG Silhouette (traced 1:1 from reference PNG) */}

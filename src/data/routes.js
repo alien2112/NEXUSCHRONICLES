@@ -7,6 +7,11 @@ export const routes = [
   { page: 'mars-insight', hash: '#mars-insight', aliases: ['#page5', '#insight'] },
   { page: 'insight-mission', hash: '#insight-mission', aliases: ['#page6'] },
   { page: 'insight-story-1', hash: '#story-1', aliases: ['#insight-story-1', '#story1', '#page7'] },
+  { page: 'insight-story-2', hash: '#story-2', aliases: ['#insight-story-2', '#story2'] },
+  { page: 'insight-story-3', hash: '#story-3', aliases: ['#insight-story-3', '#story3'] },
+  { page: 'insight-story-4', hash: '#story-4', aliases: ['#insight-story-4', '#story4'] },
+  { page: 'insight-story-5', hash: '#story-5', aliases: ['#insight-story-5', '#story5'] },
+  { page: 'insight-story-6', hash: '#story-6', aliases: ['#insight-story-6', '#story6'] },
   { page: 'investigation', hash: '#investigation', aliases: ['#investigate', '#case-1094', '#page8'] },
   { page: 'case-board', hash: '#case-board', aliases: ['#investigation-case-board'] },
   { page: 'go-deeper-1', hash: '#go-deeper', aliases: ['#go-deeper-1', '#science-behind-it', '#science-behind-it-1'] },
@@ -25,7 +30,7 @@ export const routes = [
   { page: 'go-technical-8', hash: '#go-technical-8', aliases: ['#engineering-the-mission-8'] },
   { page: 'go-technical-9', hash: '#go-technical-9', aliases: ['#engineering-the-mission-9'] },
   { page: 'go-technical-10', hash: '#go-technical-10', aliases: ['#engineering-the-mission-10'] },
-  { page: 'engineering-legacy', hash: '#engineering-legacy', aliases: ['#legacy', '#mars-legacy-outpost', '#outpost'] },
+  { page: 'survival-protocol', hash: '#survival-protocol', aliases: ['#mars-survival', '#survival', '#mars-survival-protocol'] },
 ];
 
 export function resolveHash(hash) {

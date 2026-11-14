@@ -44,18 +44,18 @@ export default function EquipmentModal({ world, onClose }) {
       />
 
       {/* Modal Dialog Box */}
-      <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl bg-[#070c1a]/95 border border-white/20 shadow-[0_25px_70px_rgba(0,0,0,0.9)] overflow-hidden font-public text-white z-10">
+      <div className="relative w-full max-w-4xl max-h-[92dvh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#070c1a]/95 border border-white/20 shadow-[0_25px_70px_rgba(0,0,0,0.9)] overflow-hidden font-public text-white z-10">
         
         {/* Header Bar */}
-        <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
-          <div className="flex items-center gap-3.5">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/10 flex items-center justify-between gap-2 bg-white/[0.02]">
+          <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
             <img 
               src={world.image} 
               alt={world.name} 
-              className="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+              className="w-9 h-9 sm:w-10 sm:h-10 object-contain shrink-0 drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]"
             />
-            <div>
-              <div className="flex items-center gap-2">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 <h2 className="text-lg sm:text-xl font-bold font-orbitron tracking-wide text-white">
                   {world.name}
                 </h2>

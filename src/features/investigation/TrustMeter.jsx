@@ -21,7 +21,7 @@ export default function TrustMeter({
 
   return (
     <div
-      className={`${className} rounded-[18px] border border-[#F7961D]/80 ${surfaceCls} backdrop-blur-md px-4 py-3.5 sm:px-5 sm:py-4 flex flex-col justify-between`}
+      className={`${className} rounded-[18px] border border-[#F7961D]/80 ${surfaceCls} backdrop-blur-md px-3 py-3 sm:px-5 sm:py-4 flex flex-col justify-between`}
     >
       <div className="flex items-center gap-2 mb-3.5">
         <span className="w-4 h-4 rounded-full bg-[#F7961D] text-[#1a0d00] flex items-center justify-center shrink-0">
@@ -67,7 +67,7 @@ export default function TrustMeter({
                 }`}
               />
               <span
-                className={`text-[10px] sm:text-[11px] font-exo2 whitespace-nowrap transition-colors ${
+                className={`text-[9.5px] sm:text-[11px] font-exo2 text-center leading-tight sm:leading-normal whitespace-normal sm:whitespace-nowrap max-w-[48px] sm:max-w-none transition-colors ${
                   isSelected ? 'text-[#F7961D] font-semibold' : 'text-white/85 group-hover:text-white'
                 }`}
               >

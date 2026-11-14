@@ -16,7 +16,7 @@ export function TestHudFrame({
 }) {
   return (
     <div className="lg:col-span-7 xl:col-span-7 relative w-full lg:w-[103%] z-10">
-      <div className="relative w-full pt-4 pb-5 px-4 sm:px-6">
+      <div className="relative w-full pt-4 pb-5 px-3.5 sm:px-6">
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none"
           viewBox="0 0 600 300"
@@ -50,7 +50,7 @@ export function TestHudFrame({
           {headerRight}
         </div>
 
-        <div className="relative z-10 rounded-2xl border border-white/30 bg-[#04091b]/70 backdrop-blur-md p-3.5 sm:p-4 md:p-5">
+        <div className="relative z-10 rounded-2xl border border-white/30 bg-[#04091b]/70 backdrop-blur-md p-3 sm:p-4 md:p-5">
           {children}
         </div>
       </div>
@@ -79,7 +79,7 @@ export function NexusSidePanel({
 }) {
   return (
     <div
-      className={`lg:col-span-5 xl:col-span-5 relative w-full lg:pl-4 flex flex-col ${topOffsetClassName} ${
+      className={`lg:col-span-5 xl:col-span-5 relative w-full mt-12 sm:mt-16 lg:mt-0 lg:pl-4 flex flex-col ${topOffsetClassName} ${
         align === 'start' ? 'justify-start' : 'justify-end'
       }`}
     >
@@ -135,7 +135,7 @@ export function NexusSidePanel({
           </div>
 
           <div
-            className="relative z-10 text-left font-exo2 text-white text-sm sm:text-[15px] md:text-[16px] leading-[1.35] pr-28 sm:pr-32">
+            className="relative z-10 text-left font-exo2 text-white text-sm sm:text-[15px] md:text-[16px] leading-[1.35] pr-22 sm:pr-28 lg:pr-32">
             {onClickDialogue && (
               <button type="button" className="sr-only dialogue-advance" aria-label={invCopy.continueDialogueSrLabel} onClick={event => { event.stopPropagation(); onClickDialogue(); }}>
                 {invCopy.continueDialogueSrLabel}
@@ -153,10 +153,10 @@ export function NexusSidePanel({
             key={robotImage}
             className="
               absolute
-              -top-[80px] -right-[8px]
-              sm:-top-[96px] sm:-right-[12px]
-              md:-top-[108px] md:-right-[14px]
-              w-[140px] sm:w-[170px] md:w-[188px]
+              -top-[64px] -right-[4px]
+              sm:-top-[86px] sm:-right-[10px]
+              lg:-top-[108px] lg:-right-[14px]
+              w-[112px] sm:w-[155px] lg:w-[188px]
               pointer-events-none select-none z-20 inv-robot-swap
             "
           >
@@ -199,7 +199,7 @@ export function NexusSidePanel({
             <TrustMeter
               value={confidenceChoice}
               onChange={onChangeConfidence}
-              className="mt-5 sm:mt-6 w-[90%] max-w-[315px] mx-auto"
+              className="mt-5 sm:mt-6 w-full sm:w-[90%] max-w-[315px] mx-auto"
             />
           </div>
         )}

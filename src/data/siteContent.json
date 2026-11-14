@@ -9,6 +9,11 @@
   },
   "navigation": {
     "navbar": {
+      "brandLogo": {
+        "src": "/nnLogo 1B_.png",
+        "alt": "NEXUS",
+        "title": "Return to Home Screen"
+      },
       "backToWorlds": "Worlds",
       "backToHome": "Home",
       "backToWorldsTitle": "Back to Choose a World",
@@ -453,10 +458,9 @@
   },
   "homePage": {
     "backgroundImage": "/homepagebg.webp",
-    "logoPlaceholder": {
-      "title": "Empty Logo Placeholder - Logo will be placed here",
-      "label": "[ Logo Placeholder ]",
-      "dimensions": "340 × 155 px"
+    "logo": {
+      "src": "/NLogo 1_.png",
+      "alt": "Nexus Chronicles"
     },
     "taglineLines": [
       "Every mission leaves a trace...",
@@ -637,6 +641,8 @@
     "backgroundImage": "/story1bg.webp",
     "backAriaLabel": "Back to Insight Trailer",
     "backTitle": "Back",
+    "nextAriaLabel": "Next story: The half of Mars nobody could see",
+    "nextTitle": "Next story",
     "headerTitle": "Mission Chronicles",
     "titleLines": [
       "The Machine That",
@@ -734,6 +740,660 @@
             "segments": [
               "Mars the way you meet a stranger, by its face: canyons,"
             ]
+          }
+        ]
+      }
+    ]
+  },
+  "insightStorySeries": {
+    "headerTitle": "Mission Chronicles",
+    "backgroundImage": "/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp",
+    "audioUi": {
+      "playAriaPrefix": "Play audio:",
+      "pauseAriaPrefix": "Pause audio:"
+    },
+    "pages": [
+      {
+        "storyNumber": 2,
+        "page": "insight-story-2",
+        "bgVariant": "cosmos",
+        "backAriaLabel": "Back to Story 1",
+        "backTitle": "Back to Story 1",
+        "nextAriaLabel": "Next story: Built to listen",
+        "nextTitle": "Next story",
+        "blocks": [
+          {
+            "type": "split",
+            "layout": "story2-hero",
+            "left": {
+              "kind": "media",
+              "frame": {
+                "variant": "hero",
+                "alt": "Placeholder frame for Inside Mars diagram",
+                "src": null
+              }
+            },
+            "right": {
+              "kind": "text",
+              "titleLines": [
+                [
+                  "The half of ",
+                  {
+                    "text": "Mars",
+                    "highlight": true
+                  }
+                ],
+                [
+                  "nobody could see"
+                ]
+              ],
+              "paragraphs": [
+                [
+                  "A surface only tells you what has happened to a planet. The inside tells you what it is made of, and it keeps the record of ",
+                  {
+                    "text": "how the planet was born",
+                    "highlight": true
+                  },
+                  ". Early on, Mars heated up and separated into layers: a thin outer crust, a thick middle layer called the mantle, and a metal core at the centre. Measure those layers and you learn how rocky planets, ",
+                  {
+                    "text": "Earth included",
+                    "highlight": true
+                  },
+                  ", were built."
+                ]
+              ]
+            }
+          },
+          {
+            "type": "paragraph",
+            "maxWidth": "max-w-[920px]",
+            "segments": [
+              {
+                "text": "Mars is the perfect place to look.",
+                "highlight": true
+              },
+              " Earth's surface is constantly reshaped by tectonic plates, huge slabs of crust that slowly move, which has likely erased Earth's earliest clues. Mars has no moving plates, so it holds on to them. Think of it as a ",
+              {
+                "text": "planet's black box.",
+                "highlight": true
+              }
+            ]
+          },
+          {
+            "type": "vital-signs-card",
+            "intro": [
+              "NASA described InSight's job as Mars's first thorough check-up since it formed about ",
+              {
+                "text": "4.5 billion",
+                "highlight": true
+              },
+              " years ago, by taking three vital signs:"
+            ],
+            "items": [
+              {
+                "icon": "pulse",
+                "title": "The pulse:",
+                "description": "marsquakes, which are quakes on Mars"
+              },
+              {
+                "icon": "reflexes",
+                "title": "The reflexes:",
+                "description": "a tiny wobble in how Mars spins"
+              },
+              {
+                "icon": "temperature",
+                "title": "The temperature:",
+                "description": "heat flowing out of the planet"
+              }
+            ],
+            "footer": "The name spells it out: Interior Exploration using Seismic Investigations, Geodesy (measuring a planet's spin) and Heat Transport."
+          }
+        ]
+      },
+      {
+        "storyNumber": 3,
+        "page": "insight-story-3",
+        "bgVariant": "mars-glow",
+        "backAriaLabel": "Back to Story 2",
+        "backTitle": "Back to Story 2",
+        "nextAriaLabel": "Next story: When the plan met Mars",
+        "nextTitle": "Next story",
+        "titleLines": [
+          [
+            "Built to listen"
+          ]
+        ],
+        "blocks": [
+          {
+            "type": "paragraph",
+            "maxWidth": "max-w-[700px]",
+            "segments": [
+              "Imagine building a science station that can never move. If the ground turns out to be wrong, you can't relocate. So you choose the most boring place ",
+              {
+                "text": "on Mars",
+                "highlight": true
+              },
+              ", on purpose."
+            ]
+          },
+          {
+            "type": "split",
+            "layout": "text-left-media-right",
+            "left": {
+              "kind": "text",
+              "paragraphs": [
+                [
+                  "InSight launched on ",
+                  {
+                    "text": "5 May 2018",
+                    "highlight": true
+                  },
+                  " and landed ",
+                  {
+                    "text": "on Elysium Planitia",
+                    "highlight": true
+                  },
+                  ", a flat plain near the Martian equator, on ",
+                  {
+                    "text": "26 November 2018",
+                    "highlight": true
+                  },
+                  ". NASA looked at ",
+                  {
+                    "text": "22 candidate sites",
+                    "highlight": true
+                  },
+                  ", and only three met the engineering limits."
+                ]
+              ]
+            },
+            "right": {
+              "kind": "media",
+              "frame": {
+                "variant": "wide",
+                "alt": "Placeholder frame for Elysium Planitia landing site map",
+                "src": null
+              }
+            }
+          },
+          {
+            "type": "triple",
+            "left": {
+              "kind": "media",
+              "frame": {
+                "variant": "square",
+                "alt": "Placeholder frame for InSight robotic arm placing instrument",
+                "src": null
+              }
+            },
+            "center": {
+              "kind": "text",
+              "paragraphs": [
+                [
+                  {
+                    "text": "Elysium won:",
+                    "highlight": true
+                  },
+                  " smooth, sunny enough for solar panels, and almost free of big rocks, because one large rock could stop a ",
+                  {
+                    "text": "solar panel",
+                    "highlight": true
+                  },
+                  " from opening or block the instruments from being placed. It wasn't chosen for the view. It was chosen for survival."
+                ]
+              ]
+            },
+            "right": {
+              "kind": "media",
+              "frame": {
+                "variant": "square",
+                "alt": "Placeholder frame for InSight deck and seismometer on Mars",
+                "src": null
+              }
+            }
+          },
+          {
+            "type": "paragraph",
+            "maxWidth": "max-w-[880px]",
+            "segments": [
+              "The star instrument was ",
+              {
+                "text": "SEIS,",
+                "highlight": true
+              },
+              " a ",
+              {
+                "text": "seismometer",
+                "highlight": true
+              },
+              ", a device that records ground shaking. Its sensors can detect movement smaller than a hydrogen atom. A robotic arm set it on the ground and covered it with a dome that shields it from ",
+              {
+                "text": "wind and temperature swings.",
+                "highlight": true
+              }
+            ]
+          },
+          {
+            "type": "audio-banner",
+            "variant": "card",
+            "trackId": "wind",
+            "ariaLabel": "Play or pause Martian wind audio from 1 December 2018",
+            "lines": [
+              [
+                "InSight has no ears. It feels vibrations, and NASA speeds them up so human ears can catch them. Its first \"sound\" was the Martian wind, on ",
+                {
+                  "text": "1 December 2018.",
+                  "highlight": true
+                }
+              ],
+              [
+                "Listen: ",
+                {
+                  "text": "the Martian wind",
+                  "highlight": true
+                }
+              ]
+            ]
+          },
+          {
+            "type": "paragraph",
+            "maxWidth": "max-w-[920px]",
+            "segments": [
+              {
+                "text": "NASA's JPL",
+                "highlight": true
+              },
+              " ran the mission. ",
+              {
+                "text": "Lockheed Martin Space",
+                "highlight": true
+              },
+              " built the spacecraft, and France, Germany, Spain and Italy each contributed hardware."
+            ]
+          }
+        ]
+      },
+      {
+        "storyNumber": 4,
+        "page": "insight-story-4",
+        "bgVariant": "deep",
+        "backAriaLabel": "Back to Story 3",
+        "backTitle": "Back to Story 3",
+        "nextAriaLabel": "Next story: What the planet said",
+        "nextTitle": "Next story",
+        "titleLines": [
+          [
+            "When the plan met ",
+            {
+              "text": "Mars",
+              "highlight": true
+            }
+          ]
+        ],
+        "blocks": [
+          {
+            "type": "paragraph",
+            "maxWidth": "max-w-[820px]",
+            "segments": [
+              "Not everything worked. A self-hammering probe nicknamed ",
+              {
+                "text": "\"the mole\"",
+                "highlight": true
+              },
+              " was meant to dig about ",
+              {
+                "text": "5 metres",
+                "highlight": true
+              },
+              " down to measure heat. But the soil was clumpier than expected, and the mole couldn't get the grip it needed. The team tried for almost ",
+              {
+                "text": "two years",
+                "highlight": true
+              },
+              " before ending the effort in ",
+              {
+                "text": "January 2021.",
+                "highlight": true
+              }
+            ]
+          },
+          {
+            "type": "media-pair",
+            "frames": [
+              {
+                "variant": "pair",
+                "alt": "Placeholder frame for HP3 mole probe on Martian soil",
+                "src": null
+              },
+              {
+                "variant": "pair",
+                "alt": "Placeholder frame for SEIS dome on Mars surface",
+                "src": null
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "maxWidth": "max-w-[800px]",
+            "segments": [
+              {
+                "text": "A failure?",
+                "highlight": true
+              },
+              " Not quite. The attempt still returned data about the soil, which helps future missions that want to dig. ",
+              {
+                "text": "Mars doesn't read your plan",
+                "highlight": true
+              },
+              ", so you learn from what it does instead."
+            ]
+          }
+        ]
+      },
+      {
+        "storyNumber": 5,
+        "page": "insight-story-5",
+        "bgVariant": "mars-glow",
+        "backAriaLabel": "Back to Story 4",
+        "backTitle": "Back to Story 4",
+        "nextAriaLabel": "Next story: The long goodbye",
+        "nextTitle": "Next story",
+        "titleLines": [
+          [
+            "What the planet said"
+          ]
+        ],
+        "blocks": [
+          {
+            "type": "paragraph",
+            "maxWidth": "max-w-[680px]",
+            "segments": [
+              "On ",
+              {
+                "text": "6 April 2019",
+                "highlight": true
+              },
+              ", 128 Martian days after landing, ",
+              {
+                "text": "SEIS",
+                "highlight": true
+              },
+              " felt a faint rumble. NASA called it the first likely marsquake."
+            ]
+          },
+          {
+            "type": "audio-banner",
+            "variant": "pill",
+            "trackId": "marsquake",
+            "ariaLabel": "Play or pause the first marsquake audio, sped up 60 times",
+            "lines": [
+              [
+                {
+                  "text": "Listen: ",
+                  "highlight": true
+                },
+                "the first marsquake, sped up ",
+                {
+                  "text": "60 times",
+                  "highlight": true
+                },
+                "."
+              ]
+            ]
+          },
+          {
+            "type": "split",
+            "layout": "text-left-media-right",
+            "left": {
+              "kind": "text",
+              "paragraphs": [
+                [
+                  "By the end, InSight had detected more than ",
+                  {
+                    "text": "1,300 marsquakes",
+                    "highlight": true
+                  },
+                  ". The biggest, on ",
+                  {
+                    "text": "4 May 2022",
+                    "highlight": true
+                  },
+                  ", was magnitude ",
+                  {
+                    "text": "4.7",
+                    "highlight": true
+                  },
+                  ". And in ",
+                  {
+                    "text": "2021",
+                    "highlight": true
+                  },
+                  ", humanity got its first look at the layers inside another planet: a crust, a mantle and a liquid core."
+                ]
+              ]
+            },
+            "right": {
+              "kind": "media",
+              "frame": {
+                "variant": "square",
+                "alt": "Placeholder frame for SEIS seismometer dome on Mars",
+                "src": null
+              }
+            }
+          },
+          {
+            "type": "split",
+            "layout": "media-left-text-right",
+            "left": {
+              "kind": "media",
+              "frame": {
+                "variant": "wide",
+                "alt": "Placeholder frame for before and after meteoroid impact crater on Mars",
+                "src": null
+              }
+            },
+            "right": {
+              "kind": "text",
+              "paragraphs": [
+                [
+                  "And one day was a plot twist. On Christmas Eve ",
+                  {
+                    "text": "2021",
+                    "highlight": true
+                  },
+                  ", SEIS felt a quake caused by a meteoroid, a space rock, hitting Mars. The crash dug up boulder-size chunks of water ice, spotted by a camera on NASA's Mars Reconnaissance Orbiter."
+                ]
+              ]
+            }
+          },
+          {
+            "type": "paragraph",
+            "maxWidth": "max-w-[820px]",
+            "segments": [
+              "Buried ice had never been seen this close to the equator, which matters for planning future astronaut missions. ",
+              {
+                "text": "InSight",
+                "highlight": true
+              },
+              " felt it, and an orbiter saw it.\n",
+              {
+                "text": "Do you believe it?",
+                "highlight": true
+              },
+              " Soon you can check the evidence yourself."
+            ]
+          },
+          {
+            "type": "audio-banner",
+            "variant": "pill",
+            "trackId": "impact",
+            "ariaLabel": "Play or pause the impact audio, sped up 100 times",
+            "lines": [
+              [
+                {
+                  "text": "Listen: ",
+                  "highlight": true
+                },
+                "the impact, sped up ",
+                {
+                  "text": "100 times",
+                  "highlight": true
+                },
+                "."
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "storyNumber": 6,
+        "page": "insight-story-6",
+        "bgVariant": "mars-horizon",
+        "backAriaLabel": "Back to Story 5",
+        "backTitle": "Back to Story 5",
+        "nextAriaLabel": "Proceed to Investigation: Case 1094",
+        "nextTitle": "Proceed to Investigation",
+        "blocks": [
+          {
+            "type": "split",
+            "layout": "story6-hero",
+            "left": {
+              "kind": "media",
+              "frame": {
+                "variant": "hero",
+                "alt": "Placeholder frame for dusty InSight lander solar panels",
+                "src": null
+              }
+            },
+            "right": {
+              "kind": "text",
+              "titleLines": [
+                [
+                  "The long goodbye"
+                ]
+              ],
+              "paragraphs": [
+                [
+                  "Then dust did what dust does. By ",
+                  {
+                    "text": "May 2022",
+                    "highlight": true
+                  },
+                  ", InSight's panels were making about a ",
+                  {
+                    "text": "tenth of the power",
+                    "highlight": true
+                  },
+                  " they made at landing. Engineers switched off instruments one by one until the seismometer was the last one running. They even used the robotic arm to trickle sand beside a panel so the wind would knock dust loose. ",
+                  {
+                    "text": "A robot cleaning itself with sand.",
+                    "highlight": true
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "type": "split",
+            "layout": "text-left-media-right",
+            "left": {
+              "kind": "text",
+              "paragraphs": [
+                [
+                  "Its last contact came on ",
+                  {
+                    "text": "15 December 2022",
+                    "highlight": true
+                  },
+                  ". Four days later, its mission account posted a final image and a sign-off in the lander's voice: ",
+                  {
+                    "text": "\"Thanks for staying with me.\"",
+                    "highlight": true
+                  },
+                  " After two missed communication attempts in a row, NASA declared the mission over on ",
+                  {
+                    "text": "21 December 2022.",
+                    "highlight": true
+                  }
+                ]
+              ]
+            },
+            "right": {
+              "kind": "media",
+              "frame": {
+                "variant": "square",
+                "alt": "Placeholder frame for InSight final image on Mars",
+                "src": null
+              }
+            }
+          },
+          {
+            "type": "split",
+            "layout": "media-left-text-right",
+            "left": {
+              "kind": "media",
+              "frame": {
+                "variant": "wide",
+                "alt": "Placeholder frame for Mars Reconnaissance Orbiter view of retired InSight",
+                "src": null
+              }
+            },
+            "right": {
+              "kind": "text",
+              "paragraphs": [
+                [
+                  "But InSight did not disappear. On ",
+                  {
+                    "text": "23 October 2024",
+                    "highlight": true
+                  },
+                  ", NASA's Mars Reconnaissance Orbiter photographed the retired lander from above, its solar panels now the same reddish-brown as the ground. Its data is public, and scientists are still making discoveries from it."
+                ]
+              ]
+            }
+          },
+          {
+            "type": "paragraph",
+            "maxWidth": "max-w-[780px]",
+            "segments": [
+              {
+                "text": "\"I'm here. I'm home.\"",
+                "highlight": true
+              },
+              " InSight said it on day one. It is still there.\nWhat if you could hear a planet's heartbeat? You just did."
+            ]
+          },
+          {
+            "type": "audio-playlist-card",
+            "heading": [
+              {
+                "text": "Listen",
+                "highlight": true
+              },
+              " to Mars:"
+            ],
+            "playButtonAriaLabel": "Play or pause selected Mars audio",
+            "tracks": [
+              {
+                "id": "wind",
+                "label": "the wind",
+                "date": "(1 Dec 2018)"
+              },
+              {
+                "id": "marsquake",
+                "label": "the first marsquake",
+                "date": "(6 Apr 2019)"
+              },
+              {
+                "id": "impact",
+                "label": "the Christmas Eve impact",
+                "date": "(24 Dec 2021)"
+              }
+            ]
+          },
+          {
+            "type": "tagline",
+            "text": "The mission ended. The evidence remains."
           }
         ]
       }
@@ -1370,13 +2030,10 @@
         "goDeeperTitle": "Go deeper: Science Behind It",
         "goTechnicalLabel": "Go technical",
         "goTechnicalTitle": "Go technical: Engineering the Mission",
-        "engineeringLegacyTitle": "Engineering Legacy: Mars Legacy Outpost",
-        "unlockedBadge": "Unlocked",
-        "optionalBadge": "Optional · Case Bonus",
-        "unlockedDescription": "Case 1094 complete. Apply InSight’s lessons in a fictional future Mars outpost strategy simulation.",
-        "lockedDescription": "Complete the 4 stamps & verdict to fully unlock in story order, or launch the optional outpost simulation now.",
-        "engineeringLegacyLabel": "Engineering Legacy",
-        "engineeringLegacyTitleAttr": "Engineering Legacy: Mars Legacy Outpost"
+        "survivalTitle": "NEXUS — Mars: The Survival Protocol",
+        "survivalBadge": "OPTIONAL PASS · 3D · 20 LEVELS",
+        "survivalDescription": "Optional post-mission simulation: drive a 6-wheeled Mars rover, consult InSight data with NEXUS AI, and build a resilient 10-module station across 20 survival levels.",
+        "survivalButtonLabel": "Play Mars: The Survival Protocol"
       },
       "actions": {
         "replayLabel": "Replay Case",
@@ -2295,563 +2952,12 @@
   },
   "missionSeriesUi": {
     "previousLabel": "Previous",
-    "nextLabel": "Next"
-  },
-  "engineeringLegacy": {
-    "introLines": [
-      "Years ago, a machine listened to the heartbeat of Mars.",
-      "It discovered what humans could not see.",
-      "Now its mission is over.",
-      "But its legacy is still waiting."
-    ],
-    "header": {
-      "returnAriaLabel": "Return to NEXUS",
-      "returnTitle": "Return to NEXUS",
-      "title": "NEXUS — Mars Legacy Outpost",
-      "badge": "FICTIONAL FUTURE CONCEPT",
-      "subtitle": "From exploring the discoveries of yesterday to engineering the solutions of tomorrow."
-    },
-    "hud": {
-      "statusAriaLabel": "Outpost status indicators",
-      "energyLabel": "ENERGY",
-      "safetyLabel": "HABITAT SAFETY",
-      "scienceLabel": "SCIENCE",
-      "legacyButtonPrefix": "InSight Legacy",
-      "controlsHint": "Click ground to walk · Click objects to inspect",
-      "seismicMonitorLabel": "SEISMIC MONITOR:",
-      "canvasAriaLabel": "Isometric Mars Legacy Outpost research zone"
-    },
-    "constructionDock": {
-      "heading": "OUTPOST CONSTRUCTION · DRAG OR TAP TO PLACE",
-      "subtext": "Simplified educational placement rules",
-      "statusBuilt": "Built",
-      "statusSelected": "Selected",
-      "statusSelect": "Select"
-    },
-    "introOverlay": {
-      "badge": "Fictional Future Concept · Elysium Planitia",
-      "disclaimer": "NASA's real InSight mission ended in December 2022. This interactive outpost scenario is a fictional future engineering concept.",
-      "nextLabel": "Next",
-      "skipLabel": "Skip Intro",
-      "beginLabel": "Begin Mission",
-      "beginBannerText": "Explore the abandoned InSight lander by clicking it or walking near it."
-    },
-    "objectives": {
-      "arrival": {
-        "label": "PHASE 1 · ARRIVAL ON MARS",
-        "text": "Explore the abandoned InSight lander.",
-        "actionLabel": "Inspect InSight"
-      },
-      "build": {
-        "labelTemplate": "PHASE 2 · BUILD OUTPOST ({count}/3)",
-        "text": "Place Research Habitat, Solar Power Unit, and Scientific Station."
-      },
-      "buildReady": {
-        "label": "PHASE 2 · OUTPOST COMPLETE",
-        "text": "Outpost systems initialized. Ready for operational stress testing.",
-        "actionLabel": "Start Operations"
-      },
-      "summary": {
-        "label": "PHASE 5 · MISSION ANALYSIS COMPLETE",
-        "text": "Review your outpost engineering summary and Earth connections.",
-        "actionLabel": "View Mission Analysis"
-      },
-      "openModulePrefix": "Open "
-    },
-    "banners": {
-      "startConstruction": "Drag a module onto Mars—or select one below and tap a highlighted site to build.",
-      "missionReset": "Mission reset. Explore the abandoned InSight lander to begin.",
-      "summaryComplete": "Mission Analysis Complete — review your outpost engineering legacy.",
-      "installedSuffix": "installed.",
-      "operationalInfix": ": Operational on ",
-      "defaultTerrain": "Martian regolith",
-      "legacyUnlockedPrefix": "InSight Legacy Unlocked:",
-      "scenarioPromptTemplate": "{title}: Click the {target} to choose your engineering response.",
-      "defaultTerrainShort": "Mars Surface",
-      "defaultModuleShort": "Module",
-      "defaultOutpostModule": "Outpost Module"
-    },
-    "simulation": {
-      "moduleDefinitions": {
-        "habitat": {
-          "id": "habitat",
-          "name": "Research Habitat",
-          "shortName": "Habitat",
-          "summary": "Pressurized crew shelter and thermal control hub.",
-          "idealZone": "basin",
-          "idealHint": "Benefits from sheltered terrain to reduce heat loss."
-        },
-        "solar": {
-          "id": "solar",
-          "name": "Solar Power Unit",
-          "shortName": "Solar Unit",
-          "summary": "Deployable photovoltaic array with dust-management rig.",
-          "idealZone": "ridge",
-          "idealHint": "Generates maximum power on open, high-sunlight ridges."
-        },
-        "science": {
-          "id": "science",
-          "name": "Scientific Station",
-          "shortName": "Science Lab",
-          "summary": "Seismic and environmental monitoring rig inspired by SEIS.",
-          "idealZone": "bedrock",
-          "idealHint": "Performs best on stable bedrock away from habitat vibration."
-        }
-      },
-      "moduleOrder": [
-        "habitat",
-        "solar",
-        "science"
-      ],
-      "terrainMeta": {
-        "rock": {
-          "label": "Basalt Boulder",
-          "buildable": false,
-          "walkable": false,
-          "note": "Rocky terrain — uneven ground cannot support module foundations."
-        },
-        "insight_zone": {
-          "label": "InSight Heritage Zone",
-          "buildable": false,
-          "walkable": true,
-          "note": "Protected historical site — keep clear of the retired InSight lander."
-        },
-        "ridge": {
-          "label": "High-Sunlight Ridge",
-          "buildable": true,
-          "walkable": true,
-          "note": "Open exposure (+Solar output, slightly higher wind chill)."
-        },
-        "basin": {
-          "label": "Sheltered Crater Lee",
-          "buildable": true,
-          "walkable": true,
-          "note": "Natural windbreak (+Habitat safety, slight low-angle shade)."
-        },
-        "bedrock": {
-          "label": "Quiet Bedrock Flat",
-          "buildable": true,
-          "walkable": true,
-          "note": "Dense low-vibration ground (+Science instrument stability)."
-        },
-        "plain": {
-          "label": "Elysium Regolith Plain",
-          "buildable": true,
-          "walkable": true,
-          "note": "Stable flat Martian regolith suitable for general construction."
-        }
-      },
-      "insightHistoricalFacts": {
-        "landed": "November 26, 2018 — Elysium Planitia",
-        "ended": "December 15, 2022 — Solar power exhausted",
-        "note": "Real NASA mission data. The astronaut outpost and repair scenarios in this game are fictional future concepts.",
-        "powerComparison": [
-          {
-            "label": "Landing (Nov 2018)",
-            "whPerSol": 5000,
-            "pct": 100,
-            "detail": "~5,000 Wh/sol — full science operations"
-          },
-          {
-            "label": "Late Mission (May 2022)",
-            "whPerSol": 500,
-            "pct": 10,
-            "detail": "~500 Wh/sol — 90% lost to Martian dust"
-          }
-        ]
-      },
-      "insightDiagnostics": [
-        {
-          "id": "power_margin",
-          "title": "Solar Array Dust Telemetry",
-          "evidence": "InSight dropped from ~5,000 to ~500 Wh/sol as dust coated its 2.2 m circular panels. A May 2021 sand-trickle test recovered ~30 Wh/sol briefly.",
-          "lesson": "Power Margin Planning",
-          "application": "Applied to Outpost: +6 Energy reserve efficiency for future power operations.",
-          "bonus": {
-            "energy": 6,
-            "safety": 0,
-            "science": 0
-          }
-        },
-        {
-          "id": "soil_cohesion",
-          "title": "HP³ Heat Probe Soil Analysis",
-          "evidence": "The self-hammering \"mole\" encountered unexpectedly clumpy duricrust regolith that lacked loose friction, preventing it from reaching 5 m depth.",
-          "lesson": "Regolith & Anchoring Realism",
-          "application": "Applied to Outpost: +6 Habitat Safety from improved foundation & anchoring awareness.",
-          "bonus": {
-            "energy": 0,
-            "safety": 6,
-            "science": 0
-          }
-        },
-        {
-          "id": "instrument_isolation",
-          "title": "SEIS Wind & Thermal Shielding",
-          "evidence": "Placing SEIS directly on the ground under a thermal & wind shield isolated faint marsquakes from wind gusts and temperature swings.",
-          "lesson": "Sensor Isolation",
-          "application": "Applied to Outpost: +6 Science clarity by protecting instruments from interference.",
-          "bonus": {
-            "energy": 0,
-            "safety": 0,
-            "science": 6
-          }
-        }
-      ],
-      "engineeringScenarios": {
-        "engineering": {
-          "id": "engineering",
-          "phaseLabel": "PHASE 3 · ENGINEERING DECISION",
-          "title": "Dust Accumulation on Solar Unit",
-          "targetModule": "solar",
-          "disclaimer": "Hypothetical future outpost engineering scenario (not historical InSight capability).",
-          "alertText": "Solar efficiency decreasing. Martian dust accumulation detected.",
-          "prompt": "Choose how to respond before regional winds intensify:",
-          "options": [
-            {
-              "id": "clean",
-              "label": "A. Activate cleaning mechanism",
-              "summary": "Sweeps dust off panels; draws startup surge power and adds slight mechanical wear.",
-              "tradeoff": "+12 Energy recovery · Minor actuator wear noted",
-              "delta": {
-                "energy": 12,
-                "safety": 0,
-                "science": 0
-              },
-              "animation": "clean",
-              "outcome": "Electromechanical wipers cleared most settled dust. Output recovered after a short startup power draw, though actuator wear increased slightly.",
-              "strength": "Balanced recovery — effective when power reserves allow the cleaning surge."
-            },
-            {
-              "id": "conserve",
-              "label": "B. Conserve power",
-              "summary": "Throttles nonessential loads to protect battery reserves, slowing science.",
-              "tradeoff": "+8 Energy reserve · -6 Science output",
-              "delta": {
-                "energy": 8,
-                "safety": 2,
-                "science": -6
-              },
-              "animation": "conserve",
-              "outcome": "Nonessential lab heaters and secondary relays entered low-power mode. Reserves stabilized cleanly, at the cost of paused science measurements.",
-              "strength": "Low-risk preservation — avoids mechanical wear while keeping reserves steady."
-            },
-            {
-              "id": "orient",
-              "label": "C. Adjust panel orientation",
-              "summary": "Tilts arrays toward afternoon sunlight; does not guarantee dust removal.",
-              "tradeoff": "+6 Energy · Zero wear · Dust layer remains",
-              "delta": {
-                "energy": 6,
-                "safety": 0,
-                "science": 0
-              },
-              "animation": "orient",
-              "outcome": "Tracking actuators tilted the array to catch higher-angle sunlight without spending cleaning power, though settled dust still limits peak output.",
-              "strength": "Zero-wear adjustment — modest gain without risking delicate moving parts."
-            }
-          ]
-        },
-        "event_1": {
-          "id": "event_1",
-          "phaseLabel": "EVENT 1 OF 3 · DUST STORM",
-          "title": "Regional Martian Dust Storm",
-          "targetModule": "solar",
-          "disclaimer": "Simplified educational simulation of dust storm power trade-offs.",
-          "alertText": "Suspended atmospheric dust is dimming incoming sunlight across Elysium Planitia.",
-          "prompt": "Solar generation is falling. How will you manage the outpost grid?",
-          "initialDrop": {
-            "energy": -18,
-            "safety": -4,
-            "science": -4
-          },
-          "options": [
-            {
-              "id": "storm_clean",
-              "label": "A. Run active dust-clearing cycle",
-              "summary": "Fights heavy dust buildup during the storm, costing energy and mechanical strain.",
-              "tradeoff": "+10 Energy · -4 Safety (equipment strain)",
-              "delta": {
-                "energy": 10,
-                "safety": -4,
-                "science": 4
-              },
-              "animation": "clean",
-              "outcome": "Active clearing kept the panels from choking completely, preserving science uptime at the expense of higher actuator strain.",
-              "strength": "Keeps science running through low light, though repeated storm cycles stress hardware."
-            },
-            {
-              "id": "storm_standby",
-              "label": "B. Switch to low-power standby",
-              "summary": "Protects habitat and batteries by suspending active scientific sampling.",
-              "tradeoff": "+14 Energy preserved · +4 Safety · -8 Science",
-              "delta": {
-                "energy": 14,
-                "safety": 4,
-                "science": -8
-              },
-              "animation": "conserve",
-              "outcome": "The outpost rode out peak dust opacity on low-power standby. Batteries stayed healthy, while science logging paused until skies cleared.",
-              "strength": "Prioritizes crew & grid survival during severe sunlight drops."
-            },
-            {
-              "id": "storm_battery",
-              "label": "C. Draw from stored battery reserves",
-              "summary": "Maintains full habitat and science operations using stored reserves.",
-              "tradeoff": "-6 Energy reserve · +8 Science continuity",
-              "delta": {
-                "energy": -6,
-                "safety": 2,
-                "science": 8
-              },
-              "animation": "boost",
-              "outcome": "Battery banks bridged the storm gap so instruments kept recording dust-storm meteorology, leaving thinner energy margins for later cold.",
-              "strength": "Maximizes storm science data, provided enough energy was saved earlier."
-            }
-          ]
-        },
-        "event_2": {
-          "id": "event_2",
-          "phaseLabel": "EVENT 2 OF 3 · EXTREME TEMPERATURE",
-          "title": "Severe Martian Cold Snap",
-          "targetModule": "habitat",
-          "disclaimer": "Simplified thermal engineering simulation for a future crewed habitat.",
-          "alertText": "Nighttime temperatures plunged sharply. Habitat hull heat loss is accelerating.",
-          "prompt": "Protect habitat safety without exhausting outpost electrical reserves:",
-          "initialDrop": {
-            "energy": -6,
-            "safety": -18,
-            "science": -2
-          },
-          "options": [
-            {
-              "id": "temp_heat",
-              "label": "A. Increase active heating power",
-              "summary": "Rapidly warms interior systems, drawing heavily on outpost electricity.",
-              "tradeoff": "+18 Habitat Safety · -14 Energy",
-              "delta": {
-                "energy": -14,
-                "safety": 18,
-                "science": 2
-              },
-              "animation": "heat",
-              "outcome": "Auxiliary thermal loops stabilized cabin warmth quickly, pulling deeply from the solar battery bank.",
-              "strength": "Fastest protection for habitat safety when energy reserves are healthy."
-            },
-            {
-              "id": "temp_insulate",
-              "label": "B. Deploy thermal insulation baffles",
-              "summary": "Reduces heat loss passively with low power draw and balanced protection.",
-              "tradeoff": "+14 Habitat Safety · -4 Energy",
-              "delta": {
-                "energy": -4,
-                "safety": 14,
-                "science": 0
-              },
-              "animation": "insulate",
-              "outcome": "Deployable aerogel shields sealed thermal bridges around the airlock, cutting heat loss with minimal electrical penalty.",
-              "strength": "Passive insulation reduces reliance on constant electrical heating."
-            },
-            {
-              "id": "temp_redirect",
-              "label": "C. Reduce nonessential science & redirect heat",
-              "summary": "Reclaims waste heat and power for the habitat while pausing external experiments.",
-              "tradeoff": "+12 Habitat Safety · +4 Energy · -8 Science",
-              "delta": {
-                "energy": 4,
-                "safety": 12,
-                "science": -8
-              },
-              "animation": "conserve",
-              "outcome": "Science racks went into sleep mode and waste heat was routed into habitat walls, keeping both energy and safety steady.",
-              "strength": "Smart load-shedding when energy is already tight."
-            }
-          ]
-        },
-        "event_3": {
-          "id": "event_3",
-          "phaseLabel": "EVENT 3 OF 3 · MARSQUAKE",
-          "title": "Local Seismic Tremor Detected",
-          "targetModule": "science",
-          "disclaimer": "Hypothetical engineering test scenario — real marsquakes vary in strength and do not typically damage surface structures.",
-          "alertText": "Scientific Station recorded ground vibrations near the outpost foundation.",
-          "prompt": "Respond to protect calibration and outpost stability:",
-          "initialDrop": {
-            "energy": -4,
-            "safety": -8,
-            "science": -14
-          },
-          "options": [
-            {
-              "id": "quake_secure",
-              "label": "A. Secure sensitive instruments",
-              "summary": "Clamps delicate optics and levels sensors using slight stabilizer power.",
-              "tradeoff": "+16 Science reliability · -6 Energy · +4 Safety",
-              "delta": {
-                "energy": -6,
-                "safety": 4,
-                "science": 16
-              },
-              "animation": "secure",
-              "outcome": "Gimbal locks and leveling actuators protected the seismometer core, capturing clean aftershock data once tremors settled.",
-              "strength": "Preserves high-value seismic science without shutting down the whole lab."
-            },
-            {
-              "id": "quake_reinforce",
-              "label": "B. Reinforce vulnerable structures",
-              "summary": "Engages outrigger anchors across the outpost to harden structural stability.",
-              "tradeoff": "+14 Habitat Safety · -8 Energy · +6 Science",
-              "delta": {
-                "energy": -8,
-                "safety": 14,
-                "science": 6
-              },
-              "animation": "reinforce",
-              "outcome": "Foundation struts locked against the Martian regolith, boosting structural safety margins across the entire outpost.",
-              "strength": "Strong structural resilience — especially valuable when combined with InSight soil lessons."
-            },
-            {
-              "id": "quake_pause",
-              "label": "C. Temporarily pause scientific operations",
-              "summary": "Parks instruments safely with minimal energy draw until ground motion stops.",
-              "tradeoff": "+4 Energy saved · +6 Safety · -4 Science",
-              "delta": {
-                "energy": 4,
-                "safety": 6,
-                "science": -4
-              },
-              "animation": "conserve",
-              "outcome": "Sensors safely retracted into park mode with near-zero power cost, avoiding drift at the cost of missing peak tremor readings.",
-              "strength": "Conservative fail-safe that preserves electrical reserves."
-            }
-          ]
-        }
-      },
-      "earthTransferConnections": [
-        {
-          "id": "earth_solar",
-          "title": "Dust Management for Terrestrial Solar",
-          "detail": "Self-cleaning coatings, electrostatic shields, and tilt schedules tested for Mars help desert solar farms maintain high output."
-        },
-        {
-          "id": "earth_microgrid",
-          "title": "Energy Efficiency in Isolated Communities",
-          "detail": "Smart load-shedding and battery buffering mirror remote microgrids where every watt-hour matters."
-        },
-        {
-          "id": "earth_resilient",
-          "title": "Resilient Structures in Extreme Climates",
-          "detail": "Passive thermal baffles and anchored foundations inform polar, alpine, and disaster-relief habitats on Earth."
-        },
-        {
-          "id": "earth_sensors",
-          "title": "Reliable Scientific Instruments",
-          "detail": "Vibration isolation and wind shielding pioneered for SEIS inspire ultra-quiet Earth seismic and climate monitors."
-        }
-      ],
-      "placementMessages": {
-        "outsidePerimeter": "Outside the designated outpost perimeter.",
-        "occupiedPrefix": "Occupied by ",
-        "occupiedFallback": "another module",
-        "installedSuffix": "installed.",
-        "operationalPrefix": "Operational on ",
-        "operationalFallback": "Martian regolith",
-        "solarRidge": "High-Sunlight Ridge: +10 Energy exposure.",
-        "solarBasin": "Crater Lee shade: -4 Energy compared to open ridge.",
-        "solarPlain": "Open regolith: +4 baseline Energy.",
-        "habitatBasin": "Sheltered Crater Lee: +10 Habitat thermal protection.",
-        "habitatRidge": "Exposed ridge winds: -4 thermal shelter.",
-        "habitatPlain": "Level ground: +4 baseline Habitat stability.",
-        "scienceBedrock": "Quiet Bedrock Flat: +10 Seismic clarity.",
-        "sciencePlain": "Standard regolith: +4 baseline Science.",
-        "scienceNearHabitat": "Adjacent to Habitat machinery: -6 vibration interference.",
-        "scienceIsolated": "Isolated from Habitat pumps: +4 low-noise signal."
-      },
-      "analysisMessages": {
-        "workedSolarRidge": "Placing the Solar Power Unit on the High-Sunlight Ridge maximized baseline electrical generation.",
-        "improveSolarRidge": "Moving the Solar Power Unit onto the High-Sunlight Ridge would increase daily energy margin before dust storms.",
-        "workedHabitatBasin": "Siting the Research Habitat in the Sheltered Crater Lee reduced exposure to Martian wind chill.",
-        "improveHabitatBasin": "Siting the Research Habitat inside the Sheltered Crater Lee lowers thermal heat loss during cold snaps.",
-        "workedScienceBedrock": "Isolating the Scientific Station on Quiet Bedrock kept vibration interference minimal.",
-        "improveScienceBedrock": "Placing the Scientific Station on Quiet Bedrock away from Habitat pumps improves seismic signal clarity.",
-        "workedLessonsTemplate": "Applied {count}/3 InSight Legacy Analysis lessons to strengthen future outpost operations.",
-        "improveLessons": "Running the full InSight Legacy Analysis reveals extra dust, soil, and sensor-shielding insights.",
-        "improveEnergy": "Final energy reserves finished tight — balancing conservation or passive insulation preserves margin.",
-        "workedEnergy": "Maintained reliable electrical energy reserves across dust accumulation and severe cold.",
-        "workedSafety": "Strong habitat protection kept the outpost ready through extreme cold and seismic tremors.",
-        "improveSafety": "Habitat protection dipped under stress — thermal baffles or structural anchoring improve resilience.",
-        "workedScience": "Scientific operations stayed productive while managing environmental trade-offs.",
-        "improveScience": "Science output paused often to save power — pairing ridge solar placement with sensor locking preserves uptime."
-      }
-    },
-    "panels": {
-      "insightModal": {
-        "modalLabel": "InSight Legacy Analysis",
-        "badge": "INSIGHT LEGACY ANALYSIS",
-        "subBadge": "REAL MISSION HISTORY · ELYSIUM PLANITIA",
-        "title": "NASA InSight Lander (2018–2022)",
-        "closeAriaLabel": "Close InSight Legacy Analysis",
-        "historyTab": "Historical Record & Power Data",
-        "diagnosticsTabPrefix": "Legacy Diagnostics",
-        "arrivalTitle": "2018 Arrival",
-        "arrivalText": "InSight landed on Mars in November 2018 to study the planet's interior crust, mantle, and core.",
-        "endTitle": "2022 Mission End",
-        "endText": "Dust accumulated on its two 2.2 m circular solar panels until NASA ended the mission in December 2022.",
-        "powerTitle": "Authentic NASA Solar Power Comparison",
-        "panelsHighlighted": "Panels Highlighted",
-        "inspectPanels": "Inspect Solar Panels",
-        "panelInspectionLabel": "Visual Panel Inspection:",
-        "panelInspectionText": "Fine reddish Martian dust coats the 2.2 m circular arrays. InSight cannot be restarted — but studying its decline helps your future outpost plan dust management and energy margins.",
-        "diagnosticsIntro": "Conduct hypothetical diagnostics on InSight's subsystems to apply its engineering lessons directly to your future outpost:",
-        "appliedSuffix": "Applied",
-        "runDiagnosticLabel": "Run Diagnostic",
-        "footerPrompt": "“Its mission ended. What would you build differently?”",
-        "analyzeLessonsLabel": "Analyze Legacy Lessons",
-        "buildOutpostLabel": "Build Outpost",
-        "resumeMissionLabel": "Resume Mission",
-        "imageSrc": "/insight-lander-photo.jpg",
-        "imageAlt": "Artist concept of NASA's InSight lander on Mars",
-        "imageCaption": "NASA INSIGHT · ELYSIUM PLANITIA · NOV 2018 – DEC 2022",
-        "powerUnitSuffix": "Wh/sol"
-      },
-      "decisionPanel": {
-        "closeAriaLabel": "Close engineering panel",
-        "actionExecutedPrefix": "Action Executed:",
-        "lessonBonusLabel": "InSight Lesson Bonus (+3)",
-        "insightPrefix": "Engineering Insight:",
-        "continueLabel": "Continue Mission"
-      },
-      "summaryModal": {
-        "modalLabel": "Mission Analysis Complete",
-        "eyebrow": "ENGINEERING LEGACY · OUTPOST DEBRIEF",
-        "title": "MISSION ANALYSIS COMPLETE",
-        "outpostSummaryTab": "Outpost Summary",
-        "earthSolutionsTab": "Earth Solutions",
-        "energyLabel": "Energy Management",
-        "safetyLabel": "Habitat Protection",
-        "scienceLabel": "Scientific Operations",
-        "workedWellHeading": "What Worked Well",
-        "couldImproveHeading": "What Could Be Improved",
-        "decisionsHeading": "Your Engineering Decisions",
-        "seeEarthLegacyLabel": "See Earth Engineering Legacy",
-        "closingTitle": "The mission ended. The knowledge remains.",
-        "closingSubtitle": "Your next challenge is waiting.",
-        "footerDisclaimer": "Simulated educational scenario inspired by NASA's InSight mission (2018–2022).",
-        "retryLabel": "RETRY MISSION",
-        "returnLabel": "RETURN TO NEXUS"
-      },
-      "earthTransfer": {
-        "illustrationAriaLabel": "Illustration of a terrestrial solar array and microgrid station on Earth",
-        "badge": "EARTH APPLICATION TRANSFER",
-        "title": "The challenges of Mars can inspire engineering solutions on Earth.",
-        "description": "Every constraint you managed on Elysium Planitia—dusty panels, scarce storage, extreme cold, and delicate ground sensors—mirrors real sustainability and resilience engineering back home.",
-        "imageSrc": "/legacy-earth-solar.jpg",
-        "imageAlt": "Terrestrial solar-energy microgrid and environmental monitoring station on Earth"
-      }
-    },
-    "canvasLabels": {
-      "insightInspect": "NASA INSIGHT (2018–2022) · CLICK TO INSPECT",
-      "moduleInspectSuffix": "· CLICK TO INSPECT"
+    "nextLabel": "Next",
+    "optionalGame": {
+      "badge": "OPTIONAL PASS · 3D SIMULATION",
+      "title": "Mars: The Survival Protocol",
+      "description": "Finished exploring the mission? Take an optional interactive pass onto Elysium Planitia: drive the rover, apply NASA InSight lessons, and protect your 10-module base across 20 levels.",
+      "buttonLabel": "Play Mars: The Survival Protocol"
     }
   },
   "equipmentModal": {

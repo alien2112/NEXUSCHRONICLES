@@ -5,7 +5,7 @@ const trailerCopy = siteContent.insightMissionPage;
 
 export default function InsightMissionPage({ onBack, onWatchStory }) {
   return (
-    <div className="relative min-h-screen w-full flex flex-col select-none overflow-hidden font-public text-white bg-[#0d0705]">
+    <div className="relative min-h-screen w-full flex flex-col select-none overflow-x-hidden overflow-y-auto font-public text-white bg-[#0d0705]">
       
       {/* 
         Trailer Video / Background Container
@@ -67,7 +67,7 @@ export default function InsightMissionPage({ onBack, onWatchStory }) {
           <div className="mt-6 sm:mt-8">
             <button
               onClick={onWatchStory}
-              className="relative group inline-flex items-center justify-between gap-3.5 px-6 sm:px-7 py-3 min-w-[235px] sm:min-w-[255px] h-[50px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
+              className="relative group inline-flex items-center justify-between gap-3.5 px-6 sm:px-7 py-3 w-full max-w-[265px] sm:w-auto sm:max-w-none sm:min-w-[255px] h-[50px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
               title={trailerCopy.ctaTitle}
             >
               {/* Pointed Hexagon Border SVG */}

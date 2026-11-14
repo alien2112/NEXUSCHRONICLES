@@ -11,6 +11,7 @@ export default function GoTechnicalPage({
   onSelectPage,
   onGoDeeper,
   onBackToCaseBoard,
+  onSurvivalProtocol,
 }) {
   const isLastPage = pageNumber >= GO_TECHNICAL_PAGES.length;
 
@@ -40,6 +41,7 @@ export default function GoTechnicalPage({
       onSelectPage={onSelectPage}
       secondaryAction={secondaryAction}
       finalAction={finalAction}
+      onOptionalGame={isLastPage ? onSurvivalProtocol : undefined}
     />
   );
 }

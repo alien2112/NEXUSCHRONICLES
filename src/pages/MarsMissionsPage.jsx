@@ -87,14 +87,22 @@ export default function MarsMissionsPage({
           />
 
           {/* Interactive Mission Location Pins Overlay */}
-          <div className="absolute inset-0 pointer-events-auto">
+          <div className="absolute inset-0 pointer-events-auto overflow-hidden">
             {MARS_PINS.map((pin) => {
               const isInsight = pin.id === 'insight';
+              const mobilePinOverride =
+                pin.id === 'maven'
+                  ? 'max-sm:!left-[52%]'
+                  : pin.id === 'curiosity'
+                  ? 'max-sm:!left-[42%]'
+                  : pin.id === 'insight'
+                  ? 'max-sm:!left-[10%]'
+                  : '';
               return (
                 <div
                   key={pin.id}
                   onClick={isInsight ? () => handlePinClick(pin) : undefined}
-                  className={`absolute ${pin.positionClass} flex items-center select-none ${
+                  className={`absolute ${pin.positionClass} ${mobilePinOverride} flex items-center select-none ${
                     isInsight
                       ? 'cursor-pointer group transition-transform duration-300 hover:scale-[1.04] active:scale-[0.98]'
                       : 'cursor-default'

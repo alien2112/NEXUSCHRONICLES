@@ -89,13 +89,13 @@ export default function MarsPage({ onBack, onExploreMissions }) {
           2. Center: 3 Stacked Feature Badges with #F7961D stroke
           3. Right: "About Mars" Card with #F7961D stroke + "Explore Missions" Button with #F7961D stroke
         */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-10 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-10 items-center">
           
           {/* ======================================================== */}
           {/* COLUMN 1: Clean Mars Planet (No glow, no blue box)       */}
           {/* ======================================================== */}
           <div className="lg:col-span-4 flex items-center justify-center lg:justify-start">
-            <div className="w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] md:w-[330px] md:h-[330px] flex items-center justify-center">
+            <div className="w-[220px] h-[220px] sm:w-[300px] sm:h-[300px] md:w-[330px] md:h-[330px] flex items-center justify-center">
               <img
                 src={marsCopy.planetImage}
                 alt={marsCopy.planetAlt}
@@ -135,7 +135,7 @@ export default function MarsPage({ onBack, onExploreMissions }) {
           {/* COLUMN 3: "About Mars" Framed Card & Button (#F7961D)    */}
           {/* Frame sized to the image with top extension for text     */}
           {/* ======================================================== */}
-          <div className="lg:col-span-4 flex flex-col items-center justify-center gap-4">
+          <div className="md:col-span-2 lg:col-span-4 flex flex-col items-center justify-center gap-4">
             
             {/* 
               The "About Mars" Card:
@@ -144,7 +144,7 @@ export default function MarsPage({ onBack, onExploreMissions }) {
               - Top extension shows "About Mars" and subtitle on dark background
               - Image (rectangle-page3.png) sits flush edge-to-edge below the text with sharp top corners
             */}
-            <div className="w-[260px] sm:w-[275px] rounded-[18px] border border-[#F7961D] bg-[#030617] overflow-hidden flex flex-col">
+            <div className="w-full max-w-[260px] sm:w-[275px] sm:max-w-none rounded-[18px] border border-[#F7961D] bg-[#030617] overflow-hidden flex flex-col">
               
               {/* Top Extension for Text */}
               <div className="px-5 pt-5 pb-4 text-left bg-[#030617]">
@@ -183,7 +183,7 @@ export default function MarsPage({ onBack, onExploreMissions }) {
             */}
             <button
               onClick={onExploreMissions}
-              className="relative group inline-flex items-center justify-between px-8 py-2.5 w-[260px] sm:w-[275px] h-[48px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
+              className="relative group inline-flex items-center justify-between px-8 py-2.5 w-full max-w-[260px] sm:w-[275px] sm:max-w-none h-[48px] transition-all duration-300 cursor-pointer select-none hover:scale-[1.02] active:scale-[0.98]"
               title={marsCopy.ctaButton.title}
             >
               {/* Pointed hexagon border with #F7961D stroke */}

@@ -53,24 +53,55 @@ export default function Navbar({
   return (
     <header
       ref={navRef}
-      className="fixed top-0 left-0 right-0 z-50 w-full select-none"
+      className="fixed top-0 left-0 right-0 z-50 w-full select-none pt-[env(safe-area-inset-top)]"
     >
+      {/* Converts dark N/U/S strokes of nnLogo 1B_.png to crisp white on dark space backgrounds while keeping orange E/X */}
+      <svg className="sr-only" aria-hidden="true" width="0" height="0">
+        <defs>
+          <filter id="nexusNavbarLogoFilter" colorInterpolationFilters="sRGB">
+            <feColorMatrix
+              type="matrix"
+              values="-0.04 0 0 0.96 0  -0.65 0 0 0.96 0  -0.88 0 0 0.96 0  0 0 0 1 0"
+            />
+          </filter>
+        </defs>
+      </svg>
+
       {/* 
         Navbar Bar Container
-        Completely transparent with no background box, border, or blur.
+        Transparent on desktop; subtle top scrim on compact screens so scrolled content remains readable.
       */}
-      <div className="relative w-full h-[70px] bg-transparent">
+      <div className="relative w-full h-[56px] lg:h-[70px] bg-gradient-to-b from-[#02050d]/85 via-[#02050d]/45 to-transparent lg:bg-none lg:bg-transparent">
         
         {/* Foreground Content Container */}
-        <div className="relative max-w-[1440px] mx-auto h-full px-4 sm:px-8 lg:px-12 flex items-center justify-between">
+        <div className="relative max-w-[1440px] mx-auto h-full px-2 min-[400px]:px-3 sm:px-8 lg:px-12 flex items-center justify-between gap-1 min-[360px]:gap-1.5 lg:gap-0">
           
-          {/* Left area spacer + mobile Investigation link */}
-          <div className="min-w-12 sm:min-w-20 md:min-w-32 flex items-center gap-3 shrink-0">
-            {/* Quick Back indicator if on missions or mars page */}
+          {/* Left brand logo + quick back indicator (desktop) / compact nav (mobile/tablet) */}
+          <div className="min-w-0 lg:min-w-32 flex items-center gap-1 min-[400px]:gap-1.5 sm:gap-3.5 shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                setActiveDropdown(null);
+                if (onNavigate) onNavigate('home');
+              }}
+              className="flex items-center shrink-0 cursor-pointer transition-transform hover:scale-105"
+              aria-label={navCopy.brandLogo.alt}
+              title={navCopy.brandLogo.title}
+            >
+              <img
+                src={encodeURI(navCopy.brandLogo.src)}
+                alt={navCopy.brandLogo.alt}
+                style={{ filter: 'url(#nexusNavbarLogoFilter)' }}
+                className="h-4 min-[400px]:h-5 sm:h-7 lg:h-9 w-auto object-contain select-none pointer-events-none"
+                draggable={false}
+              />
+            </button>
+
+            {/* Quick Back indicator on desktop lg+ if on missions or mars page */}
             {(currentPage === 'missions' || currentPage === 'mars') && (
               <button
                 onClick={() => onNavigate && onNavigate(currentPage === 'mars' ? 'missions' : 'home')}
-                className="hidden md:inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white transition-colors cursor-pointer"
+                className="hidden lg:inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white transition-colors cursor-pointer"
                 title={currentPage === 'mars' ? navCopy.backToWorldsTitle : navCopy.backToHomeTitle}
               >
                 <span className="text-white/40">‹</span>
@@ -78,21 +109,54 @@ export default function Navbar({
               </button>
             )}
 
-            <button
-              type="button"
-              onClick={() => {
-                setActiveDropdown(null);
-                if (onNavigate) onNavigate('investigation');
-              }}
-              className={`lg:hidden py-1.5 text-sm font-public font-medium tracking-wide transition-all duration-150 cursor-pointer ${
-                currentPage === 'investigation' || currentPage === 'case-board'
-                  ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
-                  : 'text-white/95 hover:text-white'
-              }`}
-              title={navCopy.investigationTitle}
-            >
-              {navCopy.investigationLabel}
-            </button>
+            {/* Compact mobile/tablet navigation bar for destinations hidden inside lg:flex */}
+            <nav aria-label="Compact navigation" className="lg:hidden flex items-center gap-0.5 min-[400px]:gap-1 sm:gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveDropdown(null);
+                  if (onNavigate) onNavigate('home');
+                }}
+                className={`px-1 sm:px-2 min-h-[36px] inline-flex items-center text-[10.5px] min-[400px]:text-[11.5px] sm:text-sm font-public font-medium tracking-wide transition-all duration-150 cursor-pointer whitespace-nowrap ${
+                  currentPage === 'home'
+                    ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
+                    : 'text-white/85 hover:text-white'
+                }`}
+              >
+                Explore
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveDropdown(null);
+                  if (onNavigate) onNavigate('missions');
+                }}
+                className={`px-1 sm:px-2 min-h-[36px] inline-flex items-center text-[10.5px] min-[400px]:text-[11.5px] sm:text-sm font-public font-medium tracking-wide transition-all duration-150 cursor-pointer whitespace-nowrap ${
+                  currentPage === 'missions' || currentPage === 'mars'
+                    ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
+                    : 'text-white/85 hover:text-white'
+                }`}
+              >
+                Missions
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveDropdown(null);
+                  if (onNavigate) onNavigate('investigation');
+                }}
+                className={`px-1 sm:px-2 min-h-[36px] inline-flex items-center text-[10.5px] min-[400px]:text-[11.5px] sm:text-sm font-public font-medium tracking-wide transition-all duration-150 cursor-pointer whitespace-nowrap ${
+                  currentPage === 'investigation' || currentPage === 'case-board'
+                    ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
+                    : 'text-white/95 hover:text-white'
+                }`}
+                title={navCopy.investigationTitle}
+              >
+                {navCopy.investigationLabel}
+              </button>
+            </nav>
           </div>
 
           {/* 
@@ -284,43 +348,43 @@ export default function Navbar({
           </nav>
 
           {/* Right Action Group: Search Icon, Hamburger Menu, Divider, NASA Meatball Logo */}
-          <div className="ml-auto flex items-center space-x-4 sm:space-x-5 shrink-0">
+          <div className="ml-auto flex items-center space-x-0.5 min-[400px]:space-x-1 sm:space-x-5 shrink-0">
             
             {/* Search Icon Button (Action disabled) */}
             <button
               type="button"
-              className="p-2 text-white/90 rounded-full transition-all duration-150 cursor-default focus:outline-none"
+              className="p-0.5 min-[400px]:p-1.5 sm:p-2 text-white/90 rounded-full transition-all duration-150 cursor-default focus:outline-none"
               disabled
               aria-label={navCopy.searchAriaLabel}
             >
-              <Search className="w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={2} />
+              <Search className="w-3.5 h-3.5 min-[400px]:w-4 min-[400px]:h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={2} />
             </button>
 
             {/* Hamburger Menu Button (Action disabled) */}
             <button
               type="button"
-              className="p-2 text-white/90 rounded-lg transition-all duration-150 cursor-default focus:outline-none"
+              className="p-0.5 min-[400px]:p-1.5 sm:p-2 text-white/90 rounded-lg transition-all duration-150 cursor-default focus:outline-none"
               disabled
               aria-label={navCopy.menuAriaLabel}
             >
-              <Menu className="w-5 h-5" strokeWidth={2} />
+              <Menu className="w-4 h-4 min-[400px]:w-[18px] min-[400px]:h-[18px] sm:w-5 sm:h-5" strokeWidth={2} />
             </button>
 
             {/* Vertical Divider Line */}
-            <div className="h-6 w-[1px] bg-white/30 hidden xs:block" />
+            <div className="h-6 w-[1px] bg-white/30 hidden sm:block" />
 
             {/* Official NASA Meatball Logo - Navigates Home */}
             <button
               type="button"
               aria-label={navCopy.returnHomeAriaLabel}
-              className="flex items-center pl-1 cursor-pointer transition-transform hover:scale-105"
+              className="flex items-center pl-0.5 sm:pl-1 cursor-pointer transition-transform hover:scale-105"
               title={navCopy.returnHomeTitle}
               onClick={() => {
                 setActiveDropdown(null);
                 if (onNavigate) onNavigate('home');
               }}
             >
-              <NasaLogo className="w-10 h-8.5 sm:w-11 sm:h-9.5" />
+              <NasaLogo className="w-7 h-6 min-[400px]:w-9 min-[400px]:h-7.5 sm:w-11 sm:h-9.5" />
             </button>
 
           </div>

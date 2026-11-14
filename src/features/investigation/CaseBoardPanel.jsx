@@ -115,7 +115,7 @@ export default function CaseBoardView({
   onPlacedPartsChange,
   onGoDeeper,
   onGoTechnical,
-  onEngineeringLegacy,
+  onSurvivalProtocol,
   onRestart,
   onExit,
 }) {
@@ -401,8 +401,8 @@ export default function CaseBoardView({
                 const isClickableTarget = Boolean(selectedPartId && !placedPart);
 
                 return (
-                  <div key={slot.id} className="flex items-center gap-2.5 sm:gap-3">
-                    <div className="w-[110px] sm:w-[132px] shrink-0 py-1.5 px-2.5 rounded-full border border-white/25 bg-[#070d20]/90 text-center font-exo2 font-medium text-xs sm:text-[13px] text-[#F7961D]">
+                  <div key={slot.id} className="flex flex-col min-[380px]:flex-row min-[380px]:items-center gap-1.5 min-[380px]:gap-2.5 sm:gap-3">
+                    <div className="w-fit min-[380px]:w-[104px] sm:w-[132px] shrink-0 py-1 min-[380px]:py-1.5 px-3 min-[380px]:px-2.5 rounded-full border border-white/25 bg-[#070d20]/90 text-center font-exo2 font-medium text-xs sm:text-[13px] text-[#F7961D]">
                       {slot.label}
                     </div>
 
@@ -542,7 +542,7 @@ export default function CaseBoardView({
         {/* ============================================================== */}
         {/* RIGHT COLUMN: NEXUS + Your Confidence (C0–C1) + Next Case      */}
         {/* ============================================================== */}
-        <div className="lg:col-span-5 flex flex-col gap-4 lg:pl-3">
+        <div className="lg:col-span-5 flex flex-col gap-4 mt-12 sm:mt-16 lg:mt-0 lg:pl-3">
           {/* Outer Faint HUD Frame wrapping NEXUS & Your Confidence */}
           <div className="relative w-full pt-2.5 px-2.5 pb-3.5">
             <svg
@@ -583,7 +583,7 @@ export default function CaseBoardView({
 
               <p
                 key={nexusMessage}
-                className="relative z-10 text-left font-exo2 text-white text-sm sm:text-[15px] md:text-[16px] leading-[1.38] pr-24 sm:pr-28 inv-dialogue-swap"
+                className="relative z-10 text-left font-exo2 text-white text-sm sm:text-[15px] md:text-[16px] leading-[1.38] pr-22 sm:pr-28 inv-dialogue-swap"
               >
                 {nexusMessage}
               </p>
@@ -593,10 +593,10 @@ export default function CaseBoardView({
                 key={robotImage}
                 className="
                   absolute
-                  -top-[74px] -right-[8px]
-                  sm:-top-[92px] sm:-right-[12px]
-                  md:-top-[102px] md:-right-[14px]
-                  w-[138px] sm:w-[168px] md:w-[186px]
+                  -top-[64px] -right-[4px]
+                  sm:-top-[86px] sm:-right-[10px]
+                  lg:-top-[102px] lg:-right-[14px]
+                  w-[112px] sm:w-[155px] lg:w-[186px]
                   pointer-events-none select-none z-20 inv-robot-swap
                 "
               >
@@ -692,8 +692,8 @@ export default function CaseBoardView({
             </div>
           </div>
 
-          {/* Post-Investigation Exploration Options: Go deeper, Go technical & Engineering Legacy */}
-          {(onGoDeeper || onGoTechnical || onEngineeringLegacy) && (
+          {/* Post-Investigation Exploration Options: Go deeper, Go technical & Survival Protocol */}
+          {(onGoDeeper || onGoTechnical || onSurvivalProtocol) && (
             <div className="rounded-[18px] border border-white/25 bg-[#050b1f]/90 backdrop-blur-md p-4 text-left shadow-[0_14px_34px_rgba(0,0,0,0.45)] flex flex-col gap-2.5">
               <div className="flex items-center justify-between gap-2">
                 <span className="font-exo2 font-semibold text-sm sm:text-base text-white">
@@ -731,30 +731,26 @@ export default function CaseBoardView({
                 )}
               </div>
 
-              {onEngineeringLegacy && (
+              {onSurvivalProtocol && (
                 <div className="mt-1 pt-3 border-t border-white/10 flex flex-col gap-2">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-exo2 font-semibold text-xs sm:text-[13px] text-[#38DDF5]">
-                      {cbCopy.exploreFurther.engineeringLegacyTitle}
+                    <span className="font-exo2 font-semibold text-xs sm:text-[13px] text-[#4DE2E8]">
+                      {cbCopy.exploreFurther.survivalTitle}
                     </span>
-                    <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#38DDF5]/10 border border-[#38DDF5]/35 text-[#38DDF5]">
-                      {earnedStampIds.length === 4 && isVerdictComplete
-                        ? cbCopy.exploreFurther.unlockedBadge
-                        : cbCopy.exploreFurther.optionalBadge}
+                    <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#39A9FF]/15 border border-[#4DE2E8]/40 text-[#4DE2E8]">
+                      {cbCopy.exploreFurther.survivalBadge}
                     </span>
                   </div>
                   <p className="text-[11px] font-exo2 text-white/70 leading-relaxed">
-                    {earnedStampIds.length === 4 && isVerdictComplete
-                      ? cbCopy.exploreFurther.unlockedDescription
-                      : cbCopy.exploreFurther.lockedDescription}
+                    {cbCopy.exploreFurther.survivalDescription}
                   </p>
                   <button
                     type="button"
-                    onClick={onEngineeringLegacy}
-                    className="flex items-center justify-between gap-2 px-4 py-2 rounded-full border border-[#38DDF5]/75 bg-[#081532]/90 hover:bg-[#38DDF5]/15 text-[#38DDF5] text-xs sm:text-[13px] font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
-                    title={cbCopy.exploreFurther.engineeringLegacyTitleAttr}
+                    onClick={onSurvivalProtocol}
+                    className="flex items-center justify-between gap-2 px-4 py-2 rounded-full border border-[#4DE2E8]/75 bg-[#081532]/90 hover:bg-[#39A9FF]/20 text-[#4DE2E8] text-xs sm:text-[13px] font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
+                    title={cbCopy.exploreFurther.survivalTitle}
                   >
-                    <span>{cbCopy.exploreFurther.engineeringLegacyLabel}</span>
+                    <span>{cbCopy.exploreFurther.survivalButtonLabel}</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </button>
                 </div>
@@ -788,7 +784,7 @@ export default function CaseBoardView({
       {/* 4 Evidence Stamps Inspection Modal */}
       {showStampsModal && (
         <Modal label={cbCopy.stampsModal.modalLabel} onClose={() => setShowStampsModal(false)} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md inv-fade-up">
-          <div className="w-full max-w-xl rounded-2xl bg-[#070b18]/95 border border-[#F7961D]/60 p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.95)] text-left">
+          <div className="w-full max-w-xl max-h-[90dvh] overflow-y-auto rounded-2xl bg-[#070b18]/95 border border-[#F7961D]/60 p-4 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.95)] text-left">
             <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
               <div>
                 <h4 className="text-base font-orbitron font-bold text-white flex items-center gap-2">
@@ -837,7 +833,7 @@ export default function CaseBoardView({
       {/* Case 1222 Dossier Preview Modal */}
       {showCase1222Modal && (
         <Modal label={cbCopy.case1222Modal.modalLabel} onClose={() => setShowCase1222Modal(false)} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md inv-fade-up">
-          <div className="w-full max-w-lg rounded-2xl bg-[#070b18]/95 border border-[#F7961D]/75 p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.95)] text-left">
+          <div className="w-full max-w-lg max-h-[90dvh] overflow-y-auto rounded-2xl bg-[#070b18]/95 border border-[#F7961D]/75 p-4 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.95)] text-left">
             <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
               <div>
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[#F7961D]">

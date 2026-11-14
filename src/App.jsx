@@ -11,12 +11,13 @@ import MarsMissionsPage from './pages/MarsMissionsPage';
 import MarsInsightPage from './pages/MarsInsightPage';
 import InsightMissionPage from './pages/InsightMissionPage';
 import InsightStory1Page from './pages/InsightStory1Page';
+import InsightStoryPage from './pages/InsightStoryPage';
 import GoDeeperPage from './pages/GoDeeperPage';
 import GoTechnicalPage from './pages/GoTechnicalPage';
 import PageBoundary from './components/PageBoundary';
 
 const InvestigationPage = lazy(() => import('./pages/InvestigationPage'));
-const EngineeringLegacyPage = lazy(() => import('./pages/EngineeringLegacyPage'));
+const SurvivalProtocolPage = lazy(() => import('./pages/SurvivalProtocolPage'));
 
 function RouteFocus({ currentPage }) {
   useEffect(() => {
@@ -41,6 +42,9 @@ export default function App() {
   const goTechnicalNumber = currentPage.startsWith('go-technical-')
     ? Number(currentPage.slice('go-technical-'.length))
     : null;
+  const insightStoryNumber = currentPage.startsWith('insight-story-')
+    ? Number(currentPage.slice('insight-story-'.length))
+    : null;
 
   return (
     <div className="relative min-h-screen w-full flex flex-col font-public select-none overflow-x-hidden bg-[#030611]">
@@ -62,11 +66,11 @@ export default function App() {
           onSaveProgress={setCase1094Progress}
           onGoDeeper={() => navigate('go-deeper-1')}
           onGoTechnical={() => navigate('go-technical-1')}
-          onEngineeringLegacy={() => navigate('engineering-legacy')}
+          onSurvivalProtocol={() => navigate('survival-protocol')}
           onBack={() => navigate('home')}
         />
-      ) : currentPage === 'engineering-legacy' ? (
-        <EngineeringLegacyPage
+      ) : currentPage === 'survival-protocol' ? (
+        <SurvivalProtocolPage
           onReturnToNexus={() => navigate('case-board')}
         />
       ) : goDeeperNumber !== null ? (
@@ -81,6 +85,7 @@ export default function App() {
           onSelectPage={(num) => navigate(`go-deeper-${num}`)}
           onGoTechnical={() => navigate('go-technical-1')}
           onBackToCaseBoard={() => navigate('case-board')}
+          onSurvivalProtocol={() => navigate('survival-protocol')}
         />
       ) : goTechnicalNumber !== null ? (
         <GoTechnicalPage
@@ -94,10 +99,22 @@ export default function App() {
           onSelectPage={(num) => navigate(`go-technical-${num}`)}
           onGoDeeper={() => navigate('go-deeper-1')}
           onBackToCaseBoard={() => navigate('case-board')}
+          onSurvivalProtocol={() => navigate('survival-protocol')}
         />
       ) : currentPage === 'insight-story-1' ? (
         <InsightStory1Page
           onBack={() => navigate('insight-mission')}
+          onNext={() => navigate('insight-story-2')}
+        />
+      ) : insightStoryNumber !== null && insightStoryNumber >= 2 ? (
+        <InsightStoryPage
+          storyNumber={insightStoryNumber}
+          onBack={() => navigate(`insight-story-${insightStoryNumber - 1}`)}
+          onNext={() =>
+            navigate(
+              insightStoryNumber < 6 ? `insight-story-${insightStoryNumber + 1}` : 'investigation'
+            )
+          }
         />
       ) : currentPage === 'insight-mission' ? (
         <InsightMissionPage

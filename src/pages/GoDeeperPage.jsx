@@ -11,6 +11,7 @@ export default function GoDeeperPage({
   onSelectPage,
   onGoTechnical,
   onBackToCaseBoard,
+  onSurvivalProtocol,
 }) {
   const isLastPage = pageNumber >= GO_DEEPER_PAGES.length;
 
@@ -45,6 +46,7 @@ export default function GoDeeperPage({
       onSelectPage={onSelectPage}
       secondaryAction={secondaryAction}
       finalAction={finalAction}
+      onOptionalGame={isLastPage ? onSurvivalProtocol : undefined}
     />
   );
 }
