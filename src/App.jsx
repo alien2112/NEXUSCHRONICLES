@@ -19,6 +19,7 @@ import PageBoundary from './components/PageBoundary';
 
 const InvestigationPage = lazy(() => import('./pages/InvestigationPage'));
 const SurvivalProtocolPage = lazy(() => import('./pages/SurvivalProtocolPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
 
 function RouteFocus({ currentPage }) {
   useEffect(() => {
@@ -149,6 +150,12 @@ export default function App() {
           onBack={() => navigate('missions')}
           onExploreMissions={() => navigate('mars-missions')}
         />
+      ) : currentPage === 'about' ? (
+        <AboutPage
+          onBack={() => navigate('home')}
+          onExploreInvestigation={() => navigate('investigation')}
+          onExploreMissions={() => navigate('missions')}
+        />
       ) : currentPage === 'missions' ? (
         <ChooseWorld 
           onSelectMars={() => navigate('mars')}
@@ -157,6 +164,7 @@ export default function App() {
       ) : (
         <HomePage
           onBeginJourney={() => navigate('missions')}
+          onNavigate={navigate}
         />
       )}
 

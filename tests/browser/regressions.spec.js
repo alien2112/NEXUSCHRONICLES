@@ -211,6 +211,7 @@ test('all pages load without application errors or missing local assets', async 
     'go-technical-9',
     'go-technical-10',
     'survival-protocol',
+    'about',
   ]) {
     await page.goto(`/#${hash}`);
     await expect(page.locator('main')).toBeVisible();
@@ -374,4 +375,28 @@ test('insight mission trailer video autoplays muted even with reduced motion and
 
   await page.getByRole('button', { name: 'Play mission trailer' }).click();
   await expect.poll(() => video.evaluate(el => el.paused)).toBe(false);
+});
+
+test('about us page is reachable from navbar and renders IRIS Mars Monitor, design priorities, and all 43 sources', async ({ page }) => {
+  await page.goto('/#home');
+  await expect(page.getByText(/Forgotten Equipment challenge/)).toBeVisible();
+  await page.getByRole('button', { name: 'About', exact: true }).click();
+  await expect(page).toHaveURL(/#about$/);
+  await expect(page.getByRole('heading', { name: 'About Nexus Chronicles' })).toBeVisible();
+  await expect(page.getByText(/turns an abandoned spacecraft into an opportunity/)).toBeVisible();
+
+  const irisButtons = page.getByRole('link', { name: 'EXPLORE REAL MARSQUAKE DATA' });
+  await expect(irisButtons.first()).toHaveAttribute('href', 'https://www.iris.edu/app/mars-monitor');
+
+  await expect(page.getByRole('heading', { name: 'P-wave and S-wave Propagation Diagram' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Mars Interior Cross-Section' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'S1222a Seismic Waveform' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Cerberus Fossae Marsquake Map' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Core Evolution Comparison' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '2025 Mantle Discovery Illustration' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'IRIS Mars Monitor Interactive Experience' })).toHaveCount(2);
+
+  await expect(page.getByText('Showing 43 of 43 primary mission pages')).toBeVisible();
+  await page.getByRole('searchbox', { name: 'Filter sources' }).fill('S1222a');
+  await expect(page.getByText('Showing 1 of 43 primary mission pages')).toBeVisible();
 });

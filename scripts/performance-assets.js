@@ -24,7 +24,7 @@ export function collectMedia(publicDir) {
 }
 
 export function criticalImages(content, page) {
-  if (page === 'home') return [content.homePage.backgroundImage];
+  if (page === 'home') return content.homePage.backgroundImage ? [content.homePage.backgroundImage] : [];
   if (page === 'missions') return [content.chooseWorldPage.backgroundImage];
   if (page === 'mars') return [content.marsPage.backgroundImage];
   if (page === 'mars-missions' || page === 'mars-insight') {
@@ -40,6 +40,7 @@ export function criticalImages(content, page) {
     return [content.insightStorySeries.backgroundImage];
   }
   if (page === 'investigation' || page === 'case-board') return [content.investigation.backgroundImage];
+  if (page === 'about') return [content.insightStorySeries.backgroundImage];
   return [];
 }
 

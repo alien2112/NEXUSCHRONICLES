@@ -457,7 +457,7 @@
     }
   },
   "homePage": {
-    "backgroundImage": "/homepagebg.webp",
+    "backgroundVideo": "/homepage-video.mp4",
     "logo": {
       "src": "/NLogo 1_.webp",
       "alt": "Nexus Chronicles"
@@ -469,6 +469,16 @@
     "ctaButton": {
       "label": "Begin Your Journey",
       "title": "Begin Your Journey"
+    },
+    "overview": {
+      "badge": "Forgotten Equipment Challenge",
+      "title": "About NEXUS CHRONICLES",
+      "paragraphs": [
+        "NEXUS CHRONICLES is an interactive web platform developed around NASA’s InSight Mars lander for the Forgotten Equipment challenge.",
+        "We built an immersive Mars exploration experience that allows users to navigate mission locations, discover InSight’s story, and explore its scientific instruments and engineering systems.",
+        "The platform includes an interactive Investigation section where users examine real mission evidence and scientific visuals, a Go Deeper mode that presents InSight’s scientific findings and data in an accessible way, and an Interactive Engineering Game where users build and develop a space station through progressive levels, applying engineering concepts through hands-on challenges.",
+        "Using authentic NASA mission resources and scientific data, NEXUS CHRONICLES turns an abandoned spacecraft into an opportunity to explore real engineering decisions, understand mission challenges, and apply problem-solving skills to future space exploration."
+      ]
     }
   },
   "chooseWorldPage": {

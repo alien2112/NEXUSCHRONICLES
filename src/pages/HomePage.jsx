@@ -1,21 +1,60 @@
-import { ChevronRight } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { ChevronRight, Compass, Gamepad2, Info, SearchCheck } from 'lucide-react';
 import siteContent from '../data/siteContent.json';
 
 const homeCopy = siteContent.homePage;
 
-export default function HomePage({ onBeginJourney }) {
+export default function HomePage({ onBeginJourney, onNavigate }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const attemptAutoplay = () => {
+      video.defaultMuted = true;
+      video.muted = true;
+      video.setAttribute('muted', '');
+
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {});
+      }
+    };
+
+    const handleCanPlay = () => {
+      if (video.paused) {
+        attemptAutoplay();
+      }
+    };
+
+    attemptAutoplay();
+    video.addEventListener('canplay', handleCanPlay);
+    return () => {
+      video.removeEventListener('canplay', handleCanPlay);
+    };
+  }, []);
+
   return (
     <>
       {/* 
-        Full-Screen Wallpaper Background for Home
-        Using user's provided file: public/homepagebg.webp
+        Full-Screen Video Background for Home
+        Using user's provided file: public/homepage-video.mp4
       */}
-      <div 
-        className="fixed inset-0 z-0 bg-cover bg-[position:68%_top] sm:bg-center bg-no-repeat pointer-events-none select-none"
-        style={{ 
-          backgroundImage: `url('${homeCopy.backgroundImage}')`,
-        }}
-      />
+      <div className="fixed inset-0 z-0 pointer-events-none select-none overflow-hidden bg-[#030611]">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover object-[68%_top] sm:object-center"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        >
+          <source src={homeCopy.backgroundVideo} type="video/mp4" />
+        </video>
+      </div>
 
       {/* Subtle bottom vignette */}
       <div className="fixed inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent pointer-events-none z-0" />
@@ -26,8 +65,9 @@ export default function HomePage({ onBeginJourney }) {
         - Text: "Every mission leaves a trace... / Are you ready to uncover it ?"
         - Button: "Begin Your Journey >"
       */}
-      <main className="relative z-10 flex-1 flex flex-col justify-start pt-22 sm:pt-28 md:pt-32 lg:pt-36 px-5 sm:px-12 md:px-16 lg:px-20 xl:px-24 pb-10 sm:pb-0">
+      <main className="relative z-10 flex-1 flex flex-col justify-between pt-22 sm:pt-28 md:pt-32 lg:pt-36 px-5 sm:px-12 md:px-16 lg:px-20 xl:px-24 pb-12 sm:pb-16">
         
+        <div className="min-h-[calc(100vh-14rem)] flex flex-col justify-start">
         <div className="w-full max-w-[340px] sm:max-w-[400px] flex flex-col items-start text-left space-y-4 sm:space-y-5">
           
           {/* 
@@ -108,6 +148,85 @@ export default function HomePage({ onBeginJourney }) {
           </div>
 
         </div>
+        </div>
+
+        {/* Platform Overview Card (Forgotten Equipment Challenge) */}
+        {homeCopy.overview && (
+          <section
+            aria-labelledby="home-overview-heading"
+            className="mt-10 sm:mt-14 w-full max-w-[980px] relative rounded-3xl border border-white/15 bg-[#030714]/78 backdrop-blur-md p-5 sm:p-8 shadow-[0_24px_65px_rgba(0,0,0,0.78)]"
+          >
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-1.5 -left-1.5 w-8 h-8 rounded-tl-3xl border-t border-l border-[#F7961D]/70"
+            />
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-1.5 -right-1.5 w-8 h-8 rounded-br-3xl border-b border-r border-[#38bdf8]/70"
+            />
+
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+              <div>
+                <div className="text-[11px] font-mono uppercase tracking-widest text-[#F7961D]">
+                  {homeCopy.overview.badge}
+                </div>
+                <h2
+                  id="home-overview-heading"
+                  className="mt-1 text-xl sm:text-2xl md:text-[26px] font-bold font-orbitron tracking-wide text-white"
+                >
+                  {homeCopy.overview.title}
+                </h2>
+              </div>
+              {onNavigate && (
+                <button
+                  type="button"
+                  onClick={() => onNavigate('about')}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#38bdf8]/50 bg-[#38bdf8]/10 hover:bg-[#38bdf8]/20 text-xs font-orbitron uppercase tracking-wider text-white transition-colors cursor-pointer"
+                >
+                  <Info className="w-3.5 h-3.5 text-[#38bdf8]" />
+                  <span>About &amp; Sources</span>
+                </button>
+              )}
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 text-sm sm:text-[15.5px] font-exo2 text-slate-200 leading-relaxed">
+              {homeCopy.overview.paragraphs.map((paragraph, idx) => (
+                <p key={idx} className="m-0">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            {onNavigate && (
+              <div className="mt-5 pt-4 border-t border-white/10 flex flex-wrap gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => onNavigate('missions')}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/[0.04] hover:border-[#F7961D]/70 hover:bg-[#F7961D]/10 text-xs font-exo2 font-semibold text-white transition-colors cursor-pointer"
+                >
+                  <Compass className="w-3.5 h-3.5 text-[#F7961D]" />
+                  <span>Mars &amp; InSight Missions</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('investigation')}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/[0.04] hover:border-[#38bdf8]/70 hover:bg-[#38bdf8]/10 text-xs font-exo2 font-semibold text-white transition-colors cursor-pointer"
+                >
+                  <SearchCheck className="w-3.5 h-3.5 text-[#38bdf8]" />
+                  <span>Investigation: Case 1094</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('survival-protocol')}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/[0.04] hover:border-[#F7961D]/70 hover:bg-[#F7961D]/10 text-xs font-exo2 font-semibold text-white transition-colors cursor-pointer"
+                >
+                  <Gamepad2 className="w-3.5 h-3.5 text-[#F7961D]" />
+                  <span>Interactive Engineering Game</span>
+                </button>
+              </div>
+            )}
+          </section>
+        )}
       </main>
     </>
   );
