@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import Modal from './Modal';
+import { useState } from 'react';
 import { 
   X, 
   MapPin, 
@@ -32,7 +33,7 @@ export default function EquipmentModal({ world, onClose }) {
   const selectedEquipment = world.equipment.find(item => item.id === selectedId) || world.equipment[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 animate-in fade-in duration-200">
+    <Modal label="Equipment details" onClose={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8   duration-200">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/85 backdrop-blur-md transition-opacity"
@@ -230,6 +231,6 @@ export default function EquipmentModal({ world, onClose }) {
         </div>
 
       </div>
-    </div>
+    </Modal>
   );
 }

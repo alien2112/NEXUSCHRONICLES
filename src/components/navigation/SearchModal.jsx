@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import Modal from '../../components/Modal';
+import { useState, useEffect, useRef } from 'react';
 import { Search, X, Sparkles, ArrowRight, ExternalLink, Rocket } from 'lucide-react';
-import { popularSearchSuggestions, nasaNavData } from '../data/nasaNavData';
+import { popularSearchSuggestions, nasaNavData } from '../../data/nasaNavData';
 
 export default function SearchModal({ isOpen, onClose, onNavigate }) {
   const [query, setQuery] = useState('');
@@ -8,9 +9,8 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
 
   // Focus input and handle shortcuts
   useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 50);
-    }
+    if (!isOpen) return;
+    const focusTimer = setTimeout(() => inputRef.current?.focus(), 50);
     const handleKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
@@ -20,7 +20,7 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => { clearTimeout(focusTimer); window.removeEventListener('keydown', handleKeyDown); };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -48,7 +48,7 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
       );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 sm:px-6 animate-in fade-in duration-200">
+    <Modal label="Search" onClose={onClose} className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 sm:px-6   duration-200">
       {/* Dark Blur Backdrop */}
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity"
@@ -62,6 +62,7 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
         <div className="flex items-center px-4 py-3.5 border-b border-white/10 bg-white/[0.03]">
           <Search className="w-5 h-5 text-gray-400 mr-3 shrink-0" />
           <input
+            aria-label="Search missions and science"
             ref={inputRef}
             type="text"
             placeholder="Search NASA missions, science, news, and multimedia..."
@@ -183,6 +184,6 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
         </div>
 
       </div>
-    </div>
+    </Modal>
   );
 }

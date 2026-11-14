@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
-import { ArrowRight, Eye, EyeOff, Sparkles } from 'lucide-react';
-import EquipmentModal from './EquipmentModal';
-import { worldsEquipmentData } from '../data/equipmentData';
+import { activateOnKeyboard } from '../utils/keyboard';
+import { ArrowRight } from 'lucide-react';
 
 export default function ChooseWorld({ onSelectMars }) {
-  const [selectedWorld, setSelectedWorld] = useState(null);
-  const [showComparison, setShowComparison] = useState(false);
-
-  const handleCardClick = (worldId) => {
-    if (worldId === 'mars' && onSelectMars) {
+  const handleMarsClick = () => {
+    if (onSelectMars) {
       onSelectMars();
-    } else {
-      setSelectedWorld(worldsEquipmentData[worldId]);
     }
   };
 
@@ -20,12 +13,12 @@ export default function ChooseWorld({ onSelectMars }) {
       
       {/* 
         Full-Screen Cosmic Space Background:
-        Using public/choose-world-background.png
+        Using public/choose-world-background.webp
       */}
       <div 
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none"
         style={{ 
-          backgroundImage: `url('/choose-world-background.png')`,
+          backgroundImage: `url('/choose-world-background.webp')`,
         }}
       />
 
@@ -61,18 +54,13 @@ export default function ChooseWorld({ onSelectMars }) {
         */}
         <div className="mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-7 sm:gap-9 md:gap-11 w-full max-w-4xl mx-auto">
           
-          {/* Card 1: The Moon */}
+          {/* Card 1: The Moon (hover glow only, no click action) */}
           <div
-            onClick={() => handleCardClick('moon')}
             style={{
               width: '296px',
               height: '328px',
             }}
-            className="group relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-pointer select-none shrink-0"
-            role="button"
-            tabIndex={0}
-            aria-label="Explore The Moon equipment"
-            onKeyDown={(e) => e.key === 'Enter' && handleCardClick('moon')}
+            className="group relative rounded-[28px] p-5 sm:p-6 flex flex-col justify-between items-center cursor-default select-none shrink-0"
           >
             {/* Background 1: Clean Card WITHOUT purple outline (default state) */}
             <div 
@@ -125,7 +113,7 @@ export default function ChooseWorld({ onSelectMars }) {
 
           {/* Card 2: The Mars */}
           <div
-            onClick={() => handleCardClick('mars')}
+            onClick={handleMarsClick}
             style={{
               width: '296px',
               height: '328px',
@@ -134,7 +122,7 @@ export default function ChooseWorld({ onSelectMars }) {
             role="button"
             tabIndex={0}
             aria-label="Explore The Mars equipment"
-            onKeyDown={(e) => e.key === 'Enter' && handleCardClick('mars')}
+            onKeyDown={e => activateOnKeyboard(e, handleMarsClick)}
           >
             {/* Background 1: Clean Card WITHOUT purple outline (default state) */}
             <div 
@@ -187,63 +175,7 @@ export default function ChooseWorld({ onSelectMars }) {
 
         </div>
 
-        {/* Optional reference comparison dialog */}
-        {showComparison && (
-          <div className="w-full max-w-4xl mx-auto my-auto p-6 rounded-2xl bg-[#070b18]/95 backdrop-blur-2xl border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.9)] animate-in fade-in zoom-in-95 duration-200 mt-10">
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
-              <div className="text-left">
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-cyan-400" />
-                  Choose a World Reference Comparison
-                </h4>
-                <p className="text-xs text-gray-400">
-                  Comparing your uploaded "Choose a World" reference image against the live component.
-                </p>
-              </div>
-              <button
-                onClick={() => setShowComparison(false)}
-                className="text-xs px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <div className="text-xs text-gray-400 font-mono mb-1.5 text-left">
-                  Uploaded Reference Image:
-                </div>
-                <div className="rounded-xl overflow-hidden border border-white/15 bg-black">
-                  <img
-                    src="/choose-world-reference.jpg"
-                    alt="Choose a World Reference"
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
       </main>
-
-      {/* Floating Reference Comparison Control */}
-      <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2">
-        <button
-          onClick={() => setShowComparison(prev => !prev)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/15 hover:border-cyan-400/50 text-xs font-medium text-gray-300 hover:text-white transition-all shadow-xl cursor-pointer"
-          title="Compare with reference"
-        >
-          {showComparison ? <EyeOff className="w-3.5 h-3.5 text-cyan-400" /> : <Eye className="w-3.5 h-3.5 text-gray-400" />}
-          <span className="hidden sm:inline">{showComparison ? 'Hide Reference' : 'Compare Reference'}</span>
-        </button>
-      </div>
-
-      {/* Equipment Interactive Dossier Modal */}
-      <EquipmentModal
-        world={selectedWorld}
-        onClose={() => setSelectedWorld(null)}
-      />
 
     </div>
   );

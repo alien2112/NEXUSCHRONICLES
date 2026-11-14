@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronRight, Eye, EyeOff, Sparkles } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ChevronRight } from 'lucide-react';
 
 export default function MarsInsightPage({ onBack, onExploreMissions }) {
   const [isZoomedIn, setIsZoomedIn] = useState(false);
-  const [showComparison, setShowComparison] = useState(false);
 
   // Smoothly animate from Page 4 full horizon into the bottom-left zoomed Mars view
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
       <div 
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none select-none"
         style={{ 
-          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.png')}')`,
+          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp')}')`,
         }}
       />
 
@@ -76,9 +75,9 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
           }}
           className="absolute transition-all duration-900 ease-out flex items-end justify-center"
         >
-          {/* Mars Horizon Image (public/mars-page4.png) */}
+          {/* Mars Horizon Image (public/mars-page4.webp) */}
           <img
-            src="/mars-page4.png"
+            src="/mars-page4.webp"
             alt="Mars Horizon Zoomed on Left"
             className="w-full h-full object-fill select-none pointer-events-none drop-shadow-[0_-10px_28px_rgba(247,150,29,0.65)]"
           />
@@ -136,7 +135,7 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
       */}
       <main className="relative z-20 flex-1 max-w-[1440px] mx-auto w-full px-6 sm:px-10 md:px-14 lg:px-20 pb-6 flex items-center justify-end pointer-events-none">
         
-        <div className="w-[310px] sm:w-[345px] md:w-[375px] lg:w-[395px] shrink-0 pointer-events-auto animate-in fade-in slide-in-from-right-6 duration-500">
+        <div className="w-[310px] sm:w-[345px] md:w-[375px] lg:w-[395px] shrink-0 pointer-events-auto   -6 duration-500">
           <div className="rounded-[22px] bg-[#040814]/92 backdrop-blur-xl border border-white/25 shadow-[0_24px_60px_rgba(0,0,0,0.9)] p-4 sm:p-5">
             
             {/* Top Lander Photo */}
@@ -203,53 +202,6 @@ export default function MarsInsightPage({ onBack, onExploreMissions }) {
         </div>
 
       </main>
-
-      {/* Floating Reference Comparison Control */}
-      <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2">
-        <button
-          onClick={() => setShowComparison((prev) => !prev)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/15 hover:border-[#F7961D]/60 text-xs font-medium text-gray-300 hover:text-white transition-all shadow-xl cursor-pointer"
-          title="Compare with Page 5 reference"
-        >
-          {showComparison ? <EyeOff className="w-3.5 h-3.5 text-[#F7961D]" /> : <Eye className="w-3.5 h-3.5 text-gray-400" />}
-          <span className="hidden sm:inline">{showComparison ? 'Hide Reference' : 'Compare Reference'}</span>
-        </button>
-      </div>
-
-      {/* Reference Comparison Modal */}
-      {showComparison && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-4xl p-6 rounded-2xl bg-[#070b18]/95 border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
-              <div className="text-left">
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#F7961D]" />
-                  Page 5 Reference Comparison
-                </h4>
-                <p className="text-xs text-gray-400">
-                  Comparing your uploaded Page 5 reference image against the live component.
-                </p>
-              </div>
-              <button
-                onClick={() => setShowComparison(false)}
-                className="text-xs px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <div className="rounded-xl overflow-hidden border border-white/15 bg-black">
-                <img
-                  src="/page5-reference.jpg"
-                  alt="Page 5 Reference"
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );

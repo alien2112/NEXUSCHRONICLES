@@ -1,13 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { activateOnKeyboard } from '../../utils/keyboard';
+import { useState, useRef, useEffect } from 'react';
 import { Search, Menu, ChevronDown, ExternalLink, Sparkles, Orbit } from 'lucide-react';
-import NasaLogo from './NasaLogo';
-import { nasaNavData } from '../data/nasaNavData';
+import NasaLogo from '../NasaLogo';
+import { nasaNavData } from '../../data/nasaNavData';
 
 export default function Navbar({ 
   currentPage = 'home',
-  onNavigate,
-  onOpenSearch, 
-  onOpenDrawer 
+  onNavigate
 }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const navRef = useRef(null);
@@ -91,8 +90,9 @@ export default function Navbar({
 
               return (
                 <div key={item.key} className="relative">
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-1.5">
                     <button
+                      disabled={isActionDisabled}
                       type="button"
                       onClick={isActionDisabled ? undefined : () => handleNavClick(item.key)}
                       className={`flex items-center gap-1.5 py-2 text-[15px] font-public font-medium tracking-wide transition-all duration-150 ${
@@ -104,11 +104,15 @@ export default function Navbar({
                           ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]'
                           : 'text-white/95 hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]'
                       }`}
-                      aria-expanded={isActionDisabled ? undefined : isOpen}
-                      aria-haspopup={isActionDisabled ? undefined : 'true'}
                     >
                       <span>{item.label}</span>
+                    </button>
                       <span
+                        role={isActionDisabled ? undefined : "button"}
+                        aria-expanded={isActionDisabled ? undefined : isOpen}
+                        aria-label={isActionDisabled ? undefined : `Open ${item.label} menu`}
+                        tabIndex={isActionDisabled ? undefined : 0}
+                        onKeyDown={e => activateOnKeyboard(e, () => setActiveDropdown(previous => previous === item.key ? null : item.key))}
                         onClick={isActionDisabled ? undefined : (e) => handleChevronClick(e, item.key)}
                         className={`p-0.5 rounded transition-colors ${isActionDisabled ? '' : 'hover:bg-white/10'}`}
                         title={isActionDisabled ? undefined : `Open ${item.label} menu`}
@@ -120,7 +124,6 @@ export default function Navbar({
                           strokeWidth={2}
                         />
                       </span>
-                    </button>
                   </div>
 
                   {/* Active Indicator Underline */}
@@ -130,7 +133,7 @@ export default function Navbar({
 
                   {/* Mega-Dropdown Menu */}
                   {isOpen && (
-                    <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-[740px] max-w-[90vw] animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+                    <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-[740px] max-w-[90vw]    duration-200 z-50">
                       <div className="rounded-2xl bg-[#050b1a]/95 backdrop-blur-2xl border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.85)] p-6 text-left font-public">
                         
                         {/* Header of dropdown */}
@@ -158,7 +161,7 @@ export default function Navbar({
                           >
                             <div className="flex items-center gap-3">
                               <div className="w-9 h-9 rounded-lg bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 group-hover:scale-105 transition-transform">
-                                <Orbit className="w-5 h-5 text-cyan-400 animate-spin-slow" />
+                                <Orbit className="w-5 h-5 text-cyan-400 " />
                               </div>
                               <div>
                                 <div className="text-sm font-bold text-white flex items-center gap-2">
@@ -246,6 +249,7 @@ export default function Navbar({
             <button
               type="button"
               className="p-2 text-white/90 rounded-full transition-all duration-150 cursor-default focus:outline-none"
+              disabled
               aria-label="Search"
             >
               <Search className="w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={2} />
@@ -255,6 +259,7 @@ export default function Navbar({
             <button
               type="button"
               className="p-2 text-white/90 rounded-lg transition-all duration-150 cursor-default focus:outline-none"
+              disabled
               aria-label="Menu"
             >
               <Menu className="w-5 h-5" strokeWidth={2} />
@@ -264,7 +269,9 @@ export default function Navbar({
             <div className="h-6 w-[1px] bg-white/30 hidden xs:block" />
 
             {/* Official NASA Meatball Logo - Navigates Home */}
-            <div
+            <button
+              type="button"
+              aria-label="Return Home"
               className="flex items-center pl-1 cursor-pointer transition-transform hover:scale-105"
               title="National Aeronautics and Space Administration (Return Home)"
               onClick={() => {
@@ -273,7 +280,7 @@ export default function Navbar({
               }}
             >
               <NasaLogo className="w-10 h-8.5 sm:w-11 sm:h-9.5" />
-            </div>
+            </button>
 
           </div>
 

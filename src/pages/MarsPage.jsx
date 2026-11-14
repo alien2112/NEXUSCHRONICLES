@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
 import { 
   ArrowLeft, 
   ChevronRight, 
   Target, 
-  Eye, 
-  EyeOff, 
-  Sparkles
 } from 'lucide-react';
 
 export default function MarsPage({ onBack, onExploreMissions }) {
-  const [showComparison, setShowComparison] = useState(false);
-
   return (
     <div className="relative min-h-screen w-full flex flex-col select-none overflow-x-hidden font-public text-white">
       
@@ -21,7 +15,7 @@ export default function MarsPage({ onBack, onExploreMissions }) {
       <div 
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none"
         style={{ 
-          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.png')}')`,
+          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp')}')`,
         }}
       />
 
@@ -228,57 +222,7 @@ export default function MarsPage({ onBack, onExploreMissions }) {
 
         </div>
 
-        {/* Optional reference comparison dialog */}
-        {showComparison && (
-          <div className="w-full max-w-4xl mx-auto my-auto p-6 rounded-2xl bg-[#070b18]/95 backdrop-blur-2xl border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.9)] animate-in fade-in zoom-in-95 duration-200 mt-10">
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
-              <div className="text-left">
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#F7961D]" />
-                  Mars Page Reference Comparison
-                </h4>
-                <p className="text-xs text-gray-400">
-                  Comparing your uploaded Mars 3rd page reference screenshot against the live component.
-                </p>
-              </div>
-              <button
-                onClick={() => setShowComparison(false)}
-                className="text-xs px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <div className="text-xs text-gray-400 font-mono mb-1.5 text-left">
-                  Uploaded Reference Screenshot:
-                </div>
-                <div className="rounded-xl overflow-hidden border border-white/15 bg-black">
-                  <img
-                    src="/mars-reference.jpg"
-                    alt="Mars Page Reference"
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
       </main>
-
-      {/* Floating Reference Comparison Control */}
-      <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2">
-        <button
-          onClick={() => setShowComparison(prev => !prev)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/15 hover:border-[#F7961D]/50 text-xs font-medium text-gray-300 hover:text-white transition-all shadow-xl cursor-pointer"
-          title="Compare with reference"
-        >
-          {showComparison ? <EyeOff className="w-3.5 h-3.5 text-[#F7961D]" /> : <Eye className="w-3.5 h-3.5 text-gray-400" />}
-          <span className="hidden sm:inline">{showComparison ? 'Hide Reference' : 'Compare Reference'}</span>
-        </button>
-      </div>
 
     </div>
   );

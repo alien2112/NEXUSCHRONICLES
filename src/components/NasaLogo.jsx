@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * Official NASA Insignia ("Meatball" logo)

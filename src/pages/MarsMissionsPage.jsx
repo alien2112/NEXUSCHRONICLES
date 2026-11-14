@@ -1,83 +1,19 @@
-import React, { useState } from 'react';
-import { Eye, EyeOff, Sparkles } from 'lucide-react';
+import { activateOnKeyboard } from '../utils/keyboard';
 
-const MARS_PINS = [
-  {
-    id: 'insight',
-    name: 'Insight',
-    subtitle: 'Full Mission',
-    equipmentId: 'insight-lander',
-    // Upper-left distance on Mars globe (Reference: X ≈ 24-25%, Y ≈ 34-36%)
-    positionClass: 'top-[31%] left-[20%] sm:top-[33%] sm:left-[23%] md:top-[34%] md:left-[24%]',
-    pinWidth: 'w-10 sm:w-12',
-    pinHeight: 'h-13 sm:h-16',
-    cardPadding: 'pl-3 pr-4 py-1.5 sm:pl-3.5 sm:pr-5 sm:py-2',
-    titleSizeClass: 'text-xs sm:text-base md:text-[17px]',
-    subSizeClass: 'text-[10px] sm:text-xs md:text-[12px]',
-  },
-  {
-    id: 'maven',
-    name: 'Maven',
-    subtitle: 'Preview',
-    equipmentId: 'perseverance-rover',
-    // Upper-right horizon (Reference: X ≈ 67-68%, Y ≈ 29-31%)
-    positionClass: 'top-[27%] left-[63%] sm:top-[28%] sm:left-[66%] md:top-[29%] md:left-[67%]',
-    pinWidth: 'w-9 sm:w-11',
-    pinHeight: 'h-12 sm:h-14',
-    cardPadding: 'pl-2.5 pr-3.5 py-1 sm:pl-3 sm:pr-4 sm:py-1.5',
-    titleSizeClass: 'text-xs sm:text-sm md:text-[15px]',
-    subSizeClass: 'text-[9px] sm:text-[11px] md:text-xs',
-  },
-  {
-    id: 'curiosity',
-    name: 'Curiosity',
-    subtitle: 'Preview',
-    equipmentId: 'curiosity-rover',
-    // Center-right midground (Reference: X ≈ 57-58%, Y ≈ 52-54%)
-    positionClass: 'top-[49%] left-[53%] sm:top-[51%] sm:left-[56%] md:top-[52%] md:left-[57%]',
-    pinWidth: 'w-11 sm:w-13 md:w-14',
-    pinHeight: 'h-14 sm:h-17 md:h-18',
-    cardPadding: 'pl-3 pr-4 py-1.5 sm:pl-4 sm:pr-5 sm:py-2.5',
-    titleSizeClass: 'text-sm sm:text-lg md:text-[19px]',
-    subSizeClass: 'text-[11px] sm:text-xs md:text-[13px]',
-  },
-  {
-    id: 'phoenix',
-    name: 'Phoenix',
-    subtitle: 'Preview',
-    equipmentId: 'viking-landers',
-    // Bottom-left foreground above prominent dark crater (Reference: X ≈ 10-11%, Y ≈ 65-67%)
-    positionClass: 'top-[61%] left-[7%] sm:top-[63%] sm:left-[9%] md:top-[65%] md:left-[10%]',
-    pinWidth: 'w-12 sm:w-15 md:w-16',
-    pinHeight: 'h-16 sm:h-19 md:h-21',
-    cardPadding: 'pl-3.5 pr-5 py-2 sm:pl-4 sm:pr-6 sm:py-3',
-    titleSizeClass: 'text-base sm:text-xl md:text-[22px]',
-    subSizeClass: 'text-xs sm:text-sm md:text-[14px]',
-  },
-];
+import { MARS_PINS } from '../data/marsMissionPins';
 
 export default function MarsMissionsPage({ 
   onBack, 
-  onSelectInsight, 
-  onExploreInsight, 
-  onOpenInsightMission 
+  onSelectInsight
 }) {
-  const [showComparison, setShowComparison] = useState(false);
-
   const handlePinClick = (pin) => {
     if (pin.id === 'insight') {
-      if (onSelectInsight) {
-        onSelectInsight();
-      } else if (onExploreInsight) {
-        onExploreInsight();
-      } else if (onOpenInsightMission) {
-        onOpenInsightMission();
-      }
+      onSelectInsight?.();
     }
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col select-none overflow-hidden font-public text-white bg-[#01040d]">
+    <main className="relative min-h-screen w-full flex flex-col select-none overflow-hidden font-public text-white bg-[#01040d]">
       
       {/* 
         Full-Screen Cosmic Deep Space Background
@@ -86,7 +22,7 @@ export default function MarsMissionsPage({
       <div 
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none select-none"
         style={{ 
-          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.png')}')`,
+          backgroundImage: `url('${encodeURI('/خلفية فضائية سينمائية بسديم وكوكب مضيء.webp')}')`,
         }}
       />
 
@@ -140,9 +76,9 @@ export default function MarsMissionsPage({
           {/* Atmospheric Orange Rim Glow above the Mars horizon curve */}
           <div className="absolute inset-x-0 top-[-2%] sm:top-[-1%] h-24 sm:h-32 bg-gradient-to-t from-[#F7961D]/20 via-[#F7961D]/10 to-transparent blur-2xl pointer-events-none" />
 
-          {/* Mars Horizon Image (public/mars-page4.png) */}
+          {/* Mars Horizon Image (public/mars-page4.webp) */}
           <img
-            src="/mars-page4.png"
+            src="/mars-page4.webp"
             alt="Mars Horizon Surface"
             className="w-full h-full object-cover object-top select-none pointer-events-none drop-shadow-[0_-8px_25px_rgba(247,150,29,0.55)]"
           />
@@ -163,7 +99,7 @@ export default function MarsMissionsPage({
                   role={isInsight ? 'button' : undefined}
                   tabIndex={isInsight ? 0 : undefined}
                   aria-label={`${pin.name} - ${pin.subtitle}`}
-                  onKeyDown={isInsight ? (e) => e.key === 'Enter' && handlePinClick(pin) : undefined}
+                  onKeyDown={isInsight ? (e) => activateOnKeyboard(e, () => handlePinClick(pin)) : undefined}
                 >
                 {/* 
                   Teardrop Map Pin Marker SVG:
@@ -224,58 +160,6 @@ export default function MarsMissionsPage({
 
       </div>
 
-      {/* Floating Reference Comparison Control */}
-      <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2">
-        <button
-          onClick={() => setShowComparison((prev) => !prev)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/80 hover:bg-black/95 backdrop-blur-md border border-white/20 hover:border-[#F7961D] text-xs font-medium text-gray-300 hover:text-white transition-all shadow-xl cursor-pointer"
-          title="Compare with reference image"
-        >
-          {showComparison ? <EyeOff className="w-3.5 h-3.5 text-[#F7961D]" /> : <Eye className="w-3.5 h-3.5 text-gray-400" />}
-          <span className="hidden sm:inline">{showComparison ? 'Hide Reference' : 'Compare Reference'}</span>
-        </button>
-      </div>
-
-      {/* Reference Comparison Modal */}
-      {showComparison && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6 rounded-2xl bg-[#070b18] border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)]">
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
-              <div className="text-left">
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#F7961D]" />
-                  Page 4 (Mars Missions) Pixel-Perfect Reference Comparison
-                </h4>
-                <p className="text-xs text-gray-400">
-                  Comparing your uploaded Page 4 reference against the live component.
-                </p>
-              </div>
-              <button
-                onClick={() => setShowComparison(false)}
-                className="text-xs px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <div className="text-xs text-gray-400 font-mono mb-1.5 text-left">
-                  Uploaded Page 4 Reference (Exact Target):
-                </div>
-                <div className="rounded-xl overflow-hidden border border-white/15 bg-black">
-                  <img
-                    src="/mars-page4-reference.jpg"
-                    alt="Mars Page 4 Reference"
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-    </div>
+    </main>
   );
 }

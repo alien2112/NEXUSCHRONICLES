@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import Modal from '../../components/Modal';
+import { useState } from 'react';
 import { X, ChevronDown, ExternalLink, Radio, Orbit } from 'lucide-react';
-import NasaLogo from './NasaLogo';
-import { nasaNavData } from '../data/nasaNavData';
+import NasaLogo from '../NasaLogo';
+import { nasaNavData } from '../../data/nasaNavData';
 
 export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }) {
   const [expandedSection, setExpandedSection] = useState('missions');
@@ -14,7 +15,7 @@ export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end animate-in fade-in duration-300">
+    <Modal label="Navigation menu" onClose={onClose} className="fixed inset-0 z-50 flex justify-end   duration-300">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
@@ -69,7 +70,7 @@ export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }
           >
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-center gap-1.5 text-[11px] uppercase text-cyan-400 font-bold tracking-wider">
-                <Orbit className="w-3.5 h-3.5 animate-spin-slow" />
+                <Orbit className="w-3.5 h-3.5 " />
                 Featured Experience
               </div>
               <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-500/30 text-white font-semibold">
@@ -193,6 +194,6 @@ export default function DrawerMenu({ isOpen, onClose, onOpenSearch, onNavigate }
         </div>
 
       </div>
-    </div>
+    </Modal>
   );
 }
