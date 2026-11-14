@@ -45,7 +45,7 @@ export default function Navbar({
   };
 
   const handleChevronClick = (e, key) => {
-    if (key === 'discover' || key === 'about') return;
+    if (key === 'about') return;
     e.stopPropagation();
     setActiveDropdown((prev) => (prev === key ? null : key));
   };
@@ -160,12 +160,37 @@ export default function Navbar({
           </div>
 
           {/* 
-            Center Navigation Links: Explore, Missions, Discover, About
+            Center Navigation Links: Explore, Missions, Investigation, About
             DEAD-CENTER IN THE NAVBAR (Horizontally centered via absolute left-1/2 -translate-x-1/2)
           */}
           <nav className="hidden lg:flex items-center justify-center absolute left-1/2 -translate-x-1/2 space-x-7 xl:space-x-9">
             {nasaNavData.map((item) => {
-              const isActionDisabled = item.key === 'discover' || item.key === 'about';
+              if (item.key === 'discover') {
+                return (
+                  <div key="investigation" className="relative">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveDropdown(null);
+                        if (onNavigate) onNavigate('investigation');
+                      }}
+                      className={`flex items-center gap-1.5 py-2 text-[15px] font-public font-medium tracking-wide transition-all duration-150 cursor-pointer ${
+                        currentPage === 'investigation' || currentPage === 'case-board'
+                          ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
+                          : 'text-white/95 hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]'
+                      }`}
+                      title={navCopy.investigationTitle}
+                    >
+                      <span>{navCopy.investigationLabel}</span>
+                    </button>
+                    {(currentPage === 'investigation' || currentPage === 'case-board') && (
+                      <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent shadow-[0_0_8px_#38bdf8]" />
+                    )}
+                  </div>
+                );
+              }
+
+              const isActionDisabled = item.key === 'about';
               const isOpen = !isActionDisabled && activeDropdown === item.key;
               const isCurrent = 
                 (item.key === 'missions' && (currentPage === 'missions' || currentPage === 'mars')) ||
@@ -323,28 +348,6 @@ export default function Navbar({
                 </div>
               );
             })}
-
-            {/* Direct Investigation Entry */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveDropdown(null);
-                  if (onNavigate) onNavigate('investigation');
-                }}
-                className={`flex items-center gap-1.5 py-2 text-[15px] font-public font-medium tracking-wide transition-all duration-150 cursor-pointer ${
-                  currentPage === 'investigation' || currentPage === 'case-board'
-                    ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
-                    : 'text-white/95 hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]'
-                }`}
-                title={navCopy.investigationTitle}
-              >
-                <span>{navCopy.investigationLabel}</span>
-              </button>
-              {(currentPage === 'investigation' || currentPage === 'case-board') && (
-                <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent shadow-[0_0_8px_#38bdf8]" />
-              )}
-            </div>
           </nav>
 
           {/* Right Action Group: Search Icon, Hamburger Menu, Divider, NASA Meatball Logo */}

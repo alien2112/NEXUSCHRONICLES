@@ -53,6 +53,7 @@ export default function InvestigationPage({
   initialScene = 'intro1-1',
   savedProgress = null,
   onSaveProgress,
+  onExploreFurther,
   onGoDeeper,
   onGoTechnical,
   onSurvivalProtocol,
@@ -619,6 +620,20 @@ export default function InvestigationPage({
                   earnedStampIds={earnedStampIds}
                   initialPlacedParts={placedParts}
                   onPlacedPartsChange={setPlacedParts}
+                  onExploreFurther={
+                    onExploreFurther
+                      ? () => {
+                          onSaveProgress?.({
+                            codename,
+                            initialConfidence,
+                            confidenceChoice,
+                            earnedStampIds,
+                            placedParts,
+                          });
+                          onExploreFurther();
+                        }
+                      : undefined
+                  }
                   onGoDeeper={
                     onGoDeeper
                       ? () => {

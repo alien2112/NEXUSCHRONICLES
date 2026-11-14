@@ -14,6 +14,7 @@ export const routes = [
   { page: 'insight-story-6', hash: '#story-6', aliases: ['#insight-story-6', '#story6'] },
   { page: 'investigation', hash: '#investigation', aliases: ['#investigate', '#case-1094', '#page8'] },
   { page: 'case-board', hash: '#case-board', aliases: ['#investigation-case-board'] },
+  { page: 'after-investigation', hash: '#after-investigation', aliases: ['#explore-further', '#choose-path'] },
   { page: 'go-deeper-1', hash: '#go-deeper', aliases: ['#go-deeper-1', '#science-behind-it', '#science-behind-it-1'] },
   { page: 'go-deeper-2', hash: '#go-deeper-2', aliases: ['#science-behind-it-2'] },
   { page: 'go-deeper-3', hash: '#go-deeper-3', aliases: ['#science-behind-it-3'] },

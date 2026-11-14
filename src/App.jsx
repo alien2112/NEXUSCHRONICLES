@@ -12,6 +12,7 @@ import MarsInsightPage from './pages/MarsInsightPage';
 import InsightMissionPage from './pages/InsightMissionPage';
 import InsightStory1Page from './pages/InsightStory1Page';
 import InsightStoryPage from './pages/InsightStoryPage';
+import ExploreFurtherPage from './pages/ExploreFurtherPage';
 import GoDeeperPage from './pages/GoDeeperPage';
 import GoTechnicalPage from './pages/GoTechnicalPage';
 import PageBoundary from './components/PageBoundary';
@@ -45,6 +46,12 @@ export default function App() {
   const insightStoryNumber = currentPage.startsWith('insight-story-')
     ? Number(currentPage.slice('insight-story-'.length))
     : null;
+  const pageBoundaryKey =
+    goTechnicalNumber !== null
+      ? 'go-technical'
+      : goDeeperNumber !== null
+      ? 'go-deeper'
+      : currentPage;
 
   return (
     <div className="relative min-h-screen w-full flex flex-col font-public select-none overflow-x-hidden bg-[#030611]">
@@ -55,7 +62,7 @@ export default function App() {
         onNavigate={navigate}
       />
 
-      <PageBoundary key={currentPage}>
+      <PageBoundary key={pageBoundaryKey}>
       <Suspense fallback={<main className="relative z-10 min-h-screen pt-28 px-6 text-white" role="status">{siteContent.app.loadingLabel}</main>}>
       <RouteFocus currentPage={currentPage} />
       {currentPage === 'investigation' || currentPage === 'case-board' ? (
@@ -64,10 +71,18 @@ export default function App() {
           initialScene={currentPage === 'case-board' ? 'case-board' : 'intro1-1'}
           savedProgress={currentPage === 'case-board' ? case1094Progress : null}
           onSaveProgress={setCase1094Progress}
+          onExploreFurther={() => navigate('after-investigation')}
           onGoDeeper={() => navigate('go-deeper-1')}
           onGoTechnical={() => navigate('go-technical-1')}
           onSurvivalProtocol={() => navigate('survival-protocol')}
           onBack={() => navigate('home')}
+        />
+      ) : currentPage === 'after-investigation' ? (
+        <ExploreFurtherPage
+          onBackToCaseBoard={() => navigate('case-board')}
+          onGoDeeper={() => navigate('go-deeper-1')}
+          onGoTechnical={() => navigate('go-technical-1')}
+          onSurvivalProtocol={() => navigate('survival-protocol')}
         />
       ) : currentPage === 'survival-protocol' ? (
         <SurvivalProtocolPage
@@ -99,6 +114,7 @@ export default function App() {
           onSelectPage={(num) => navigate(`go-technical-${num}`)}
           onGoDeeper={() => navigate('go-deeper-1')}
           onBackToCaseBoard={() => navigate('case-board')}
+          onChoosePath={() => navigate('after-investigation')}
           onSurvivalProtocol={() => navigate('survival-protocol')}
         />
       ) : currentPage === 'insight-story-1' ? (

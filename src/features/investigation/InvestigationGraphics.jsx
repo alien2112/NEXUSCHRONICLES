@@ -242,13 +242,41 @@ export function SeismogramGraphic({ variant = 'x', isPlaying = false, ariaLabel 
 
     let frameId = 0;
     const start = performance.now();
+    // The heatmap, waveform and labels do not change during playback.
+    // Keep their exact pixels and composite only the moving cursor each frame.
+    const backdrop = document.createElement('canvas');
+    let cachedDpr = 0;
+    let fontsDirty = true;
+    const invalidateFonts = () => { fontsDirty = true; };
+    document.fonts?.addEventListener('loadingdone', invalidateFonts);
     const render = (now) => {
       const playhead = ((now - start) % 4500) / 4500;
-      drawSeismogramFrame(canvas, variant, playhead);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (cachedDpr !== dpr || fontsDirty) {
+        drawSeismogramFrame(backdrop, variant, null);
+        cachedDpr = dpr;
+        fontsDirty = false;
+      }
+      const ctx = setupHiDpiCanvas(canvas, 460, 190);
+      if (ctx) {
+        ctx.clearRect(0, 0, 460, 190);
+        ctx.drawImage(backdrop, 0, 0, backdrop.width, backdrop.height, 0, 0, 460, 190);
+        const px = 14 + playhead * (460 - 28);
+        ctx.strokeStyle = 'rgba(247, 150, 29, 0.9)';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(px, 18);
+        ctx.lineTo(px, 178);
+        ctx.stroke();
+        ctx.restore();
+      }
       frameId = requestAnimationFrame(render);
     };
     frameId = requestAnimationFrame(render);
-    return () => cancelAnimationFrame(frameId);
+    return () => {
+      cancelAnimationFrame(frameId);
+      document.fonts?.removeEventListener('loadingdone', invalidateFonts);
+    };
   }, [variant, isPlaying]);
 
   return (

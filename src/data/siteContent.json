@@ -10,7 +10,7 @@
   "navigation": {
     "navbar": {
       "brandLogo": {
-        "src": "/nnLogo 1B_.png",
+        "src": "/nnLogo 1B_.webp",
         "alt": "NEXUS",
         "title": "Return to Home Screen"
       },
@@ -459,7 +459,7 @@
   "homePage": {
     "backgroundImage": "/homepagebg.webp",
     "logo": {
-      "src": "/NLogo 1_.png",
+      "src": "/NLogo 1_.webp",
       "alt": "Nexus Chronicles"
     },
     "taglineLines": [
@@ -473,8 +473,8 @@
   },
   "chooseWorldPage": {
     "backgroundImage": "/choose-world-background.webp",
-    "cardBackgroundClean": "/choose-world-planets-background-clean.png",
-    "cardBackgroundHover": "/choose-world-planets-background.png",
+    "cardBackgroundClean": "/choose-world-planets-background-clean.webp",
+    "cardBackgroundHover": "/choose-world-planets-background.webp",
     "title": "Choose a World",
     "subtitleLines": [
       "Discover the equipment left behind by NASA's",
@@ -483,13 +483,13 @@
     "cards": {
       "moon": {
         "name": "The Moon",
-        "image": "/moon.png",
+        "image": "/moon.webp",
         "imageAlt": "The Moon",
         "countText": "3+ equipment"
       },
       "mars": {
         "name": "The Mars",
-        "image": "/mars.png",
+        "image": "/mars.webp",
         "imageAlt": "The Mars",
         "countText": "4+ equipment",
         "ariaLabel": "Explore The Mars equipment"
@@ -501,7 +501,7 @@
     "backAriaLabel": "Back to Choose a World",
     "backTitle": "Back to Choose a World",
     "title": "The Mars",
-    "planetImage": "/mars-page-planet3rd.png",
+    "planetImage": "/mars-page-planet3rd.webp",
     "planetAlt": "The Mars",
     "featureCards": [
       {
@@ -533,7 +533,7 @@
         "A cold , dusty world with",
         "incredible stories to tell"
       ],
-      "image": "/rectangle-page3.png",
+      "image": "/rectangle-page3.webp",
       "imageAlt": "Mars Surface Landscape"
     },
     "ctaButton": {
@@ -611,7 +611,7 @@
       "subtitle": "Full Mission"
     },
     "card": {
-      "image": "/insight-lander-photo.jpg",
+      "image": "/insight-lander-photo.webp",
       "imageAlt": "NASA InSight Lander on Mars",
       "title": "Insight",
       "meta": "Mars . 2018-2022",
@@ -635,7 +635,16 @@
       "to the planet's natural quakes"
     ],
     "ctaLabel": "Watch the story",
-    "ctaTitle": "Watch the story"
+    "ctaTitle": "Watch the story",
+    "video": {
+      "poster": "/insight-trailer-poster.webp",
+      "webm": "/insight-trailer.webm",
+      "mp4": "/insight-trailer.mp4",
+      "playAriaLabel": "Play mission trailer",
+      "pauseAriaLabel": "Pause mission trailer",
+      "muteAriaLabel": "Mute trailer audio",
+      "unmuteAriaLabel": "Unmute trailer audio"
+    }
   },
   "insightStory1Page": {
     "backgroundImage": "/story1bg.webp",
@@ -756,6 +765,7 @@
       {
         "storyNumber": 2,
         "page": "insight-story-2",
+        "backgroundImage": "/stories2,4,6 .webp",
         "bgVariant": "cosmos",
         "backAriaLabel": "Back to Story 1",
         "backTitle": "Back to Story 1",
@@ -769,8 +779,8 @@
               "kind": "media",
               "frame": {
                 "variant": "hero",
-                "alt": "Placeholder frame for Inside Mars diagram",
-                "src": null
+                "alt": "Inside Mars cross-section diagram showing crust, mantle, core, and seismic wave paths",
+                "src": "/story2.png"
               }
             },
             "right": {
@@ -853,6 +863,7 @@
       {
         "storyNumber": 3,
         "page": "insight-story-3",
+        "backgroundImage": "/stories3,5.webp",
         "bgVariant": "mars-glow",
         "backAriaLabel": "Back to Story 2",
         "backTitle": "Back to Story 2",
@@ -911,8 +922,8 @@
               "kind": "media",
               "frame": {
                 "variant": "wide",
-                "alt": "Placeholder frame for Elysium Planitia landing site map",
-                "src": null
+                "alt": "Map of Mars showing InSight landing site on Elysium Planitia alongside past missions",
+                "src": "/story3top.png"
               }
             }
           },
@@ -922,8 +933,8 @@
               "kind": "media",
               "frame": {
                 "variant": "square",
-                "alt": "Placeholder frame for InSight robotic arm placing instrument",
-                "src": null
+                "alt": "InSight robotic arm placing instrument on Mars",
+                "src": "/story3left.png"
               }
             },
             "center": {
@@ -947,8 +958,8 @@
               "kind": "media",
               "frame": {
                 "variant": "square",
-                "alt": "Placeholder frame for InSight deck and seismometer on Mars",
-                "src": null
+                "alt": "InSight deck with robotic arm and seismometer dome on Mars",
+                "src": "/story3right.png"
               }
             }
           },
@@ -1016,6 +1027,7 @@
       {
         "storyNumber": 4,
         "page": "insight-story-4",
+        "backgroundImage": "/stories2,4,6 .webp",
         "bgVariant": "deep",
         "backAriaLabel": "Back to Story 3",
         "backTitle": "Back to Story 3",
@@ -1062,13 +1074,13 @@
             "frames": [
               {
                 "variant": "pair",
-                "alt": "Placeholder frame for HP3 mole probe on Martian soil",
-                "src": null
+                "alt": "HP3 self-hammering mole probe on Martian soil",
+                "src": "/story4left.png"
               },
               {
                 "variant": "pair",
-                "alt": "Placeholder frame for SEIS dome on Mars surface",
-                "src": null
+                "alt": "SEIS seismometer dome deployed on the Martian surface",
+                "src": "/story4right.png"
               }
             ]
           },
@@ -1093,6 +1105,7 @@
       {
         "storyNumber": 5,
         "page": "insight-story-5",
+        "backgroundImage": "/stories3,5.webp",
         "bgVariant": "mars-glow",
         "backAriaLabel": "Back to Story 4",
         "backTitle": "Back to Story 4",
@@ -1176,8 +1189,8 @@
               "kind": "media",
               "frame": {
                 "variant": "square",
-                "alt": "Placeholder frame for SEIS seismometer dome on Mars",
-                "src": null
+                "alt": "SEIS seismometer dome resting on Martian soil",
+                "src": "/story5right.png"
               }
             }
           },
@@ -1188,8 +1201,8 @@
               "kind": "media",
               "frame": {
                 "variant": "wide",
-                "alt": "Placeholder frame for before and after meteoroid impact crater on Mars",
-                "src": null
+                "alt": "Before and after orbital view of the Christmas Eve meteoroid impact crater on Mars",
+                "src": "/story5left.png"
               }
             },
             "right": {
@@ -1248,6 +1261,7 @@
       {
         "storyNumber": 6,
         "page": "insight-story-6",
+        "backgroundImage": "/stories2,4,6 .webp",
         "bgVariant": "mars-horizon",
         "backAriaLabel": "Back to Story 5",
         "backTitle": "Back to Story 5",
@@ -1261,8 +1275,8 @@
               "kind": "media",
               "frame": {
                 "variant": "hero",
-                "alt": "Placeholder frame for dusty InSight lander solar panels",
-                "src": null
+                "alt": "Overhead mosaic of dust-covered InSight lander solar panels on Mars",
+                "src": "/story6top.png"
               }
             },
             "right": {
@@ -1322,8 +1336,8 @@
               "kind": "media",
               "frame": {
                 "variant": "square",
-                "alt": "Placeholder frame for InSight final image on Mars",
-                "src": null
+                "alt": "InSight final image showing the dust-coated SEIS dome on Mars",
+                "src": "/stroy6mid.png"
               }
             }
           },
@@ -1334,8 +1348,8 @@
               "kind": "media",
               "frame": {
                 "variant": "wide",
-                "alt": "Placeholder frame for Mars Reconnaissance Orbiter view of retired InSight",
-                "src": null
+                "alt": "Mars Reconnaissance Orbiter view of the retired InSight lander and dust devil tracks",
+                "src": "/story6bottom.png"
               }
             },
             "right": {
@@ -1588,10 +1602,10 @@
     "nexusSpeakerLabel": "NEXUS",
     "robotAlt": "NEXUS Companion Robot",
     "robotImages": {
-      "intro": "/robot-intro-scences.png",
-      "investigate": "/robot-investigate-page.png",
-      "amazed": "/robot-amazed.png",
-      "front": "/robot-front.png"
+      "intro": "/robot-intro-scences.webp",
+      "investigate": "/robot-investigate-page.webp",
+      "amazed": "/robot-amazed.webp",
+      "front": "/robot-front.webp"
     },
     "continuePrompt": "Click to continue",
     "continueDialogueSrLabel": "Continue NEXUS dialogue",
@@ -2133,6 +2147,23 @@
             },
             " isn't a photograph. It's a recording."
           ]
+        ],
+        "sections": [
+          {
+            "type": "split",
+            "cols": "lg:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)]",
+            "left": {
+              "kind": "paragraphs",
+              "indices": [0, 1]
+            },
+            "right": {
+              "kind": "image",
+              "src": "/godeeper1.webp",
+              "alt": "Cutaway illustration of Mars showing its crust, mantle, and core",
+              "variant": "brackets",
+              "maxWidth": "max-w-[350px]"
+            }
+          }
         ]
       },
       {
@@ -2192,6 +2223,38 @@
             },
             ". For Earth, it took hundreds of years."
           ]
+        ],
+        "sections": [
+          {
+            "type": "split",
+            "cols": "md:grid-cols-[minmax(190px,240px)_minmax(0,1fr)]",
+            "left": {
+              "kind": "image",
+              "src": "/godeeper2left.webp",
+              "alt": "Diagram comparing P wave compression and S wave shear motion",
+              "variant": "brackets",
+              "maxWidth": "max-w-[235px]"
+            },
+            "right": {
+              "kind": "paragraphs",
+              "indices": [0]
+            }
+          },
+          {
+            "type": "split",
+            "cols": "lg:grid-cols-[minmax(0,1.12fr)_minmax(280px,0.88fr)]",
+            "left": {
+              "kind": "paragraphs",
+              "indices": [1]
+            },
+            "right": {
+              "kind": "image",
+              "src": "/godeeper2rightbottom.webp",
+              "alt": "NASA InSight SEIS seismometer dome resting on the Martian surface",
+              "variant": "blue-border",
+              "maxWidth": "max-w-[440px]"
+            }
+          }
         ]
       },
       {
@@ -2246,6 +2309,38 @@
             },
             ". A crater that never was told scientists something too."
           ]
+        ],
+        "sections": [
+          {
+            "type": "split",
+            "cols": "lg:grid-cols-[minmax(0,1.18fr)_minmax(250px,0.82fr)]",
+            "left": {
+              "kind": "paragraphs",
+              "indices": [0]
+            },
+            "right": {
+              "kind": "image",
+              "src": "/godeeper3right.webp",
+              "alt": "SEIS seismometer dome overlay with the S1222a waveform spike",
+              "variant": "brackets",
+              "maxWidth": "max-w-[300px]"
+            }
+          },
+          {
+            "type": "split",
+            "cols": "lg:grid-cols-[minmax(280px,0.85fr)_minmax(0,1.15fr)]",
+            "left": {
+              "kind": "image",
+              "src": "/godeeper3left.webp",
+              "alt": "Seismogram comparison of events S1222a, S1094b, and S1000a across frequency bands",
+              "variant": "brackets",
+              "maxWidth": "max-w-[350px]"
+            },
+            "right": {
+              "kind": "paragraphs",
+              "indices": [1]
+            }
+          }
         ]
       },
       {
@@ -2294,6 +2389,28 @@
             },
             ", the case file you can open next."
           ]
+        ],
+        "sections": [
+          {
+            "type": "paragraphs",
+            "indices": [0],
+            "maxWidth": "max-w-[680px]"
+          },
+          {
+            "type": "split",
+            "cols": "lg:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.92fr)]",
+            "left": {
+              "kind": "paragraphs",
+              "indices": [1]
+            },
+            "right": {
+              "kind": "image",
+              "src": "/godeeper4.webp",
+              "alt": "Before and after orbital view of the Christmas Eve 2021 meteoroid impact crater",
+              "variant": "brackets",
+              "maxWidth": "max-w-[430px]"
+            }
+          }
         ]
       },
       {
@@ -2348,6 +2465,47 @@
           [
             "The newest study plays the plot twist. Each answer improved on the one before."
           ]
+        ],
+        "sections": [
+          {
+            "type": "bullets",
+            "indices": [0],
+            "align": "md:pl-24 lg:pl-44"
+          },
+          {
+            "type": "split",
+            "cols": "lg:grid-cols-[minmax(0,1fr)_minmax(240px,0.85fr)]",
+            "left": {
+              "kind": "bullets",
+              "indices": [1]
+            },
+            "right": {
+              "kind": "image",
+              "src": "/godeeper5right.webp",
+              "alt": "Core comparison diagram across Earth, Mars, and the Moon",
+              "variant": "brackets",
+              "maxWidth": "max-w-[290px]"
+            }
+          },
+          {
+            "type": "split",
+            "cols": "lg:grid-cols-[minmax(230px,0.75fr)_minmax(0,1.25fr)]",
+            "left": {
+              "kind": "image",
+              "src": "/godeeper5left.webp",
+              "alt": "Homogeneous vs heterogeneous mantle and molten basal layer profiles of Mars",
+              "variant": "brackets",
+              "maxWidth": "max-w-[260px]"
+            },
+            "right": {
+              "kind": "bullets",
+              "indices": [2]
+            }
+          },
+          {
+            "type": "paragraphs",
+            "indices": [0]
+          }
         ],
         "closing": "That's not a mistake. That's evidence arriving."
       },
@@ -2985,7 +3143,7 @@
       "distance": "384,400 km from Earth",
       "gravity": "1.62 m/s² (0.166 g)",
       "atmosphere": "Extremely thin exosphere",
-      "image": "/moon.png",
+      "image": "/moon.webp",
       "countText": "3+ equipment",
       "accentColor": "#38bdf8",
       "description": "Humanity's primary stepping stone into the cosmos. NASA's Apollo missions left behind landing stages, rovers, and scientific packages that continue yielding discoveries.",
@@ -3066,7 +3224,7 @@
       "distance": "225,000,000 km avg from Earth",
       "gravity": "3.72 m/s² (0.379 g)",
       "atmosphere": "95% Carbon Dioxide (CO₂)",
-      "image": "/mars.png",
+      "image": "/mars.webp",
       "countText": "4+ equipment",
       "accentColor": "#f97316",
       "description": "A rust-colored desert world shaped by ancient rivers, towering volcanoes, and violent dust storms. NASA robotic scouts have traversed hundreds of kilometers across Martian sands.",

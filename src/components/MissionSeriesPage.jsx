@@ -17,6 +17,125 @@ function RichText({ segments }) {
   );
 }
 
+const bodyCopyClass =
+  'text-left font-exo2 font-normal text-[15px] sm:text-[17px] md:text-[19px] lg:text-[20px] leading-[1.4] tracking-[0.01em] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]';
+
+function ParagraphList({ items, className = '' }) {
+  return (
+    <div className={`space-y-5 sm:space-y-6 ${bodyCopyClass} ${className}`}>
+      {items.map((segments, idx) => (
+        <p key={idx} className="whitespace-pre-line">
+          <RichText segments={segments} />
+        </p>
+      ))}
+    </div>
+  );
+}
+
+function BulletList({ items, className = '' }) {
+  return (
+    <ul className={`space-y-2.5 sm:space-y-3 ${bodyCopyClass} leading-[1.38] ${className}`}>
+      {items.map((bullet, idx) => (
+        <li key={idx} className="flex items-start gap-2.5">
+          <span className="text-[#F7961D] font-bold leading-[1.38]" aria-hidden="true">
+            •
+          </span>
+          <span>
+            <RichText segments={bullet} />
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function SeriesMediaFrame({ src, alt, variant = 'brackets', maxWidth = 'max-w-[360px]' }) {
+  return (
+    <div className={`relative w-full ${maxWidth} mx-auto`}>
+      {variant === 'brackets' && (
+        <>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-2.5 -right-2.5 h-8 w-8 rounded-tr-xl border-t border-r border-[#c88d5c]/65"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-2.5 -left-2.5 h-8 w-8 rounded-bl-xl border-b border-l border-[#c88d5c]/65"
+          />
+        </>
+      )}
+      <div
+        className={`overflow-hidden rounded-xl ${
+          variant === 'blue-border'
+            ? 'border-2 border-[#38bdf8]/80 shadow-[0_12px_30px_rgba(0,0,0,0.55)]'
+            : ''
+        }`}
+      >
+        <img
+          src={src}
+          alt={alt}
+          className="block w-full h-auto object-contain"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  );
+}
+
+function renderSlot(slot, content) {
+  if (slot.kind === 'image') {
+    return (
+      <SeriesMediaFrame
+        src={slot.src}
+        alt={slot.alt}
+        variant={slot.variant}
+        maxWidth={slot.maxWidth}
+      />
+    );
+  }
+  if (slot.kind === 'paragraphs') {
+    const items = (slot.indices ?? []).map((i) => content.paragraphs?.[i]).filter(Boolean);
+    return <ParagraphList items={items} />;
+  }
+  if (slot.kind === 'bullets') {
+    const items = (slot.indices ?? []).map((i) => content.bullets?.[i]).filter(Boolean);
+    return <BulletList items={items} />;
+  }
+  return null;
+}
+
+function SeriesSections({ sections, content }) {
+  return (
+    <div className="mt-5 sm:mt-6 space-y-6 sm:space-y-8">
+      {sections.map((section, idx) => {
+        if (section.type === 'split') {
+          return (
+            <div
+              key={idx}
+              className={`grid grid-cols-1 ${
+                section.cols ?? 'lg:grid-cols-2'
+              } gap-6 sm:gap-8 lg:gap-12 items-center`}
+            >
+              <div>{renderSlot(section.left, content)}</div>
+              <div>{renderSlot(section.right, content)}</div>
+            </div>
+          );
+        }
+        if (section.type === 'paragraphs') {
+          const items = (section.indices ?? []).map((i) => content.paragraphs?.[i]).filter(Boolean);
+          return <ParagraphList key={idx} items={items} className={section.maxWidth ?? ''} />;
+        }
+        if (section.type === 'bullets') {
+          const items = (section.indices ?? []).map((i) => content.bullets?.[i]).filter(Boolean);
+          return <BulletList key={idx} items={items} className={section.align ?? ''} />;
+        }
+        return null;
+      })}
+    </div>
+  );
+}
+
 /**
  * Shared multi-page cosmic briefing layout used by both Go Deeper (Science Behind It)
  * and Go Technical (Engineering the Mission).
@@ -105,7 +224,10 @@ export default function MissionSeriesPage({
           </div>
 
           {/* Primary Content Column */}
-          <div key={content.page} className="max-w-[700px] inv-fade-up">
+          <div
+            key={content.page}
+            className={`${content.sections ? 'max-w-[1140px]' : 'max-w-[700px]'} inv-fade-up`}
+          >
             <h1 className="mt-5 sm:mt-6 md:mt-7 text-2xl sm:text-3xl md:text-[38px] lg:text-[42px] font-bold font-orbitron text-white leading-[1.18] tracking-wide drop-shadow-[0_4px_18px_rgba(0,0,0,0.85)] text-left">
               {content.title}
             </h1>
@@ -116,29 +238,15 @@ export default function MissionSeriesPage({
               </p>
             )}
 
-            {content.bullets && (
-              <ul className="mt-5 sm:mt-6 space-y-2.5 sm:space-y-3 text-left font-exo2 font-normal text-[15px] sm:text-[17px] md:text-[19px] lg:text-[20px] leading-[1.38] tracking-[0.01em] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-                {content.bullets.map((bullet, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5">
-                    <span className="text-[#F7961D] font-bold leading-[1.38]" aria-hidden="true">
-                      •
-                    </span>
-                    <span>
-                      <RichText segments={bullet} />
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {content.paragraphs && (
-              <div className="mt-5 sm:mt-6 space-y-5 sm:space-y-6 text-left font-exo2 font-normal text-[15px] sm:text-[17px] md:text-[19px] lg:text-[20px] leading-[1.4] tracking-[0.01em] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-                {content.paragraphs.map((segments, idx) => (
-                  <p key={idx} className="whitespace-pre-line">
-                    <RichText segments={segments} />
-                  </p>
-                ))}
-              </div>
+            {content.sections ? (
+              <SeriesSections sections={content.sections} content={content} />
+            ) : (
+              <>
+                {content.bullets && <BulletList items={content.bullets} className="mt-5 sm:mt-6" />}
+                {content.paragraphs && (
+                  <ParagraphList items={content.paragraphs} className="mt-5 sm:mt-6" />
+                )}
+              </>
             )}
 
             {content.promptBox && (

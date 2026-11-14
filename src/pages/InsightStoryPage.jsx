@@ -32,21 +32,29 @@ function StoryTitle({ titleLines }) {
   );
 }
 
-const FRAME_VARIANT_CLASSES = {
+const PLACEHOLDER_VARIANT_CLASSES = {
   hero: 'aspect-[16/10] w-full',
   wide: 'aspect-[16/9] w-full',
   square: 'aspect-[4/3] sm:aspect-square w-full max-w-[260px] lg:max-w-[280px] mx-auto',
   pair: 'aspect-[16/10] w-full',
 };
 
+const MEDIA_VARIANT_CLASSES = {
+  hero: 'w-full',
+  wide: 'w-full',
+  square: 'w-full max-w-[260px] lg:max-w-[280px] mx-auto',
+  pair: 'w-full',
+};
+
 function StoryMediaFrame({ frame }) {
-  const sizeClass = FRAME_VARIANT_CLASSES[frame.variant] ?? FRAME_VARIANT_CLASSES.hero;
+  const variantClasses = frame.src ? MEDIA_VARIANT_CLASSES : PLACEHOLDER_VARIANT_CLASSES;
+  const sizeClass = variantClasses[frame.variant] ?? variantClasses.hero;
+  const placeholderA11yProps = frame.src ? {} : { role: 'img', 'aria-label': frame.alt };
 
   return (
     <div
       className={`relative ${sizeClass} rounded-2xl border border-white/25 bg-[#050b1c]/50 backdrop-blur-[2px] shadow-[0_14px_40px_rgba(0,0,0,0.55)] overflow-visible`}
-      role="img"
-      aria-label={frame.alt}
+      {...placeholderA11yProps}
       data-placeholder={frame.src ? 'false' : 'true'}
     >
       {/* Decorative HUD corner brackets matching mission frame styling */}
@@ -71,7 +79,7 @@ function StoryMediaFrame({ frame }) {
         <img
           src={frame.src}
           alt={frame.alt}
-          className="w-full h-full object-cover rounded-2xl"
+          className="block w-full h-auto rounded-2xl"
         />
       ) : (
         <div className="w-full h-full rounded-2xl bg-gradient-to-br from-white/[0.04] via-transparent to-[#F7961D]/[0.03]" />
@@ -407,41 +415,20 @@ export default function InsightStoryPage({ storyNumber = 2, onBack, onNext }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onBack, onNext]);
 
-  const bgPosition =
-    story.bgVariant === 'mars-glow'
-      ? 'right bottom'
-      : story.bgVariant === 'mars-horizon'
-      ? 'center bottom'
-      : story.bgVariant === 'deep'
-      ? '20% 15%'
-      : 'right top';
+  const backgroundSrc = story.backgroundImage ?? seriesCopy.backgroundImage;
 
   return (
     <div className="relative min-h-screen w-full flex flex-col select-none overflow-x-hidden font-public text-white bg-[#02050e]">
       {/* Cosmic Space Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div
-          className={`absolute inset-0 bg-cover bg-no-repeat transition-opacity duration-500 ${
-            story.bgVariant === 'deep' ? 'scale-110 opacity-75' : 'opacity-90'
-          }`}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-500 opacity-95"
           style={{
-            backgroundImage: `url('${encodeURI(seriesCopy.backgroundImage)}')`,
-            backgroundPosition: bgPosition,
+            backgroundImage: `url('${encodeURI(backgroundSrc)}')`,
           }}
         />
-        {(story.bgVariant === 'mars-glow' || story.bgVariant === 'mars-horizon') && (
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                story.bgVariant === 'mars-horizon'
-                  ? 'radial-gradient(ellipse 90% 55% at 75% 92%, rgba(234, 88, 12, 0.42), rgba(154, 52, 18, 0.22) 45%, transparent 75%)'
-                  : 'radial-gradient(ellipse 65% 55% at 88% 72%, rgba(234, 88, 12, 0.36), transparent 72%)',
-            }}
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020512]/82 via-[#020617]/55 to-[#020512]/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#02050e]/85 via-transparent to-[#02050e]/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020512]/72 via-[#020617]/40 to-[#020512]/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#02050e]/65 via-transparent to-[#02050e]/50" />
       </div>
 
       {/* Main Content Container */}

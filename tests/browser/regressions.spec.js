@@ -43,6 +43,11 @@ test('unavailable navigation is disabled and closed search does not consume Ctrl
   await page.goto('/');
   await expect(page.getByRole('button', { name: 'Search', exact: true })).toBeDisabled();
   await expect(page.getByRole('button', { name: 'Menu', exact: true })).toBeDisabled();
+  await expect(page.locator('header').getByRole('button', { name: 'Discover' })).toHaveCount(0);
+  if (page.viewportSize().width >= 1024) {
+    const centerNavLabels = await page.locator('header nav').last().getByRole('button').allInnerTexts();
+    expect(centerNavLabels.map(text => text.trim())).toEqual(['Explore', 'Missions', 'Investigation', 'About']);
+  }
   const prevented = await page.evaluate(() => {
     const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true, cancelable: true });
     window.dispatchEvent(event);
@@ -166,12 +171,12 @@ test('audio context closes when leaving and rejected resume is reported', async 
   await expect(page.getByRole('status').filter({ hasText: 'Audio is unavailable.' })).toBeVisible();
 });
 
-test('all pages load without application errors or missing local assets', async ({ page }) => {
+test('all pages load without application errors or missing local assets', async ({ page, baseURL }) => {
   test.setTimeout(60_000);
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => {
-    if (response.url().startsWith('http://127.0.0.1:4173') && response.status() >= 400) errors.push(response.url());
+    if (response.url().startsWith(baseURL) && response.status() >= 400) errors.push(response.url());
   });
   for (const hash of [
     'home',
@@ -188,6 +193,7 @@ test('all pages load without application errors or missing local assets', async 
     'story-6',
     'investigation',
     'case-board',
+    'after-investigation',
     'go-deeper',
     'go-deeper-2',
     'go-deeper-3',
@@ -215,6 +221,7 @@ test('all pages load without application errors or missing local assets', async 
 });
 
 test('story 1 removes Go deeper and Investigation entries, and post-investigation Case Board offers Go deeper and Go technical', async ({ page }) => {
+  test.setTimeout(60_000);
   await page.goto('/#story-1');
   await expect(page.getByRole('button', { name: 'Go deeper' })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Investigation: Case 1094' })).toHaveCount(0);
@@ -226,6 +233,15 @@ test('story 1 removes Go deeper and Investigation entries, and post-investigatio
   await page.getByRole('button', { name: 'Go to Case Board' }).click();
   await expect(page.getByRole('button', { name: 'Go deeper' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Go technical' })).toBeVisible();
+
+  // Post-Investigation path chooser page (#after-investigation)
+  await page.getByRole('button', { name: 'Choose Your Next Path' }).click();
+  await expect(page).toHaveURL(/#after-investigation$/);
+  await expect(page.getByRole('heading', { name: 'Choose Your Next Path' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Go deeper: Science Behind It' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Go technical: Engineering the Mission 3D' })).toBeVisible();
+  await page.getByRole('button', { name: 'Back to Case Board' }).click();
+  await expect(page).toHaveURL(/#case-board$/);
 
   // Go deeper (Science Behind It) 6-page journey from Case Board
   await page.getByRole('button', { name: 'Go deeper' }).click();
@@ -285,36 +301,44 @@ test('story 1 removes Go deeper and Investigation entries, and post-investigatio
   await expect(page).toHaveURL(/#case-board$/);
 });
 
-test('mission chronicles stories 2 through 6 render from JSON with placeholder frames, audio controls, and next/back flow', async ({ page }) => {
+test('mission chronicles stories 2 through 6 render from JSON with story images, audio controls, and next/back flow', async ({ page }) => {
+  const assertStoryMediaLoaded = async (expectedCount) => {
+    await expect(page.locator('[data-placeholder="true"]')).toHaveCount(0);
+    const frames = page.locator('[data-placeholder="false"] img');
+    await expect(frames).toHaveCount(expectedCount);
+    const widths = await frames.evaluateAll((imgs) => imgs.map((img) => img.complete && img.naturalWidth > 0));
+    expect(widths.every(Boolean)).toBe(true);
+  };
+
   await page.goto('/#story-1');
   await page.getByRole('button', { name: 'Next story: The half of Mars nobody could see' }).click();
   await expect(page).toHaveURL(/#story-2$/);
   await expect(page.getByRole('heading', { name: /The half of Mars nobody could see/i })).toBeVisible();
-  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(1);
+  await assertStoryMediaLoaded(1);
   await expect(page.getByText('4.5 billion')).toBeVisible();
 
   await page.getByRole('button', { name: 'Next story: Built to listen' }).click();
   await expect(page).toHaveURL(/#story-3$/);
   await expect(page.getByRole('heading', { name: 'Built to listen' })).toBeVisible();
-  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(3);
+  await assertStoryMediaLoaded(3);
   await expect(page.getByRole('button', { name: /Play or pause Martian wind audio/ })).toBeVisible();
 
   await page.getByRole('button', { name: 'Next story: When the plan met Mars' }).click();
   await expect(page).toHaveURL(/#story-4$/);
   await expect(page.getByRole('heading', { name: /When the plan met Mars/i })).toBeVisible();
-  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(2);
+  await assertStoryMediaLoaded(2);
 
   await page.getByRole('button', { name: 'Next story: What the planet said' }).click();
   await expect(page).toHaveURL(/#story-5$/);
   await expect(page.getByRole('heading', { name: 'What the planet said' })).toBeVisible();
-  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(2);
+  await assertStoryMediaLoaded(2);
   await expect(page.getByRole('button', { name: /first marsquake audio/ })).toBeVisible();
   await expect(page.getByRole('button', { name: /impact audio/ })).toBeVisible();
 
   await page.getByRole('button', { name: 'Next story: The long goodbye' }).click();
   await expect(page).toHaveURL(/#story-6$/);
   await expect(page.getByRole('heading', { name: 'The long goodbye' })).toBeVisible();
-  await expect(page.locator('[data-placeholder="true"]')).toHaveCount(3);
+  await assertStoryMediaLoaded(3);
   await expect(page.getByText('The mission ended. The evidence remains.')).toBeVisible();
 
   await page.getByRole('button', { name: 'Back to Story 5' }).click();
@@ -324,4 +348,28 @@ test('mission chronicles stories 2 through 6 render from JSON with placeholder f
 
   await page.getByRole('button', { name: 'Proceed to Investigation: Case 1094' }).click();
   await expect(page).toHaveURL(/#investigation$/);
+});
+
+test('insight mission trailer video autoplays muted even with reduced motion and responds to controls', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#insight-mission');
+
+  const video = page.locator('video');
+  await expect(video).toBeVisible();
+  await expect
+    .poll(() =>
+      video.evaluate(el => ({
+        paused: el.paused,
+        muted: el.muted,
+        hasMutedAttr: el.hasAttribute('muted'),
+        defaultMuted: el.defaultMuted,
+      }))
+    )
+    .toEqual({ paused: false, muted: true, hasMutedAttr: true, defaultMuted: true });
+
+  await page.getByRole('button', { name: 'Pause mission trailer' }).click();
+  await expect.poll(() => video.evaluate(el => el.paused)).toBe(true);
+
+  await page.getByRole('button', { name: 'Play mission trailer' }).click();
+  await expect.poll(() => video.evaluate(el => el.paused)).toBe(false);
 });

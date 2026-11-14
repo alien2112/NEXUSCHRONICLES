@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { disposeScene } from './disposeScene';
 import {
   BUILD_SLOTS,
   INSIGHT_POS,
@@ -936,6 +937,7 @@ export default function MarsThreeScene({
       for (const [id, entry] of nodeMeshes.entries()) {
         if (!activeIds.has(id)) {
           scene.remove(entry.group);
+          disposeScene(entry.group);
           nodeMeshes.delete(id);
         }
       }
@@ -1109,14 +1111,7 @@ export default function MarsThreeScene({
       canvas.removeEventListener('contextmenu', onContextMenu);
       window.removeEventListener('resize', onResize);
       resizeObserver?.disconnect();
-      marsMap.dispose();
-      marsBump.dispose();
-      terrainGeo.dispose();
-      terrainMat.dispose();
-      particleGeo.dispose();
-      particleMat.dispose();
-      insightBeacon.geometry.dispose();
-      insightBeacon.material.dispose();
+      disposeScene(scene);
       renderer.dispose();
     };
   }, [gameStateRef, cameraControlRef]);

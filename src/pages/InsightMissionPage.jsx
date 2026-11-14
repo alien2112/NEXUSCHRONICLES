@@ -1,20 +1,100 @@
-import { ArrowLeft, ArrowRight, Play } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, Pause, Play, Volume2, VolumeX } from 'lucide-react';
 import siteContent from '../data/siteContent.json';
 
 const trailerCopy = siteContent.insightMissionPage;
 
 export default function InsightMissionPage({ onBack, onWatchStory }) {
+  const videoRef = useRef(null);
+  const userInteractedRef = useRef(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const attemptAutoplay = () => {
+      if (userInteractedRef.current) return;
+      video.defaultMuted = true;
+      video.muted = true;
+      video.setAttribute('muted', '');
+
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise
+          .then(() => {
+            if (!video.paused) setIsPlaying(true);
+          })
+          .catch(() => {
+            setIsPlaying(false);
+          });
+      } else {
+        setIsPlaying(!video.paused);
+      }
+    };
+
+    const handleCanPlay = () => {
+      if (video.paused) {
+        attemptAutoplay();
+      }
+    };
+
+    attemptAutoplay();
+    video.addEventListener('canplay', handleCanPlay);
+    return () => {
+      video.removeEventListener('canplay', handleCanPlay);
+    };
+  }, []);
+
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    userInteractedRef.current = true;
+    if (video.paused) {
+      video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    userInteractedRef.current = true;
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    setIsMuted(nextMuted);
+    if (!nextMuted && video.paused) {
+      video.play().then(() => setIsPlaying(true)).catch(() => {});
+    }
+  };
+
   return (
     <div className="relative min-h-screen w-full flex flex-col select-none overflow-x-hidden overflow-y-auto font-public text-white bg-[#0d0705]">
       
-      {/* 
-        Trailer Video / Background Container
-        Reserved for the full-screen InSight mission trailer video.
-      */}
+      {/* Full-screen optimized InSight mission trailer video (WebM VP9 + H.264 MP4 + WebP poster) */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Subtle dark Martian atmospheric gradient placeholder until trailer video is attached */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a0d07] via-[#2b1409] to-[#0a0605]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/50" />
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          poster={trailerCopy.video.poster}
+          autoPlay
+          loop
+          muted={isMuted}
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+        >
+          <source src={trailerCopy.video.webm} type="video/webm" />
+          <source src={trailerCopy.video.mp4} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-l from-black/85 via-black/55 to-black/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/50" />
       </div>
 
       {/* Top Header Row: Back Button & "Insight" Title */}
@@ -103,6 +183,29 @@ export default function InsightMissionPage({ onBack, onWatchStory }) {
         </div>
 
       </main>
+
+      {/* Compact trailer playback & audio controls */}
+      <div className="fixed bottom-5 left-5 sm:bottom-7 sm:left-10 z-20 flex items-center gap-2 rounded-full border border-white/25 bg-black/55 backdrop-blur-md px-2.5 py-1.5 shadow-[0_6px_24px_rgba(0,0,0,0.45)]">
+        <button
+          type="button"
+          onClick={togglePlayback}
+          aria-label={isPlaying ? trailerCopy.video.pauseAriaLabel : trailerCopy.video.playAriaLabel}
+          title={isPlaying ? trailerCopy.video.pauseAriaLabel : trailerCopy.video.playAriaLabel}
+          className="w-8 h-8 rounded-full flex items-center justify-center text-white/90 hover:text-white hover:bg-white/15 transition-colors cursor-pointer"
+        >
+          {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+        </button>
+        <div className="h-4 w-px bg-white/20" aria-hidden="true" />
+        <button
+          type="button"
+          onClick={toggleMute}
+          aria-label={isMuted ? trailerCopy.video.unmuteAriaLabel : trailerCopy.video.muteAriaLabel}
+          title={isMuted ? trailerCopy.video.unmuteAriaLabel : trailerCopy.video.muteAriaLabel}
+          className="w-8 h-8 rounded-full flex items-center justify-center text-white/90 hover:text-white hover:bg-white/15 transition-colors cursor-pointer"
+        >
+          {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        </button>
+      </div>
 
     </div>
   );

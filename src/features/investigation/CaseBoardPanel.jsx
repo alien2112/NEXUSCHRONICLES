@@ -113,6 +113,7 @@ export default function CaseBoardView({
   earnedStampIds,
   initialPlacedParts = {},
   onPlacedPartsChange,
+  onExploreFurther,
   onGoDeeper,
   onGoTechnical,
   onSurvivalProtocol,
@@ -692,8 +693,8 @@ export default function CaseBoardView({
             </div>
           </div>
 
-          {/* Post-Investigation Exploration Options: Go deeper, Go technical & Survival Protocol */}
-          {(onGoDeeper || onGoTechnical || onSurvivalProtocol) && (
+          {/* Post-Investigation Exploration Options: Chooser, Go deeper, Go technical & Survival Protocol */}
+          {(onExploreFurther || onGoDeeper || onGoTechnical || onSurvivalProtocol) && (
             <div className="rounded-[18px] border border-white/25 bg-[#050b1f]/90 backdrop-blur-md p-4 text-left shadow-[0_14px_34px_rgba(0,0,0,0.45)] flex flex-col gap-2.5">
               <div className="flex items-center justify-between gap-2">
                 <span className="font-exo2 font-semibold text-sm sm:text-base text-white">
@@ -706,6 +707,17 @@ export default function CaseBoardView({
               <p className="text-xs font-exo2 text-white/75 leading-relaxed">
                 {cbCopy.exploreFurther.description}
               </p>
+              {onExploreFurther && (
+                <button
+                  type="button"
+                  onClick={onExploreFurther}
+                  className="flex items-center justify-between gap-2 px-4 py-2 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] text-xs sm:text-[13px] font-exo2 font-semibold transition-all shadow-[0_0_16px_rgba(247,150,29,0.28)] cursor-pointer active:scale-95"
+                  title="Open the post-investigation path chooser"
+                >
+                  <span>Choose Your Next Path</span>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                </button>
+              )}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
                 {onGoDeeper && (
                   <button
