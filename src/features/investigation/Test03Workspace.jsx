@@ -2,12 +2,7 @@ import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { CaseBoardStrip } from './CaseBoardPanel';
 import { TestHudFrame, NexusSidePanel } from './WorkspaceLayout';
-import {
-  BusGraphic,
-  CraterScaleGraphic,
-  MeteorSpeedGraphic,
-  PyramidGraphic,
-} from './InvestigationGraphics';
+import { CutoutImage } from './InvestigationGraphics';
 import siteContent from '../../data/siteContent.json';
 
 const invCopy = siteContent.investigation;
@@ -103,11 +98,38 @@ export function Test03Workspace({
                   className="sm:col-span-8 relative rounded-2xl overflow-hidden border border-white/25 hover:border-[#F7961D]/70 transition-all cursor-pointer bg-[#040818]"
                   title={test3Copy.dropZoneTitle}
                 >
-                  <CraterScaleGraphic
-                    busPlaced={busPlaced}
-                    pyramidPlaced={pyramidPlaced}
-                    ariaLabel={test3Copy.craterAlt}
+                  <img
+                    src={test3Copy.craterImage}
+                    alt={test3Copy.craterAlt}
+                    className="w-full h-[170px] sm:h-[188px] object-cover block pointer-events-none"
+                    draggable={false}
                   />
+
+                  {busPlaced && (
+                    <div className="absolute top-[19%] left-[9%] flex items-center gap-1.5 px-1.5 py-0.5 rounded bg-black/75 border border-[#F7961D]/80 inv-robot-swap pointer-events-none">
+                      <CutoutImage
+                        src={test3Copy.bus.image}
+                        alt={test3Copy.bus.placedAlt}
+                        className="w-7 h-4 object-contain"
+                      />
+                      <span className="text-[10px] font-mono text-white">
+                        {test3Copy.bus.placedLabel}
+                      </span>
+                    </div>
+                  )}
+
+                  {pyramidPlaced && (
+                    <div className="absolute bottom-[6%] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none inv-robot-swap">
+                      <CutoutImage
+                        src={test3Copy.pyramid.image}
+                        alt={test3Copy.pyramid.placedAlt}
+                        className="w-28 h-20 object-contain opacity-95 drop-shadow-[0_4px_14px_rgba(0,0,0,0.85)]"
+                      />
+                      <span className="mt-0.5 px-2 py-0.5 rounded bg-black/75 border border-[#F7961D]/80 text-[10px] font-mono text-white">
+                        {test3Copy.pyramid.placedLabel}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Scale Objects Container (Bus on top, Pyramid on bottom) */}
@@ -124,9 +146,10 @@ export function Test03Workspace({
                     }`}
                     title={test3Copy.bus.trayTitle}
                   >
-                    <BusGraphic
-                      ariaLabel={test3Copy.bus.trayAlt}
-                      className="w-24 h-12 pointer-events-none"
+                    <CutoutImage
+                      src={test3Copy.bus.image}
+                      alt={test3Copy.bus.trayAlt}
+                      className="w-24 h-12 object-contain pointer-events-none"
                     />
                   </button>
 
@@ -144,9 +167,10 @@ export function Test03Workspace({
                     }`}
                     title={test3Copy.pyramid.trayTitle}
                   >
-                    <PyramidGraphic
-                      ariaLabel={test3Copy.pyramid.trayAlt}
-                      className="w-24 h-16 pointer-events-none"
+                    <CutoutImage
+                      src={test3Copy.pyramid.image}
+                      alt={test3Copy.pyramid.trayAlt}
+                      className="w-24 h-16 object-contain pointer-events-none"
                     />
                   </button>
                 </div>
@@ -182,10 +206,19 @@ export function Test03Workspace({
               </p>
 
               <div className="relative w-full max-w-[430px] h-[108px] sm:h-[118px] overflow-hidden bg-transparent">
-                <MeteorSpeedGraphic
-                  speedVal={speedVal}
-                  energyPct={energyPct}
-                  ariaLabel={test3Copy.speedStage.meteorAlt}
+                <img
+                  src={test3Copy.speedStage.meteorImage}
+                  alt={test3Copy.speedStage.meteorAlt}
+                  className="w-full h-full object-cover transition-transform duration-200 mix-blend-lighten"
+                  style={{
+                    transform: `scale(${1 + (speedVal / 100) * 0.08})`,
+                    filter: `brightness(${0.92 + (speedVal / 100) * 0.42})`,
+                    maskImage:
+                      'radial-gradient(ellipse 88% 85% at 50% 50%, black 55%, transparent 100%)',
+                    WebkitMaskImage:
+                      'radial-gradient(ellipse 88% 85% at 50% 50%, black 55%, transparent 100%)',
+                  }}
+                  draggable={false}
                 />
               </div>
 

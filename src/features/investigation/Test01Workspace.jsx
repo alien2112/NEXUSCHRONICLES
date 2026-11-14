@@ -4,7 +4,6 @@ import { Play, Pause } from 'lucide-react';
 import TrustMeter from './TrustMeter';
 import { CaseBoardStrip } from './CaseBoardPanel';
 import { TestHudFrame, NexusSidePanel } from './WorkspaceLayout';
-import { SeismogramGraphic } from './InvestigationGraphics';
 import siteContent from '../../data/siteContent.json';
 
 const invCopy = siteContent.investigation;
@@ -188,18 +187,21 @@ export function Test01Workspace({
                 onKeyDown={(e) => {
                   activateOnKeyboard(e, () => handleSeismogramClick(e, 'x', true));
                 }}
-                className={`group relative w-full rounded-[14px] overflow-hidden bg-[#050a1c] border border-white/25 transition-all duration-200 cursor-pointer ${
+                className={`group relative w-full rounded-[14px] overflow-hidden bg-white border border-white/25 transition-all duration-200 cursor-pointer ${
                   quakeLabelOn === 'x' && beat <= 2
                     ? 'ring-2 ring-[#F7961D] shadow-[0_0_20px_rgba(247,150,29,0.45)]'
                     : tapMarker && beat === 5
                     ? 'ring-2 ring-[#F7961D]/80 shadow-[0_0_16px_rgba(247,150,29,0.35)]'
+                    : playingTrack === 'x'
+                    ? 'ring-2 ring-[#F7961D]/75 shadow-[0_0_16px_rgba(247,150,29,0.3)]'
                     : 'hover:ring-2 hover:ring-white/65'
                 }`}
               >
-                <SeismogramGraphic
-                  variant="x"
-                  isPlaying={playingTrack === 'x'}
-                  ariaLabel={test1Copy.recordingX.imageAlt}
+                <img
+                  src={test1Copy.recordingX.image}
+                  alt={test1Copy.recordingX.imageAlt}
+                  className="w-full h-[126px] sm:h-[138px] md:h-[146px] object-fill scale-[1.03] block pointer-events-none"
+                  draggable={false}
                 />
 
                 {/* QUAKE dropped badge on Recording X */}
@@ -266,16 +268,19 @@ export function Test01Workspace({
                 onKeyDown={(e) => {
                   activateOnKeyboard(e, () => handleSeismogramClick(e, 'y', true));
                 }}
-                className={`group relative w-full rounded-[14px] overflow-hidden bg-[#050a1c] border border-white/25 transition-all duration-200 cursor-pointer ${
+                className={`group relative w-full rounded-[14px] overflow-hidden bg-white border border-white/25 transition-all duration-200 cursor-pointer ${
                   beat === 6
                     ? 'ring-[2.5px] ring-[#38bdf8] shadow-[0_0_22px_rgba(56,189,248,0.85)]'
+                    : playingTrack === 'y'
+                    ? 'ring-2 ring-[#F7961D]/75 shadow-[0_0_16px_rgba(247,150,29,0.3)]'
                     : 'hover:ring-2 hover:ring-white/65'
                 }`}
               >
-                <SeismogramGraphic
-                  variant="y"
-                  isPlaying={playingTrack === 'y'}
-                  ariaLabel={test1Copy.recordingY.imageAlt}
+                <img
+                  src={test1Copy.recordingY.image}
+                  alt={test1Copy.recordingY.imageAlt}
+                  className="w-full h-[126px] sm:h-[138px] md:h-[146px] object-fill scale-[1.03] block pointer-events-none"
+                  draggable={false}
                 />
 
                 {quakeLabelOn === 'y' && beat <= 2 && (

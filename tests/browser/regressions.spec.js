@@ -237,7 +237,7 @@ test('story 1 removes Go deeper and Investigation entries, and post-investigatio
   // Post-Investigation path chooser page (#after-investigation)
   await page.getByRole('button', { name: 'Choose Your Next Path' }).click();
   await expect(page).toHaveURL(/#after-investigation$/);
-  await expect(page.getByRole('heading', { name: 'Choose Your Next Path' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Explore Your Path' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Go deeper: Science Behind It' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Go technical: Engineering the Mission 3D' })).toBeVisible();
   await page.getByRole('button', { name: 'Back to Case Board' }).click();

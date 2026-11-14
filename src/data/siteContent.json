@@ -1705,6 +1705,7 @@
       "quakeButtonTitle": "Drag QUAKE onto Recording X or Y (or click to test)",
       "audioCaption": "Sped up 100 times so human ears can hear it.",
       "recordingX": {
+        "image": "/sesmicwaveleft-investigation.jpeg",
         "playTitle": "Play Recording X (sped up 100x)",
         "imageAlt": "Recording X is the sol 1094 seismogram from NASA's video",
         "onsetTitle": "Seismic surface wave onset",
@@ -1714,6 +1715,7 @@
         ]
       },
       "recordingY": {
+        "image": "/sesmicwaveright-investigation.jpeg",
         "playTitle": "Play Recording Y (sped up 100x)",
         "imageAlt": "Recording Y is a windy-day noise sample",
         "captionLines": [
@@ -1845,15 +1847,18 @@
     },
     "test03": {
       "title": "Can a small rock do this?",
+      "craterImage": "/carter-investigation.jpeg",
       "craterAlt": "150m wide, 21m deep Martian crater",
       "dropZoneTitle": "Drop scale object here (or click)",
       "bus": {
+        "image": "/bus-investigation.jpeg",
         "placedAlt": "12m Bus",
         "placedLabel": "12 m",
         "trayAlt": "Bus (~12m)",
         "trayTitle": "Drag or click Bus (~12 m)"
       },
       "pyramid": {
+        "image": "/pyramid-investigation.jpeg",
         "placedAlt": "146m Great Pyramid",
         "placedLabel": "Great Pyramid ~146 m",
         "trayAlt": "Great Pyramid (~146m)",
@@ -1867,6 +1872,7 @@
       "testSpeedButtonLabel": "Test Impact Speed",
       "speedStage": {
         "instruction": "speed slider. Energy bar grows as the rock speeds up.",
+        "meteorImage": "/asteriod-investigation.jpeg",
         "meteorAlt": "High-speed meteoroid impact energy visualization",
         "speedLabel": "Speed",
         "speedSliderAriaLabel": "Meteoroid speed slider",

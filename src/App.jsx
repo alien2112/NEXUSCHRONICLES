@@ -82,7 +82,6 @@ export default function App() {
           onBackToCaseBoard={() => navigate('case-board')}
           onGoDeeper={() => navigate('go-deeper-1')}
           onGoTechnical={() => navigate('go-technical-1')}
-          onSurvivalProtocol={() => navigate('survival-protocol')}
         />
       ) : currentPage === 'survival-protocol' ? (
         <SurvivalProtocolPage
