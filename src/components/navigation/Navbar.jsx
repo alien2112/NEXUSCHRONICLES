@@ -61,8 +61,8 @@ export default function Navbar({
         {/* Foreground Content Container */}
         <div className="relative max-w-[1440px] mx-auto h-full px-4 sm:px-8 lg:px-12 flex items-center justify-between">
           
-          {/* Left area spacer */}
-          <div className="w-12 sm:w-20 md:w-32 flex items-center shrink-0">
+          {/* Left area spacer + mobile Investigation link */}
+          <div className="min-w-12 sm:min-w-20 md:min-w-32 flex items-center gap-3 shrink-0">
             {/* Quick Back indicator if on missions or mars page */}
             {(currentPage === 'missions' || currentPage === 'mars') && (
               <button
@@ -74,6 +74,22 @@ export default function Navbar({
                 <span>{currentPage === 'mars' ? 'Worlds' : 'Home'}</span>
               </button>
             )}
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveDropdown(null);
+                if (onNavigate) onNavigate('investigation');
+              }}
+              className={`lg:hidden py-1.5 text-sm font-public font-medium tracking-wide transition-all duration-150 cursor-pointer ${
+                currentPage === 'investigation' || currentPage === 'case-board'
+                  ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
+                  : 'text-white/95 hover:text-white'
+              }`}
+              title="Open Investigation: Case 1094"
+            >
+              Investigation
+            </button>
           </div>
 
           {/* 
@@ -240,6 +256,28 @@ export default function Navbar({
                 </div>
               );
             })}
+
+            {/* Direct Investigation Entry */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveDropdown(null);
+                  if (onNavigate) onNavigate('investigation');
+                }}
+                className={`flex items-center gap-1.5 py-2 text-[15px] font-public font-medium tracking-wide transition-all duration-150 cursor-pointer ${
+                  currentPage === 'investigation' || currentPage === 'case-board'
+                    ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-semibold'
+                    : 'text-white/95 hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]'
+                }`}
+                title="Open Investigation: Case 1094"
+              >
+                <span>Investigation</span>
+              </button>
+              {(currentPage === 'investigation' || currentPage === 'case-board') && (
+                <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent shadow-[0_0_8px_#38bdf8]" />
+              )}
+            </div>
           </nav>
 
           {/* Right Action Group: Search Icon, Hamburger Menu, Divider, NASA Meatball Logo */}

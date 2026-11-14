@@ -107,6 +107,10 @@ export default function CaseBoardView({
   confidenceChoice,
   onChangeConfidence,
   earnedStampIds,
+  initialPlacedParts = {},
+  onPlacedPartsChange,
+  onGoDeeper,
+  onGoTechnical,
   onRestart,
   onExit,
 }) {
@@ -121,7 +125,7 @@ export default function CaseBoardView({
   const [inspectedSuspect, setInspectedSuspect] = useState(null);
 
   // Verdict Builder drag & click placement state
-  const [placedParts, setPlacedParts] = useState({}); // { [slotId]: partId }
+  const [placedParts, setPlacedParts] = useState(initialPlacedParts); // { [slotId]: partId }
   const [selectedPartId, setSelectedPartId] = useState(null);
   const [draggingPartId, setDraggingPartId] = useState(null);
   const [dragOverSlotId, setDragOverSlotId] = useState(null);
@@ -185,6 +189,7 @@ export default function CaseBoardView({
       [slotId]: partId,
     };
     setPlacedParts(nextPlaced);
+    onPlacedPartsChange?.(nextPlaced);
     setSelectedPartId(null);
     setSlotFeedback({
       type: 'success',
@@ -213,6 +218,7 @@ export default function CaseBoardView({
     setPlacedParts((prev) => {
       const next = { ...prev };
       delete next[slotId];
+      onPlacedPartsChange?.(next);
       return next;
     });
     setSlotFeedback(null);
@@ -220,6 +226,7 @@ export default function CaseBoardView({
 
   const handleResetVerdict = () => {
     setPlacedParts({});
+    onPlacedPartsChange?.({});
     setSelectedPartId(null);
     setSlotFeedback(null);
   };
@@ -671,6 +678,47 @@ export default function CaseBoardView({
             </div>
           </div>
 
+          {/* Post-Investigation Exploration Options: Go deeper & Go technical */}
+          {(onGoDeeper || onGoTechnical) && (
+            <div className="rounded-[18px] border border-white/25 bg-[#050b1f]/90 backdrop-blur-md p-4 text-left shadow-[0_14px_34px_rgba(0,0,0,0.45)] flex flex-col gap-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-exo2 font-semibold text-sm sm:text-base text-white">
+                  After the Investigation
+                </span>
+                <span className="text-[11px] font-mono text-white/50">
+                  EXPLORE FURTHER
+                </span>
+              </div>
+              <p className="text-xs font-exo2 text-white/75 leading-relaxed">
+                Dive into the seismic science behind the quakes or inspect how InSight was engineered.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
+                {onGoDeeper && (
+                  <button
+                    type="button"
+                    onClick={onGoDeeper}
+                    className="flex items-center justify-between gap-2 px-4 py-2 rounded-full border border-[#F7961D]/80 bg-[#070e24]/90 hover:bg-[#F7961D]/15 text-[#F7961D] hover:text-[#ffb454] text-xs sm:text-[13px] font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
+                    title="Go deeper: Science Behind It"
+                  >
+                    <span>Go deeper</span>
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                  </button>
+                )}
+                {onGoTechnical && (
+                  <button
+                    type="button"
+                    onClick={onGoTechnical}
+                    className="flex items-center justify-between gap-2 px-4 py-2 rounded-full border border-[#F7961D]/80 bg-[#070e24]/90 hover:bg-[#F7961D]/15 text-[#F7961D] hover:text-[#ffb454] text-xs sm:text-[13px] font-exo2 font-semibold transition-all cursor-pointer active:scale-95"
+                    title="Go technical: Engineering the Mission"
+                  >
+                    <span>Go technical</span>
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Compact Case Actions */}
           <div className="flex flex-wrap items-center justify-end gap-2.5">
             <button
@@ -687,7 +735,7 @@ export default function CaseBoardView({
                 onClick={onExit}
                 className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-[#F7961D]/55 hover:border-[#F7961D] bg-[#050b1f]/80 text-xs font-exo2 font-medium text-[#F7961D] transition-colors cursor-pointer"
               >
-                <span>Back to Chronicles</span>
+                <span>Return Home</span>
               </button>
             )}
           </div>
@@ -803,7 +851,7 @@ export default function CaseBoardView({
                   }}
                   className="px-4 py-2 rounded-full bg-[#F7961D] hover:bg-[#f9a63e] text-[#1a0d00] font-exo2 font-semibold text-xs transition-colors cursor-pointer"
                 >
-                  Back to Chronicles
+                  Return Home
                 </button>
               ) : (
                 <button

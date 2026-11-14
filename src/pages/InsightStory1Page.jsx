@@ -1,6 +1,6 @@
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
-export default function InsightStory1Page({ onBack, onStartInvestigation }) {
+export default function InsightStory1Page({ onBack }) {
   return (
     <div className="relative min-h-screen w-full flex flex-col select-none overflow-x-hidden font-public text-white bg-[#040711]">
       
@@ -91,20 +91,6 @@ export default function InsightStory1Page({ onBack, onStartInvestigation }) {
         </div>
 
       </main>
-
-      {/* Next Page Control */}
-      {onStartInvestigation && (
-        <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5">
-          <button
-            onClick={onStartInvestigation}
-            className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F7961D]/90 hover:bg-[#F7961D] text-[#1a0f00] text-xs sm:text-sm font-exo2 font-semibold transition-all shadow-xl cursor-pointer active:scale-95"
-            title="Proceed to Investigation: Case 1094"
-          >
-            <span>Investigation: Case 1094</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      )}
 
     </div>
   );

@@ -82,6 +82,9 @@ Individual pages retain their original local state. The investigation page owns 
 | InSight mission | `#insight-mission`, `#page6` |
 | Story 1 | `#insight-story-1`, `#story-1`, `#story1`, `#page7` |
 | Investigation | `#investigation`, `#investigate`, `#case-1094`, `#page8` |
+| Case Board | `#case-board`, `#investigation-case-board` |
+| Go deeper (1–6) | `#go-deeper` (`#go-deeper-1`, `#science-behind-it`, `#science-behind-it-1`), `#go-deeper-2`..`#go-deeper-6` (`#science-behind-it-2`..`#science-behind-it-6`) |
+| Go technical (1–10) | `#go-technical` (`#go-technical-1`, `#engineering-the-mission`, `#engineering-the-mission-1`), `#go-technical-2`..`#go-technical-10` (`#engineering-the-mission-2`..`#engineering-the-mission-10`) |
 
 Hash matching is case-insensitive. Unknown hashes consistently render Home, including on refresh. Navigation callbacks retain existing canonical hashes and hierarchy-based Back destinations. Scrolling respects reduced-motion preferences.
 

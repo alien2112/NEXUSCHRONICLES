@@ -62,15 +62,23 @@ const getChapterGroup = (sceneId) => {
   return sceneId;
 };
 
-export default function InvestigationPage({ onBack }) {
-  const [scene, setScene] = useState('intro1-1');
+export default function InvestigationPage({
+  onBack,
+  initialScene = 'intro1-1',
+  savedProgress = null,
+  onSaveProgress,
+  onGoDeeper,
+  onGoTechnical,
+}) {
+  const [scene, setScene] = useState(initialScene);
   const [transitionDir, setTransitionDir] = useState('next'); // 'next' | 'prev'
   const [chapterToast, setChapterToast] = useState(null);
-  const [codename, setCodename] = useState('');
-  const [codenameInput, setCodenameInput] = useState('');
-  const [initialConfidence, setInitialConfidence] = useState(null);
-  const [confidenceChoice, setConfidenceChoice] = useState(null);
-  const [earnedStampIds, setEarnedStampIds] = useState([]);
+  const [codename, setCodename] = useState(savedProgress?.codename ?? '');
+  const [codenameInput, setCodenameInput] = useState(savedProgress?.codename ?? '');
+  const [initialConfidence, setInitialConfidence] = useState(savedProgress?.initialConfidence ?? null);
+  const [confidenceChoice, setConfidenceChoice] = useState(savedProgress?.confidenceChoice ?? null);
+  const [earnedStampIds, setEarnedStampIds] = useState(savedProgress?.earnedStampIds ?? []);
+  const [placedParts, setPlacedParts] = useState(savedProgress?.placedParts ?? {});
   const unlockStamp = id => setEarnedStampIds(previous => earnStamp(previous, id));
 
   const { playingTrack, audioError, togglePlayAudio, stopAudio } = useInvestigationAudio();
@@ -618,12 +626,44 @@ export default function InvestigationPage({ onBack }) {
                   confidenceChoice={confidenceChoice}
                   onChangeConfidence={setConfidenceChoice}
                   earnedStampIds={earnedStampIds}
+                  initialPlacedParts={placedParts}
+                  onPlacedPartsChange={setPlacedParts}
+                  onGoDeeper={
+                    onGoDeeper
+                      ? () => {
+                          onSaveProgress?.({
+                            codename,
+                            initialConfidence,
+                            confidenceChoice,
+                            earnedStampIds,
+                            placedParts,
+                          });
+                          onGoDeeper();
+                        }
+                      : undefined
+                  }
+                  onGoTechnical={
+                    onGoTechnical
+                      ? () => {
+                          onSaveProgress?.({
+                            codename,
+                            initialConfidence,
+                            confidenceChoice,
+                            earnedStampIds,
+                            placedParts,
+                          });
+                          onGoTechnical();
+                        }
+                      : undefined
+                  }
                   onRestart={() => {
                     setEarnedStampIds([]);
                     setInitialConfidence(null);
                     setConfidenceChoice(null);
                     setCodename('');
                     setCodenameInput('');
+                    setPlacedParts({});
+                    onSaveProgress?.(null);
                     navigateToScene('intro1-1');
                   }}
                   onExit={onBack}
