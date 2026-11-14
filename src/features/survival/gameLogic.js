@@ -644,6 +644,157 @@ export function applyEmergencyAction(state, actionId) {
   };
 }
 
+export function canAffordChallengeAction(state, action) {
+  if (!action) return false;
+  if ((action.energyCost ?? 0) > state.missionStats.energy) return false;
+  return hasEnoughResources(state.inventory, {
+    metal: action.metalCost ?? 0,
+    insulation: action.insulationCost ?? 0,
+    components: action.componentsCost ?? 0,
+  });
+}
+
+export function getRecommendedGuidance(state, proximity = null) {
+  const active = state.eventState?.active;
+  if (active && !active.mitigated) {
+    const challenge = CHALLENGES[active.type];
+    const affordable = challenge?.actions.find((a) => canAffordChallengeAction(state, a));
+    const preferred = affordable ?? challenge?.actions[0];
+    return {
+      focus: 'hazard',
+      actionId: preferred?.id ?? null,
+      affordable: Boolean(affordable),
+      label: preferred ? `Run "${preferred.label}" now!` : 'Countermeasure Needed!',
+      highlightHazard: true,
+    };
+  }
+
+  const def = getLevelDef(state.level);
+  if (!def) return { focus: 'explore', label: 'Explore Mars terrain' };
+
+  if (state.missionStats.stationHealth < 55) {
+    return {
+      focus: 'build',
+      buildTab: 'upgrade',
+      label: 'Station damaged — Open Build -> Repair Outpost',
+      highlightBuild: true,
+    };
+  }
+
+  switch (def.type) {
+    case 'collect_total':
+      return {
+        focus: 'collect',
+        label: proximity?.nearestNode
+          ? `Collect ${proximity.nearestNode.type.toUpperCase()} now!`
+          : 'Drive to any glowing resource pod to collect',
+        highlightResources: true,
+      };
+    case 'consult_insight':
+      return {
+        focus: 'insight',
+        label: 'Visit InSight (northwest) or tap INSIGHT',
+        highlightInsight: true,
+      };
+    case 'build_module': {
+      const mod = MODULE_BY_ID[def.moduleId];
+      if (!mod) break;
+      if (hasEnoughResources(state.inventory, mod.cost)) {
+        return {
+          focus: 'build',
+          buildTab: 'build',
+          targetModuleId: mod.id,
+          label: `Tap BUILD to construct ${mod.shortName}`,
+          highlightBuild: true,
+        };
+      }
+      const missing = Object.entries(mod.cost).find(([k, q]) => (state.inventory[k] ?? 0) < q)?.[0];
+      return {
+        focus: 'collect',
+        neededResource: missing ?? null,
+        targetModuleId: mod.id,
+        label: `Collect ${missing ? missing.toUpperCase() : 'resources'} for ${mod.shortName}`,
+        highlightResources: true,
+      };
+    }
+    case 'upgrade_or_build':
+    case 'upgrade_any': {
+      const upgradeTarget = def.moduleIds.find(
+        (id) => state.modules[id] && state.modules[id].level < (def.minLevel ?? 2) && hasEnoughResources(state.inventory, MODULE_BY_ID[id]?.upgradeCost)
+      );
+      const buildAlt = def.altBuildId && !state.modules[def.altBuildId] && hasEnoughResources(state.inventory, MODULE_BY_ID[def.altBuildId]?.cost)
+        ? def.altBuildId
+        : null;
+      if (upgradeTarget || buildAlt) {
+        return {
+          focus: 'build',
+          buildTab: upgradeTarget ? 'upgrade' : 'build',
+          targetModuleId: upgradeTarget ?? buildAlt,
+          label: upgradeTarget
+            ? `Tap BUILD -> Upgrades to upgrade ${MODULE_BY_ID[upgradeTarget]?.shortName}`
+            : `Tap BUILD to build ${MODULE_BY_ID[buildAlt]?.shortName}`,
+          highlightBuild: true,
+        };
+      }
+      return {
+        focus: 'collect',
+        label: 'Collect resources to unlock upgrade',
+        highlightResources: true,
+      };
+    }
+    case 'survive_challenge': {
+      if (def.requireInsightId && !state.insightConsulted.includes(def.requireInsightId)) {
+        return {
+          focus: 'insight',
+          label: 'Tap INSIGHT to analyze required archive',
+          highlightInsight: true,
+        };
+      }
+      if (def.requireModuleId && !state.modules[def.requireModuleId]) {
+        const mod = MODULE_BY_ID[def.requireModuleId];
+        if (mod && hasEnoughResources(state.inventory, mod.cost)) {
+          return {
+            focus: 'build',
+            buildTab: 'build',
+            targetModuleId: mod.id,
+            label: `Tap BUILD to construct ${mod.shortName}`,
+            highlightBuild: true,
+          };
+        }
+        return {
+          focus: 'collect',
+          label: `Gather supplies for ${mod?.shortName ?? 'module'}`,
+          highlightResources: true,
+        };
+      }
+      return {
+        focus: 'survive',
+        label: active?.mitigated ? 'Countermeasure active — hold position' : 'Keep station systems stable',
+      };
+    }
+    case 'final_evaluation': {
+      const caps = computeStationCapabilities(state.modules);
+      if (caps.upgradedCount >= (def.requiredUpgradedCount ?? 3) && state.missionStats.stationHealth >= 50) {
+        return {
+          focus: 'certify',
+          label: 'Ready! Tap Run Final Certification',
+          highlightCertify: true,
+        };
+      }
+      return {
+        focus: 'build',
+        buildTab: 'upgrade',
+        label: `Upgrade ${Math.max(1, (def.requiredUpgradedCount ?? 3) - caps.upgradedCount)} more module(s) to LV.2+`,
+        highlightBuild: true,
+      };
+    }
+    default:
+      break;
+  }
+
+  return { focus: 'explore', label: def.objective };
+}
+
 export function applySimulationTick(state, dt) {
   if (state.screen !== 'playing' || dt <= 0) return state;
 
@@ -676,24 +827,30 @@ export function applySimulationTick(state, dt) {
     const active = eventState.active;
     const def = CHALLENGES[active.type];
     const nextTimer = active.timer - dt;
-    const mitigationMult = active.mitigated ? 0.38 : 1.0;
+    // Taking an emergency action cuts ongoing hazard drain by 78%; ignoring deals full critical damage
+    const mitigationMult = active.mitigated ? 0.22 : 1.0;
 
     if (active.phase === 'active') {
       if (active.type === 'marsquake' || (active.secondaryQuake && nextTimer < 5)) {
-        const dmg = 3.1 * (1 - caps.seismicDefense) * mitigationMult * dt;
-        stats.stability = clamp(stats.stability - dmg * 1.4, 0, 100);
-        stats.stationHealth = clamp(stats.stationHealth - dmg * 0.8, 0, 100);
+        const baseQuake = active.secondaryQuake ? 11.5 : state.level >= 8 ? 10.5 : 8.2;
+        const dmg = baseQuake * (1 - caps.seismicDefense * 0.72) * mitigationMult * dt;
+        stats.stability = clamp(stats.stability - dmg * 1.45, 0, 100);
+        const healthMult = stats.stability < 20 ? 1.6 : 1.15;
+        stats.stationHealth = clamp(stats.stationHealth - dmg * healthMult, 0, 100);
       }
       if (active.type === 'dust_storm') {
-        stats.dustOnSolar = clamp(stats.dustOnSolar + 5.2 * dt, 0, 90);
-        stats.energy = clamp(stats.energy - 1.75 * mitigationMult * dt, 0, caps.energyMax);
+        stats.dustOnSolar = clamp(stats.dustOnSolar + (active.mitigated ? 2.2 : 6.5) * dt, 0, 95);
+        stats.energy = clamp(stats.energy - 2.6 * mitigationMult * dt, 0, caps.energyMax);
+        const stormDmg = (stats.energy < 15 ? 7.5 : 4.2) * mitigationMult * dt;
+        stats.stationHealth = clamp(stats.stationHealth - stormDmg, 0, 100);
+        stats.stability = clamp(stats.stability - 2.4 * mitigationMult * dt, 0, 100);
       }
       if (active.type === 'extreme_cold') {
-        const coldLoss = 3.4 * (1 - caps.thermalDefense) * mitigationMult * dt;
+        const coldLoss = 9.5 * (1 - caps.thermalDefense * 0.72) * mitigationMult * dt;
         stats.thermalIntegrity = clamp(stats.thermalIntegrity - coldLoss, 0, 100);
-        stats.energy = clamp(stats.energy - 1.15 * dt, 0, caps.energyMax);
-        if (stats.thermalIntegrity < 22) {
-          stats.stationHealth = clamp(stats.stationHealth - 1.6 * dt, 0, 100);
+        stats.energy = clamp(stats.energy - 2.2 * mitigationMult * dt, 0, caps.energyMax);
+        if (stats.thermalIntegrity < 35 || !active.mitigated) {
+          stats.stationHealth = clamp(stats.stationHealth - 6.5 * mitigationMult * dt, 0, 100);
         }
       }
     } else if (active.phase === 'recovery') {

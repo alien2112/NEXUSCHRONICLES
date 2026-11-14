@@ -30,14 +30,14 @@ import {
   RESOURCE_TYPES,
   getLevelDef,
 } from './gameData';
-import { isLevelConditionMet } from './gameLogic';
+import { getRecommendedGuidance, isLevelConditionMet } from './gameLogic';
 
 function StatGauge({ icon: Icon, label, value, color }) {
   return (
-    <div className="flex flex-col gap-0.5 min-w-[66px] sm:min-w-[82px]">
+    <div className="flex flex-col gap-0.5 min-w-0 flex-1 sm:flex-none sm:min-w-[82px]">
       <div className="flex items-center justify-between text-[10px] font-mono">
         <span className="inline-flex items-center gap-1 text-slate-300">
-          <Icon className="w-3 h-3" style={{ color }} />
+          <Icon className="w-3 h-3 shrink-0" style={{ color }} />
           <span className="hidden md:inline">{label}</span>
         </span>
         <span className="font-bold" style={{ color }}>
@@ -73,6 +73,7 @@ export default function SurvivalHud({
 }) {
   const [showLevelsList, setShowLevelsList] = useState(false);
   const [nexusExpanded, setNexusExpanded] = useState(true);
+  const [mobileNexusOpen, setMobileNexusOpen] = useState(false);
 
   const levelDef = getLevelDef(state.level);
   const activeChallenge = state.eventState.active ? CHALLENGES[state.eventState.active.type] : null;
@@ -80,37 +81,48 @@ export default function SurvivalHud({
     ? NEXUS_DIALOGUES[state.eventState.active.type]
     : levelDef.nexusHint;
   const level20Ready = state.level === 20 && isLevelConditionMet(state);
+  const guidance = getRecommendedGuidance(state, proximity);
 
   const bindTouchKey = (key) => ({
-    onPointerDown: () => onTouchDrive(key, true),
+    onPointerDown: (e) => {
+      e.preventDefault();
+      e.currentTarget.setPointerCapture?.(e.pointerId);
+      onTouchDrive(key, true);
+    },
     onPointerUp: () => onTouchDrive(key, false),
     onPointerLeave: () => onTouchDrive(key, false),
     onPointerCancel: () => onTouchDrive(key, false),
   });
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 flex flex-col p-2 sm:p-3.5 text-[#F4F7FA]">
+    <div className="pointer-events-none absolute inset-0 z-20 flex flex-col p-1.5 sm:p-3.5 text-[#F4F7FA]">
       {/* TOP HUD */}
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-2">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-1.5 sm:gap-2">
         {/* Top-Left: Title + Level + Resource Inventory */}
-        <div className="pointer-events-auto game-panel-sm border border-[#39A9FF]/45 px-3 py-2 flex flex-wrap items-center gap-3">
-          <div>
-            <div className="flex items-center gap-2">
+        <div className="pointer-events-auto game-panel-sm border border-[#39A9FF]/45 px-2.5 py-1.5 sm:px-3 sm:py-2 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+          <div className="w-full sm:w-auto">
+            <div className="flex items-center justify-between sm:justify-start gap-2">
               <span className="px-2 py-0.5 bg-[#39A9FF]/20 border border-[#39A9FF]/60 text-[10px] font-orbitron font-bold text-[#4DE2E8]">
                 LEVEL {state.level} / 20
               </span>
               <span className="text-xs font-orbitron font-bold tracking-wide text-white hidden sm:inline">
                 MARS: THE SURVIVAL PROTOCOL
               </span>
+              <span className="text-[10px] font-mono text-[#4DE2E8] sm:hidden">
+                SCORE {state.score}
+              </span>
             </div>
-            <div className="mt-1 flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] font-mono">
+            <div className="mt-1 grid grid-cols-4 sm:flex sm:flex-wrap items-center gap-1 sm:gap-3 text-[10px] sm:text-[11px] font-mono">
               {RESOURCE_TYPES.map((res) => (
                 <span
                   key={res.id}
-                  className="inline-flex items-center gap-1 px-1.5 py-0.5 border border-white/15"
+                  className="inline-flex items-center justify-between sm:justify-start gap-1 px-1.5 py-0.5 border border-white/15"
                   style={{ backgroundColor: res.badgeBg }}
                 >
-                  <span className="text-slate-300">{res.label}:</span>
+                  <span className="text-slate-300 truncate max-sm:text-[9px]">
+                    <span className="hidden sm:inline">{res.label}:</span>
+                    <span className="sm:hidden">{res.label.slice(0, 3)}:</span>
+                  </span>
                   <span className="font-bold" style={{ color: res.color }}>
                     {state.inventory[res.id] ?? 0}
                   </span>
@@ -121,7 +133,7 @@ export default function SurvivalHud({
         </div>
 
         {/* Top-Right: Station Condition + Energy + Score + Audio/Pause */}
-        <div className="pointer-events-auto game-panel-sm border border-[#39A9FF]/45 px-3 py-2 flex flex-wrap items-center gap-3 sm:gap-4">
+        <div className="pointer-events-auto game-panel-sm border border-[#39A9FF]/45 px-2.5 py-1.5 sm:px-3 sm:py-2 flex items-center justify-between gap-2 sm:gap-4">
           <StatGauge icon={Activity} label="HEALTH" value={state.missionStats.stationHealth} color="#45D483" />
           <StatGauge icon={Shield} label="STABILITY" value={state.missionStats.stability} color="#39A9FF" />
           <StatGauge icon={Flame} label="THERMAL" value={state.missionStats.thermalIntegrity} color="#FFB547" />
@@ -131,16 +143,16 @@ export default function SurvivalHud({
             value={(state.missionStats.energy / Math.max(1, state.missionStats.energyMax)) * 100}
             color="#4DE2E8"
           />
-          <div className="pl-2 border-l border-white/15 text-right">
+          <div className="hidden sm:block pl-2 border-l border-white/15 text-right">
             <div className="text-[9px] font-mono text-slate-400">SCORE</div>
             <div className="text-xs font-orbitron font-bold text-[#4DE2E8]">{state.score}</div>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 shrink-0">
             <button
               type="button"
               onClick={onToggleMute}
               aria-label={state.settings.muted ? 'Unmute audio' : 'Mute audio'}
-              className="p-1.5 rounded bg-[#1A2433] border border-white/15 hover:border-[#4DE2E8] cursor-pointer"
+              className="p-2 sm:p-1.5 rounded bg-[#1A2433] border border-white/15 hover:border-[#4DE2E8] cursor-pointer"
             >
               {state.settings.muted ? <VolumeX className="w-3.5 h-3.5 text-[#FF5555]" /> : <Volume2 className="w-3.5 h-3.5 text-[#4DE2E8]" />}
             </button>
@@ -148,7 +160,7 @@ export default function SurvivalHud({
               type="button"
               onClick={onPause}
               aria-label="Pause mission"
-              className="p-1.5 rounded bg-[#1A2433] border border-white/15 hover:border-[#39A9FF] cursor-pointer"
+              className="p-2 sm:p-1.5 rounded bg-[#1A2433] border border-white/15 hover:border-[#39A9FF] cursor-pointer"
             >
               <Pause className="w-3.5 h-3.5 text-white" />
             </button>
@@ -157,26 +169,51 @@ export default function SurvivalHud({
       </div>
 
       {/* MIDDLE ROW: LEFT MISSION/HAZARDS + RIGHT NEXUS/ACTIONS */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mt-1.5 sm:my-auto py-1 sm:py-2">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1.5 sm:gap-2 mt-1.5 sm:my-auto py-0.5 sm:py-2">
         {/* Left Panel */}
-        <div className="pointer-events-auto w-full sm:w-[290px] lg:w-[310px] space-y-2">
-          <div className="game-panel-sm border border-[#39A9FF]/45 border-l-2 border-l-[#4DE2E8] p-3">
+        <div className="pointer-events-auto w-full sm:w-[290px] lg:w-[310px] space-y-1.5 sm:space-y-2">
+          <div className="game-panel-sm border border-[#39A9FF]/45 border-l-2 border-l-[#4DE2E8] p-2 sm:p-3">
             <div className="flex items-center justify-between gap-2">
               <span className="text-[10px] font-mono uppercase tracking-wider text-[#4DE2E8]">
                 {levelDef.act}
               </span>
-              <button
-                type="button"
-                onClick={() => setShowLevelsList((v) => !v)}
-                className="text-[10px] font-mono inline-flex items-center gap-1 px-2 py-0.5 bg-[#131E31] border border-[#39A9FF]/30 hover:border-[#4DE2E8] text-slate-200 cursor-pointer"
-              >
-                <Layers className="w-3 h-3 text-[#39A9FF]" />
-                <span>20 Levels</span>
-                {showLevelsList ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setMobileNexusOpen((v) => !v)}
+                  className={`sm:hidden text-[10px] font-mono inline-flex items-center gap-1 px-2 py-0.5 border cursor-pointer ${
+                    mobileNexusOpen
+                      ? 'bg-[#4DE2E8] border-[#4DE2E8] text-[#09111E] font-bold'
+                      : 'bg-[#131E31] border-[#4DE2E8]/40 text-[#4DE2E8]'
+                  }`}
+                >
+                  <Cpu className="w-3 h-3" />
+                  <span>NEXUS</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowLevelsList((v) => !v)}
+                  className="text-[10px] font-mono inline-flex items-center gap-1 px-2 py-0.5 bg-[#131E31] border border-[#39A9FF]/30 hover:border-[#4DE2E8] text-slate-200 cursor-pointer"
+                >
+                  <Layers className="w-3 h-3 text-[#39A9FF]" />
+                  <span>20 Levels</span>
+                  {showLevelsList ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                </button>
+              </div>
             </div>
-            <h2 className="mt-1 text-xs sm:text-sm font-orbitron font-bold text-white uppercase">{levelDef.title}</h2>
-            <p className="mt-1 text-[11px] font-public text-slate-300 leading-snug">{levelDef.objective}</p>
+            <h2 className="mt-0.5 sm:mt-1 text-xs sm:text-sm font-orbitron font-bold text-white uppercase">{levelDef.title}</h2>
+            <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-[11px] font-public text-slate-300 leading-snug">{levelDef.objective}</p>
+
+            <div className="mt-1.5 px-2 py-1 bg-[#0B1424] border border-[#4DE2E8]/35 text-[10px] font-mono text-[#4DE2E8] flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFB547] animate-pulse shrink-0" />
+              <span className="truncate">NEXT: {guidance.label}</span>
+            </div>
+
+            {mobileNexusOpen && (
+              <p className="sm:hidden mt-1.5 pt-1.5 border-t border-white/10 text-[10px] font-public text-[#4DE2E8] leading-snug">
+                NEXUS AI: {nexusText}
+              </p>
+            )}
 
             {state.level === 20 && (
               <button
@@ -220,7 +257,11 @@ export default function SurvivalHud({
           {activeChallenge && (
             <div
               role="alert"
-              className="game-panel-sm border border-[#FF5555]/75 border-l-4 border-l-[#FF5555] p-3"
+              className={`game-panel-sm border border-l-4 p-2.5 sm:p-3 ${
+                state.eventState.active.mitigated
+                  ? 'border-[#45D483]/70 border-l-[#45D483]'
+                  : 'border-[#FF5555]/85 border-l-[#FF5555] shadow-[0_0_24px_rgba(255,85,85,0.28)]'
+              }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="inline-flex items-center gap-1.5 text-xs font-orbitron font-bold text-[#FF5555]">
@@ -231,23 +272,54 @@ export default function SurvivalHud({
                   {state.eventState.active.phase.toUpperCase()} · {Math.ceil(state.eventState.active.timer)}s
                 </span>
               </div>
-              <p className="mt-1 text-[11px] font-public text-slate-200 leading-snug">
+              <p className="mt-1 text-[10px] sm:text-[11px] font-public text-slate-200 leading-snug">
                 {state.eventState.active.phase === 'warning'
                   ? activeChallenge.warningText
                   : activeChallenge.activeText}
               </p>
-              <div className="mt-2 space-y-1.5">
-                {activeChallenge.actions.map((act) => (
-                  <button
-                    key={act.id}
-                    type="button"
-                    onClick={() => onEmergencyAction(act.id)}
-                    className="w-full text-left p-2 rounded bg-[#1A2433] hover:bg-[#39A9FF]/20 border border-[#4DE2E8]/40 cursor-pointer transition-colors"
-                  >
-                    <div className="text-[11px] font-orbitron font-bold text-[#4DE2E8]">{act.label}</div>
-                    <div className="text-[10px] font-mono text-slate-300">{act.detail}</div>
-                  </button>
-                ))}
+
+              <div
+                className={`mt-1.5 px-2 py-0.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider border ${
+                  state.eventState.active.mitigated
+                    ? 'bg-[#45D483]/15 border-[#45D483]/50 text-[#45D483]'
+                    : 'bg-[#FF5555]/15 border-[#FF5555]/50 text-[#FFB547]'
+                }`}
+              >
+                {state.eventState.active.mitigated
+                  ? '✓ COUNTERMEASURE ACTIVE (-78% HAZARD DRAIN)'
+                  : '⚠ ACTION REQUIRED — HIGH DAMAGE IF IGNORED'}
+              </div>
+
+              <div className="mt-2 grid grid-cols-2 sm:grid-cols-1 gap-1.5">
+                {activeChallenge.actions.map((act) => {
+                  const isRec = !state.eventState.active.mitigated && guidance.actionId === act.id;
+                  return (
+                    <button
+                      key={act.id}
+                      type="button"
+                      onClick={() => onEmergencyAction(act.id)}
+                      className={`w-full text-left p-2 cursor-pointer transition-all border ${
+                        isRec
+                          ? 'bg-[#1D2B44] hover:bg-[#263959] border-[#FFB547] ring-2 ring-[#FFB547]/65 shadow-[0_0_18px_rgba(255,181,71,0.38)]'
+                          : 'bg-[#1A2433] hover:bg-[#39A9FF]/20 border-[#4DE2E8]/40'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[10px] sm:text-[11px] font-orbitron font-bold text-[#4DE2E8] leading-tight">
+                          {act.label}
+                        </span>
+                        {isRec && (
+                          <span className="px-1.5 py-0.5 bg-[#FFB547] text-[#09111E] text-[8px] font-orbitron font-black uppercase shrink-0">
+                            RECOMMENDED
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-[9px] sm:text-[10px] font-mono text-slate-300 leading-tight mt-0.5">
+                        {act.detail}
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -287,8 +359,12 @@ export default function SurvivalHud({
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
-              onClick={() => onOpenBuild('build')}
-              className="game-cmd-btn py-2 px-3 bg-[#39A9FF] hover:bg-[#4DE2E8] text-[#09111E] font-orbitron font-bold text-[11px] uppercase inline-flex items-center justify-center gap-1.5 cursor-pointer shadow-[0_0_16px_rgba(57,169,255,0.35)]"
+              onClick={() => onOpenBuild(guidance.buildTab ?? 'build')}
+              className={`game-cmd-btn py-2 px-3 bg-[#39A9FF] hover:bg-[#4DE2E8] text-[#09111E] font-orbitron font-bold text-[11px] uppercase inline-flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+                guidance.highlightBuild
+                  ? 'ring-2 ring-[#FFB547] shadow-[0_0_24px_rgba(255,181,71,0.58)] animate-pulse'
+                  : 'shadow-[0_0_16px_rgba(57,169,255,0.35)]'
+              }`}
             >
               <Hammer className="w-3.5 h-3.5" />
               <span>Build (B)</span>
@@ -298,8 +374,8 @@ export default function SurvivalHud({
               type="button"
               onClick={onOpenInsight}
               className={`game-cmd-btn py-2 px-3 border font-orbitron font-bold text-[11px] uppercase inline-flex items-center justify-center gap-1.5 cursor-pointer shadow ${
-                proximity.nearInsight
-                  ? 'bg-[#4DE2E8] text-[#09111E] border-white animate-pulse'
+                proximity.nearInsight || guidance.highlightInsight
+                  ? 'bg-[#4DE2E8] text-[#09111E] border-white ring-2 ring-[#4DE2E8]/70 shadow-[0_0_22px_rgba(77,226,232,0.55)] animate-pulse'
                   : 'bg-[#131E31]/95 hover:border-[#4DE2E8] text-[#4DE2E8] border-[#4DE2E8]/55'
               }`}
             >
@@ -324,13 +400,13 @@ export default function SurvivalHud({
             </div>
           )}
 
-          {/* Camera Zoom & Follow Controls */}
+          {/* Camera Zoom & Follow Controls (Desktop + Compact Mobile) */}
           <div className="hidden sm:flex items-center justify-end gap-1.5">
             <button
               type="button"
               onClick={onZoomIn}
               aria-label="Zoom camera in"
-              className="p-1.5 rounded bg-[#101827]/85 border border-white/15 hover:border-[#4DE2E8] cursor-pointer"
+              className="p-1.5 bg-[#101827]/85 border border-white/15 hover:border-[#4DE2E8] cursor-pointer"
             >
               <ZoomIn className="w-3.5 h-3.5" />
             </button>
@@ -338,14 +414,14 @@ export default function SurvivalHud({
               type="button"
               onClick={onZoomOut}
               aria-label="Zoom camera out"
-              className="p-1.5 rounded bg-[#101827]/85 border border-white/15 hover:border-[#4DE2E8] cursor-pointer"
+              className="p-1.5 bg-[#101827]/85 border border-white/15 hover:border-[#4DE2E8] cursor-pointer"
             >
               <ZoomOut className="w-3.5 h-3.5" />
             </button>
             <button
               type="button"
               onClick={onResetFollow}
-              className="px-2 py-1 rounded bg-[#101827]/85 border border-white/15 hover:border-[#4DE2E8] text-[10px] font-mono inline-flex items-center gap-1 cursor-pointer"
+              className="px-2 py-1 bg-[#101827]/85 border border-white/15 hover:border-[#4DE2E8] text-[10px] font-mono inline-flex items-center gap-1 cursor-pointer"
             >
               <Compass className="w-3 h-3 text-[#4DE2E8]" />
               <span>Follow Rover</span>
@@ -354,12 +430,12 @@ export default function SurvivalHud({
         </div>
       </div>
 
-      {/* BOTTOM INTERFACE: FEEDBACK BANNER + INTERACTION PROMPT + CONTROLS + MOBILE D-PAD */}
-      <div className="mt-auto flex flex-col items-center gap-2">
+      {/* BOTTOM INTERFACE: FEEDBACK BANNER + INTERACTION PROMPT + CONTROLS + ERGONOMIC MOBILE GAMEPAD */}
+      <div className="mt-auto flex flex-col items-center gap-1.5 sm:gap-2">
         {state.lastBanner && (
           <div
             role="status"
-            className={`pointer-events-none px-4 py-1.5 rounded-full border text-xs font-exo2 font-semibold shadow-lg ${
+            className={`pointer-events-none px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full border text-[11px] sm:text-xs font-exo2 font-semibold shadow-lg text-center max-w-[96%] ${
               state.lastBanner.type === 'error'
                 ? 'bg-[#101827]/95 border-[#FF5555]/70 text-[#FF5555]'
                 : state.lastBanner.type === 'warning'
@@ -371,41 +447,43 @@ export default function SurvivalHud({
           </div>
         )}
 
-        <div className="pointer-events-auto w-full max-w-4xl flex flex-wrap items-center justify-between gap-2">
-          {/* Touch D-Pad for Mobile / Tablet */}
-          <div className="flex lg:hidden items-center gap-1 bg-[#101827]/85 p-1 rounded-lg border border-white/15">
-            <button
-              type="button"
-              aria-label="Steer Left"
-              {...bindTouchKey('left')}
-              className="p-2 rounded bg-[#1A2433] active:bg-[#39A9FF]/40"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-            </button>
+        <div className="pointer-events-auto w-full max-w-4xl flex items-end justify-between gap-2">
+          {/* Ergonomic Cross Touch D-Pad for Mobile / Tablet */}
+          <div className="flex lg:hidden flex-col items-center gap-1 game-panel-sm border border-[#39A9FF]/40 p-1.5 touch-none select-none">
             <button
               type="button"
               aria-label="Drive Forward"
               {...bindTouchKey('forward')}
-              className="p-2 rounded bg-[#1A2433] active:bg-[#39A9FF]/40"
+              className="w-11 h-11 flex items-center justify-center bg-[#131E31] border border-[#39A9FF]/40 active:bg-[#39A9FF] active:text-[#09111E] active:scale-95 transition-transform touch-none"
             >
-              <ArrowUp className="w-3.5 h-3.5" />
+              <ArrowUp className="w-4 h-4" />
             </button>
-            <button
-              type="button"
-              aria-label="Drive Backward"
-              {...bindTouchKey('backward')}
-              className="p-2 rounded bg-[#1A2433] active:bg-[#39A9FF]/40"
-            >
-              <ArrowDown className="w-3.5 h-3.5" />
-            </button>
-            <button
-              type="button"
-              aria-label="Steer Right"
-              {...bindTouchKey('right')}
-              className="p-2 rounded bg-[#1A2433] active:bg-[#39A9FF]/40"
-            >
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                aria-label="Steer Left"
+                {...bindTouchKey('left')}
+                className="w-11 h-11 flex items-center justify-center bg-[#131E31] border border-[#39A9FF]/40 active:bg-[#39A9FF] active:text-[#09111E] active:scale-95 transition-transform touch-none"
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                aria-label="Drive Backward"
+                {...bindTouchKey('backward')}
+                className="w-11 h-11 flex items-center justify-center bg-[#131E31] border border-[#39A9FF]/40 active:bg-[#39A9FF] active:text-[#09111E] active:scale-95 transition-transform touch-none"
+              >
+                <ArrowDown className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                aria-label="Steer Right"
+                {...bindTouchKey('right')}
+                className="w-11 h-11 flex items-center justify-center bg-[#131E31] border border-[#39A9FF]/40 active:bg-[#39A9FF] active:text-[#09111E] active:scale-95 transition-transform touch-none"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           {/* Desktop Controls Hint */}
@@ -417,28 +495,58 @@ export default function SurvivalHud({
             <span><strong className="text-[#4DE2E8]">ESC</strong> Pause</span>
           </div>
 
-          {/* Contextual Action Trigger */}
-          <div className="flex items-center gap-2 ml-auto">
-            {proximity.nearestNode && (
+          {/* Right Thumb Zone: Contextual Action Triggers + Mobile Camera Controls */}
+          <div className="flex flex-col items-end gap-1.5 ml-auto">
+            <div className="flex sm:hidden items-center gap-1">
               <button
                 type="button"
-                onClick={onCollectNearby}
-                className="px-3.5 py-1.5 rounded-lg bg-[#45D483] hover:bg-emerald-300 text-[#101827] font-orbitron font-bold text-xs uppercase inline-flex items-center gap-1.5 cursor-pointer shadow-lg animate-pulse"
+                onClick={onZoomIn}
+                aria-label="Mobile zoom in"
+                className="w-9 h-9 flex items-center justify-center bg-[#101827]/90 border border-[#39A9FF]/40 active:bg-[#39A9FF]/30"
               >
-                <Pickaxe className="w-3.5 h-3.5" />
-                <span>Collect {proximity.nearestNode.type.toUpperCase()} (E)</span>
+                <ZoomIn className="w-4 h-4 text-[#4DE2E8]" />
               </button>
-            )}
-            {proximity.nearInsight && (
               <button
                 type="button"
-                onClick={onOpenInsight}
-                className="px-3.5 py-1.5 rounded-lg bg-[#4DE2E8] hover:bg-cyan-200 text-[#101827] font-orbitron font-bold text-xs uppercase inline-flex items-center gap-1.5 cursor-pointer shadow-lg"
+                onClick={onZoomOut}
+                aria-label="Mobile zoom out"
+                className="w-9 h-9 flex items-center justify-center bg-[#101827]/90 border border-[#39A9FF]/40 active:bg-[#39A9FF]/30"
               >
-                <Radio className="w-3.5 h-3.5" />
-                <span>ACCESS INSIGHT DATA (E)</span>
+                <ZoomOut className="w-4 h-4 text-[#4DE2E8]" />
               </button>
-            )}
+              <button
+                type="button"
+                onClick={onResetFollow}
+                aria-label="Recenter on rover"
+                className="h-9 px-2.5 flex items-center gap-1 bg-[#101827]/90 border border-[#39A9FF]/40 active:bg-[#39A9FF]/30 text-[10px] font-mono text-[#4DE2E8]"
+              >
+                <Compass className="w-3.5 h-3.5" />
+                <span>ROVER</span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {proximity.nearestNode && (
+                <button
+                  type="button"
+                  onClick={onCollectNearby}
+                  className="game-cmd-btn px-4 py-2.5 sm:px-3.5 sm:py-1.5 bg-[#45D483] hover:bg-emerald-300 text-[#09111E] font-orbitron font-bold text-xs uppercase inline-flex items-center gap-1.5 cursor-pointer shadow-lg animate-pulse"
+                >
+                  <Pickaxe className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                  <span>Collect {proximity.nearestNode.type.toUpperCase()}</span>
+                </button>
+              )}
+              {proximity.nearInsight && (
+                <button
+                  type="button"
+                  onClick={onOpenInsight}
+                  className="game-cmd-btn px-4 py-2.5 sm:px-3.5 sm:py-1.5 bg-[#4DE2E8] hover:bg-cyan-200 text-[#09111E] font-orbitron font-bold text-xs uppercase inline-flex items-center gap-1.5 cursor-pointer shadow-lg"
+                >
+                  <Radio className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                  <span>ACCESS INSIGHT DATA</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

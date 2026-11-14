@@ -267,7 +267,7 @@ export function MainMenuOverlay({
             <span>NEXUS // 3D MARS ENGINEERING CAMPAIGN</span>
           </div>
 
-          <h1 className="mt-3 text-3xl sm:text-5xl font-orbitron font-black tracking-wider text-white leading-[1.03] drop-shadow-[0_6px_26px_rgba(57,169,255,0.28)]">
+          <h1 className="mt-2 sm:mt-3 text-2xl sm:text-5xl font-orbitron font-black tracking-wider text-white leading-[1.03] drop-shadow-[0_6px_26px_rgba(57,169,255,0.28)]">
             MARS: THE SURVIVAL PROTOCOL
           </h1>
 
@@ -369,7 +369,7 @@ export function HowToPlayModal({ onClose }) {
     {
       keys: ['W', 'A', 'S', 'D'],
       title: '1. Rover Exploration',
-      body: 'Steer the 6-wheeled Mars rover across Elysium terrain using W/A/S/D or Arrow keys (or touch D-Pad on mobile). Right-Click Drag to pan camera and Scroll to zoom.',
+      body: 'Steer the 6-wheeled Mars rover across Elysium terrain using W/A/S/D or Arrow keys on desktop, or the Touch D-Pad on mobile. Right-Click Drag (or 1-Finger Drag on mobile) to pan camera, and Scroll (or Pinch) to zoom.',
     },
     {
       keys: ['E'],
@@ -650,6 +650,7 @@ export function ConstructionModal({
   inventory,
   modules,
   stationHealth,
+  recommendedModuleId = null,
   onQuickBuild,
   onPickSlotMode,
   onUpgrade,
@@ -701,12 +702,15 @@ export function ConstructionModal({
             const built = Boolean(modules[mod.id]);
             const unlocked = level >= mod.unlockLevel;
             const affordable = hasEnoughResources(inventory, mod.cost);
+            const isTarget = !built && recommendedModuleId === mod.id;
             return (
               <div
                 key={mod.id}
                 className={`p-3.5 border flex flex-col justify-between gap-2.5 ${
                   built
                     ? 'border-[#45D483]/55 border-t-2 border-t-[#45D483] bg-[#0F1E24]/85'
+                    : isTarget
+                    ? 'border-[#FFB547] ring-2 ring-[#FFB547]/65 border-t-2 border-t-[#FFB547] bg-[#192338] shadow-[0_0_24px_rgba(255,181,71,0.28)]'
                     : unlocked
                     ? 'border-[#39A9FF]/45 border-t-2 border-t-[#4DE2E8] bg-[#131E31]/95'
                     : 'border-white/10 bg-[#0D1422]/65 opacity-70'
@@ -716,15 +720,17 @@ export function ConstructionModal({
                   <div className="flex items-center justify-between gap-2">
                     <h3 className="text-sm font-orbitron font-bold text-white uppercase">{mod.name}</h3>
                     <span
-                      className={`text-[10px] font-mono px-2 py-0.5 border ${
+                      className={`text-[10px] font-mono px-2 py-0.5 border shrink-0 ${
                         built
                           ? 'bg-[#45D483]/15 border-[#45D483]/45 text-[#45D483]'
+                          : isTarget
+                          ? 'bg-[#FFB547] border-[#FFB547] text-[#09111E] font-bold'
                           : unlocked
                           ? 'bg-[#39A9FF]/15 border-[#4DE2E8]/45 text-[#4DE2E8]'
                           : 'bg-white/5 border-white/10 text-slate-400'
                       }`}
                     >
-                      {built ? 'BUILT' : unlocked ? 'UNLOCKED' : `LV.${mod.unlockLevel}`}
+                      {built ? 'BUILT' : isTarget ? '★ RECOMMENDED' : unlocked ? 'UNLOCKED' : `LV.${mod.unlockLevel}`}
                     </span>
                   </div>
                   <p className="text-xs font-public text-slate-300 mt-1.5 leading-snug">{mod.summary}</p>
@@ -796,10 +802,15 @@ export function ConstructionModal({
               {Object.entries(modules).map(([id, mod]) => {
                 const def = MODULE_BY_ID[id];
                 const canUp = mod.level < 3 && hasEnoughResources(inventory, def.upgradeCost);
+                const isTarget = recommendedModuleId === id;
                 return (
                   <div
                     key={id}
-                    className="p-3.5 border border-[#39A9FF]/40 bg-[#131E31]/95 space-y-2.5"
+                    className={`p-3.5 border space-y-2.5 ${
+                      isTarget
+                        ? 'border-[#FFB547] ring-2 ring-[#FFB547]/65 bg-[#192338]'
+                        : 'border-[#39A9FF]/40 bg-[#131E31]/95'
+                    }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-orbitron font-bold text-white uppercase">{def.name}</span>

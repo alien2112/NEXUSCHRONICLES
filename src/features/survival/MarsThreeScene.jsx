@@ -8,6 +8,7 @@ import {
   RESOURCE_COLLECT_RADIUS,
   WORLD_RADIUS,
 } from './gameData';
+import { getRecommendedGuidance, getRoverProximity } from './gameLogic';
 
 /** Deterministic terrain height keeping central construction basin and InSight deck smooth. */
 function sampleTerrainHeight(x, z) {
@@ -647,13 +648,25 @@ export default function MarsThreeScene({
     previewMesh.visible = false;
     scene.add(previewMesh);
 
-    // NASA InSight Lander
+    // NASA InSight Lander + Guidance Beacon
     const insight = buildInsightLanderMesh();
     insight.group.position.set(INSIGHT_POS.x, sampleTerrainHeight(INSIGHT_POS.x, INSIGHT_POS.z), INSIGHT_POS.z);
     insight.group.traverse((child) => {
       child.userData = { kind: 'insight' };
     });
     scene.add(insight.group);
+
+    const insightBeacon = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.18, 1.4, 7, 16, 1, true),
+      new THREE.MeshBasicMaterial({
+        color: PALETTE.cyan,
+        transparent: true,
+        opacity: 0,
+        side: THREE.DoubleSide,
+      })
+    );
+    insightBeacon.position.set(INSIGHT_POS.x, sampleTerrainHeight(INSIGHT_POS.x, INSIGHT_POS.z) + 3.5, INSIGHT_POS.z);
+    scene.add(insightBeacon);
 
     // Player 6-Wheeled Rover
     const roverRig = buildRoverMesh();
@@ -711,10 +724,13 @@ export default function MarsThreeScene({
       };
     }
 
-    // Raycaster & Camera Pan Events
+    // Raycaster & Desktop + Mobile Multi-Touch Camera Controls
     const raycaster = new THREE.Raycaster();
     const pointerNdc = new THREE.Vector2();
     let hoveredSlotIndex = null;
+    const activePointers = new Map();
+    let touchTapCandidate = null;
+    let lastPinchDist = null;
 
     const updatePointer = (clientX, clientY) => {
       const rect = canvas.getBoundingClientRect();
@@ -722,16 +738,8 @@ export default function MarsThreeScene({
       pointerNdc.y = -((clientY - rect.top) / rect.height) * 2 + 1;
     };
 
-    const onPointerDown = (e) => {
-      if (e.button === 1 || e.button === 2 || e.shiftKey) {
-        camState.isDragging = true;
-        camState.followRover = false;
-        camState.lastX = e.clientX;
-        camState.lastY = e.clientY;
-        return;
-      }
-
-      updatePointer(e.clientX, e.clientY);
+    const runRaycastPick = (clientX, clientY) => {
+      updatePointer(clientX, clientY);
       raycaster.setFromCamera(pointerNdc, camera);
 
       if (selectedBuildRef.current) {
@@ -759,7 +767,65 @@ export default function MarsThreeScene({
       }
     };
 
+    const getPinchDistance = () => {
+      const pts = Array.from(activePointers.values());
+      if (pts.length < 2) return null;
+      return Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+    };
+
+    const onPointerDown = (e) => {
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY, type: e.pointerType });
+
+      if (e.pointerType === 'touch') {
+        if (activePointers.size === 1) {
+          touchTapCandidate = { id: e.pointerId, x: e.clientX, y: e.clientY, moved: false };
+          camState.lastX = e.clientX;
+          camState.lastY = e.clientY;
+        } else if (activePointers.size === 2) {
+          touchTapCandidate = null;
+          camState.isDragging = false;
+          lastPinchDist = getPinchDistance();
+        }
+        return;
+      }
+
+      if (e.button === 1 || e.button === 2 || e.shiftKey) {
+        camState.isDragging = true;
+        camState.followRover = false;
+        camState.lastX = e.clientX;
+        camState.lastY = e.clientY;
+        return;
+      }
+
+      runRaycastPick(e.clientX, e.clientY);
+    };
+
     const onPointerMove = (e) => {
+      if (activePointers.has(e.pointerId)) {
+        activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY, type: e.pointerType });
+      }
+
+      if (e.pointerType === 'touch') {
+        if (activePointers.size === 2) {
+          const nextDist = getPinchDistance();
+          if (nextDist != null && lastPinchDist != null) {
+            const delta = lastPinchDist - nextDist;
+            camState.zoom = Math.max(12, Math.min(36, camState.zoom + delta * 0.05));
+          }
+          lastPinchDist = nextDist;
+          return;
+        }
+
+        if (activePointers.size === 1 && touchTapCandidate?.id === e.pointerId) {
+          const distFromStart = Math.hypot(e.clientX - touchTapCandidate.x, e.clientY - touchTapCandidate.y);
+          if (distFromStart > 8) {
+            touchTapCandidate.moved = true;
+            camState.isDragging = true;
+            camState.followRover = false;
+          }
+        }
+      }
+
       if (camState.isDragging) {
         const dx = e.clientX - camState.lastX;
         const dy = e.clientY - camState.lastY;
@@ -780,8 +846,20 @@ export default function MarsThreeScene({
       }
     };
 
-    const onPointerUp = () => {
-      camState.isDragging = false;
+    const onPointerUp = (e) => {
+      if (
+        e.pointerType === 'touch' &&
+        touchTapCandidate?.id === e.pointerId &&
+        !touchTapCandidate.moved
+      ) {
+        runRaycastPick(e.clientX, e.clientY);
+      }
+      activePointers.delete(e.pointerId);
+      if (activePointers.size < 2) lastPinchDist = null;
+      if (activePointers.size === 0) {
+        camState.isDragging = false;
+        touchTapCandidate = null;
+      }
     };
 
     const onWheel = (e) => {
@@ -794,6 +872,7 @@ export default function MarsThreeScene({
     canvas.addEventListener('pointerdown', onPointerDown);
     window.addEventListener('pointermove', onPointerMove);
     window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
     canvas.addEventListener('wheel', onWheel, { passive: false });
     canvas.addEventListener('contextmenu', onContextMenu);
 
@@ -820,6 +899,17 @@ export default function MarsThreeScene({
       clockTime += dt;
 
       const st = gameStateRef.current;
+      const prox = getRoverProximity(st);
+      const guidance = getRecommendedGuidance(st, prox);
+
+      // Guidance illumination in 3D scene
+      insightBeacon.material.opacity = guidance.highlightInsight
+        ? 0.18 + Math.sin(clockTime * 4) * 0.1
+        : 0;
+      padRing.material.opacity = guidance.highlightBuild
+        ? 0.68 + Math.sin(clockTime * 4.5) * 0.22
+        : 0.35;
+      padRing.material.color.set(guidance.highlightBuild ? PALETTE.warning : PALETTE.techBlue);
 
       // Sync Rover position, wheel rotation & suspension bounce
       const rx = st.rover.x;
@@ -863,8 +953,19 @@ export default function MarsThreeScene({
         entry.group.position.set(node.x, ny + Math.sin(clockTime * 2.2 + node.bobSeed) * 0.14, node.z);
         entry.group.rotation.y = clockTime * 1.1 + node.bobSeed;
         const near = Math.hypot(rx - node.x, rz - node.z) <= RESOURCE_COLLECT_RADIUS;
-        entry.ring.material.opacity = near ? 0.92 : 0.38;
-        const rScale = near ? 1.25 + Math.sin(clockTime * 6) * 0.1 : 1;
+        const isRecommendedNode =
+          guidance.highlightResources &&
+          (!guidance.neededResource || guidance.neededResource === node.type);
+        entry.ring.material.opacity = near
+          ? 0.94
+          : isRecommendedNode
+          ? 0.65 + Math.sin(clockTime * 5 + node.bobSeed) * 0.22
+          : 0.32;
+        const rScale = near
+          ? 1.25 + Math.sin(clockTime * 6) * 0.1
+          : isRecommendedNode
+          ? 1.12 + Math.sin(clockTime * 4 + node.bobSeed) * 0.08
+          : 1;
         entry.ring.scale.set(rScale, rScale, 1);
       }
 
@@ -1003,6 +1104,7 @@ export default function MarsThreeScene({
       canvas.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerUp);
       canvas.removeEventListener('wheel', onWheel);
       canvas.removeEventListener('contextmenu', onContextMenu);
       window.removeEventListener('resize', onResize);
@@ -1013,6 +1115,8 @@ export default function MarsThreeScene({
       terrainMat.dispose();
       particleGeo.dispose();
       particleMat.dispose();
+      insightBeacon.geometry.dispose();
+      insightBeacon.material.dispose();
       renderer.dispose();
     };
   }, [gameStateRef, cameraControlRef]);
@@ -1022,7 +1126,7 @@ export default function MarsThreeScene({
       <canvas
         ref={canvasRef}
         aria-label="Three.js 3D isometric Mars survival environment"
-        className="w-full h-full block cursor-grab active:cursor-grabbing"
+        className="w-full h-full block touch-none cursor-grab active:cursor-grabbing"
       />
       {webglError && (
         <div className="absolute inset-0 flex items-center justify-center bg-[#101827] text-[#F4F7FA] p-6 text-center">

@@ -16,6 +16,7 @@ import {
   computeStationCapabilities,
   consultInsight,
   createInitialState,
+  getRecommendedGuidance,
   getRoverProximity,
   repairStation,
   startChallenge,
@@ -136,4 +137,33 @@ test('consulting InSight data advances science objectives and Level 20 certifies
   const certified = completeFinalMission(state);
   assert.equal(certified.screen, 'victory');
   assert.ok(['S', 'A', 'B'].includes(certified.finalReport.grade));
+});
+
+test('ignoring severe hazard causes real defeat while taking recommended action saves outpost', () => {
+  let ignored = createInitialState();
+  ignored.screen = 'playing';
+  ignored.level = 8;
+  ignored = startChallenge(ignored, 'marsquake');
+
+  const g = getRecommendedGuidance(ignored);
+  assert.equal(g.focus, 'hazard');
+  assert.ok(g.actionId);
+
+  // Simulate full warning (5s) + active quake (10s) with zero countermeasures
+  for (let i = 0; i < 16; i += 1) {
+    ignored = applySimulationTick(ignored, 1);
+  }
+  assert.equal(ignored.screen, 'gameover');
+
+  // Now replay and take recommended action during warning phase
+  let responded = createInitialState();
+  responded.screen = 'playing';
+  responded.level = 8;
+  responded = startChallenge(responded, 'marsquake');
+  responded = applyEmergencyAction(responded, getRecommendedGuidance(responded).actionId);
+  for (let i = 0; i < 16; i += 1) {
+    responded = applySimulationTick(responded, 1);
+  }
+  assert.equal(responded.screen, 'playing');
+  assert.ok(responded.missionStats.stationHealth > 50);
 });

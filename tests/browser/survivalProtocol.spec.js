@@ -83,3 +83,17 @@ test('game appears as an optional pass at the end of Go Deeper (#go-deeper-6) an
   await techOptional.getByRole('button', { name: 'Play Mars: The Survival Protocol' }).click();
   await expect(page).toHaveURL(/#survival-protocol$/);
 });
+
+test('mobile gameplay provides touch D-Pad, NEXUS toggle, and camera controls', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'Mobile viewport test');
+  await page.goto('/#survival-protocol');
+  await page.getByRole('button', { name: 'START MISSION' }).click();
+
+  await expect(page.getByRole('button', { name: 'Drive Forward' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Steer Left' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Mobile zoom in' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Recenter on rover' })).toBeVisible();
+
+  await page.getByRole('main').getByRole('button', { name: 'NEXUS', exact: true }).click();
+  await expect(page.getByText(/NEXUS AI:/)).toBeVisible();
+});

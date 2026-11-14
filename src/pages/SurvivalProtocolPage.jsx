@@ -20,6 +20,7 @@ import {
   completeFinalMission,
   consultInsight,
   createInitialState,
+  getRecommendedGuidance,
   getRoverProximity,
   loadSurvivalGame,
   repairStation,
@@ -259,9 +260,10 @@ export default function SurvivalProtocolPage({ onReturnToNexus }) {
   }, []);
 
   const proximity = getRoverProximity(uiState);
+  const guidance = getRecommendedGuidance(uiState, proximity);
 
   return (
-    <div className="relative h-[100dvh] w-full flex flex-col bg-[#101827] text-[#F4F7FA] font-public select-none overflow-hidden">
+    <div className="relative h-[100dvh] w-full flex flex-col bg-[#101827] text-[#F4F7FA] font-public select-none overflow-hidden overscroll-none">
       <main className="relative flex-1 w-full h-full overflow-hidden">
         <div className="absolute inset-x-0 bottom-0 top-[58px] lg:top-[68px] overflow-hidden">
           <MarsThreeScene
@@ -343,6 +345,7 @@ export default function SurvivalProtocolPage({ onReturnToNexus }) {
           inventory={uiState.inventory}
           modules={uiState.modules}
           stationHealth={uiState.missionStats.stationHealth}
+          recommendedModuleId={guidance.targetModuleId}
           onQuickBuild={(modId) => handleBuildQuick(modId)}
           onPickSlotMode={(modId) => {
             setActiveModal(null);
