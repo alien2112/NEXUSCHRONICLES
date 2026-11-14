@@ -2,7 +2,7 @@
 
 **The mission ends The evidence remains**
 
-AFTERTRACE is an early, frontend-only NASA Space Apps concept about the evidence that space missions leave behind. Its product direction comes from the user-supplied sketches, AI visual reference, and **Project Vision & Execution Blueprint**. This repository contains the existing NEXUS CHRONICLES frontend, organized as a foundation for that vision.
+AFTERTRACE is an early, frontend-only NASA Space Apps concept about the evidence that space missions leave behind. Its product direction comes from the user-supplied sketches, AI visual reference, and **Project Vision & Execution Blueprint**. This repository contains the existing NEXUS CHRONICLES frontend, organized as a foundation for that vision
 
 ## Project vision
 
